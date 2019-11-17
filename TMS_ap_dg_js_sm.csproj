@@ -56,7 +56,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Business-Layer\controllers\adminController.cs" />
+    <Compile Include="Business-Layer\controllers\loginController.cs" />
     <Compile Include="Business-Layer\logger.cs" />
+    <Compile Include="Business-Layer\users\loginInfo.cs" />
     <Compile Include="Business-Layer\users\user.cs" />
     <Page Include="UI-Layer\LoginPage.xaml">
       <SubType>Designer</SubType>
@@ -74,7 +76,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI-Layer\MainWindow.xaml">
+    <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -104,7 +106,7 @@
     <Compile Include="UI-Layer\plannerPage.xaml.cs">
       <DependentUpon>plannerPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI-Layer\MainWindow.xaml.cs">
+    <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -136,5 +138,8 @@
     <None Include="configuration\App.config" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Resource Include="UI-Layer\UI_Images\bacground_Login.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
