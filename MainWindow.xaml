@@ -16,7 +16,7 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle Width="440" Fill="White" StrokeThickness="3" Margin="130,100,130,65">
+        <Rectangle Width="440" Fill="White" StrokeThickness="3" Margin="130,99,130,66">
             <Rectangle.Effect>
                 <DropShadowEffect Color="#FF636363" Direction="-90" BlurRadius="15"/>
             </Rectangle.Effect>
