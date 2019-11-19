@@ -59,6 +59,7 @@
     <Compile Include="Business-Layer\controllers\adminController.cs" />
     <Compile Include="Business-Layer\controllers\loginController.cs" />
     <Compile Include="Business-Layer\logger.cs" />
+    <Compile Include="Business-Layer\orderManagement\Contract.cs" />
     <Compile Include="Business-Layer\users\loginInfo.cs" />
     <Compile Include="Business-Layer\users\user.cs" />
     <Page Include="UI-Layer\LoginPage.xaml">
@@ -86,7 +87,8 @@
     <Compile Include="Business-Layer\controllers\controller.cs" />
     <Compile Include="Business-Layer\controllers\buyerController.cs" />
     <Compile Include="Business-Layer\orderManagement\carrier.cs" />
-    <Compile Include="Data-Access\connection.cs" />
+    <Compile Include="Data-Access\External_Comm.cs" />
+    <Compile Include="Data-Access\Local_Comm.cs" />
     <Compile Include="Business-Layer\users\planner.cs" />
     <Compile Include="Business-Layer\controllers\plannerController.cs" />
     <Compile Include="Business-Layer\orderManagement\order.cs" />
