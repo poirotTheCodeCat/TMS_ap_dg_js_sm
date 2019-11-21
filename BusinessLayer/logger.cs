@@ -13,7 +13,7 @@ namespace TMS_ap_dg_js_sm.Business_Layer.users
     /// </summary>
     class Logger
     {
-        private string uName;
+        private string uName;///< hold the name of the logged in user
         //private DateTime loginDateTime;
         //private DateTime logoutDateTime;
         //private string logFileLocation;
@@ -35,6 +35,7 @@ namespace TMS_ap_dg_js_sm.Business_Layer.users
         /// </summary>
         /// <param name="message">Log information.</param>
         /// <param name="ex">Bool to tell if exception or just basic log.</param>
+        /// <returns>void</returns>
 
         public static void Log(string message, int ex = 0)
         {
