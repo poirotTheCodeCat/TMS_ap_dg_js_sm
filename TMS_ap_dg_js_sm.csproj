@@ -56,7 +56,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Business-Layer\controllers\AdminController.cs" />
     <Compile Include="Business-Layer\Logger.cs" />
     <Compile Include="Business-Layer\orderManagement\Contract.cs" />
     <Compile Include="Business-Layer\users\User.cs" />
@@ -83,12 +82,10 @@
     <Compile Include="Business-Layer\users\Admin.cs" />
     <Compile Include="Business-Layer\users\Buyer.cs" />
     <Compile Include="Business-Layer\controllers\Controller.cs" />
-    <Compile Include="Business-Layer\controllers\BuyerController.cs" />
     <Compile Include="Business-Layer\orderManagement\Carrier.cs" />
     <Compile Include="Data-Access\External_Comm.cs" />
     <Compile Include="Data-Access\Local_Comm.cs" />
     <Compile Include="Business-Layer\users\Planner.cs" />
-    <Compile Include="Business-Layer\controllers\PlannerController.cs" />
     <Compile Include="Business-Layer\orderManagement\Order.cs" />
     <Compile Include="Business-Layer\orderManagement\Trip.cs" />
     <Compile Include="UI-Layer\LoginPage.xaml.cs">
