@@ -27,7 +27,6 @@ namespace TMS_ap_dg_js_sm.Business_Layer.orderManagement
             Quant = Int32.Parse(words[3]);
             Orig = words[4];
             Dest = words[5];
-
         }
     }
 }

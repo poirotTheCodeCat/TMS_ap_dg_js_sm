@@ -8,5 +8,9 @@ namespace TMS_ap_dg_js_sm
 {
     class Order
     {
+        private string cName;
+        private int contractID;
+        private int carrierID;
+        private int markup; 
     }
 }
