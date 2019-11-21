@@ -23,13 +23,13 @@ namespace TMS_ap_dg_js_sm
         /// <param name="newPort">The requested new port number - default to blank in the case where the user only
         ///                       wants to update the ip address.</param>
         /// <returns>Int representing the successful change in IP/Port values.</returns>
-        private int ChangeTmsConnSettings(string newIP, string newPort = "")
+        public int ChangeTmsConnSettings(string newIP, string newPort = "")
         {
-            int isChanged = 0;
+            int done = 0;
 
-            isChanged = 1; //set to true for testing
+            done = 1; //set to true for testing
 
-            return isChanged;
+            return done;
         }
 
         /// <summary>
@@ -40,13 +40,13 @@ namespace TMS_ap_dg_js_sm
         /// <param name="newPort">The requested new port number - default to blank in the case where the user only
         ///                       wants to update the ip address.</param>
         /// <returns>Int representing the successful change in IP/Port values.</returns>
-        private int ChangeCmpConnSettings(string newIP, string newPort = "")
+        public int ChangeCmpConnSettings(string newIP, string newPort = "")
         {
-            int isChanged = 0;
+            int done = 0;
 
-            isChanged = 1; //set to true for testing
+            done = 1; //set to true for testing
 
-            return isChanged;
+            return done;
         }
 
         /// <summary>
@@ -55,20 +55,20 @@ namespace TMS_ap_dg_js_sm
         /// </summary>
         /// <param name="newFileLocation">The requested new log save location</param>
         /// <returns>Int representing the successful change of the log save location.</returns>
-        private int ChangeLogLocation(string newFileLocation)
+        public int ChangeLogLocation(string newFileLocation)
         {
-            int isChanged = 0;
+            int done = 0;
 
-            isChanged = 1; //set to true for testing
+            done = 1; //set to true for testing
 
-            return isChanged;
+            return done;
         }
 
         /// <summary>
-        /// This method is used show the current logs saved in the log text file to the screen.
+        /// This method is used to show the current logs saved in the log text file to the screen.
         /// </summary>
         /// <returns>Int representing the successful printing of log file, else exception occured.</returns>
-        private int ShowLogs()
+        public int ShowLogs()
         {
             int done = 0;
 
@@ -82,6 +82,54 @@ namespace TMS_ap_dg_js_sm
             {
                 Logger.Log(fileIoException.ToString());
             }
+
+            return done;
+        }
+
+        /// <summary>
+        /// This method is used to update a column and row location in the route table database.
+        /// </summary>
+        /// <param name="routeID">The id of the selected route</param>
+        /// <param name="whatColumn">The name of the selected column</param>
+        /// <param name="newValue">The new value to insert in that location</param>
+        /// <returns>Int representing successful addition to the database.</returns>
+        public int UpdateRouteTable(int routeID, string whatColumn, string newValue)
+        {
+            int done = 0;
+
+            done = 1; //set to true for testing
+
+            return done;
+        }
+
+        /// <summary>
+        /// This method is used to update a column and row location in the carrier table database.
+        /// </summary>
+        /// <param name="carrierID">The id of the selected carrier</param>
+        /// <param name="whatColumn">The name of the selected column</param>
+        /// <param name="newValue">The new value to insert in that location</param>
+        /// <returns>Int representing successful addition to the database.</returns>
+        public int UpdateCarrierTable(int carrierID, string whatColumn, string newValue)
+        {
+            int done = 0;
+
+            done = 1; //set to true for testing
+
+            return done;
+        }
+
+        /// <summary>
+        /// This method is used to update a column and row location in the rate table database.
+        /// </summary>
+        /// <param name="rateID">The id of the selected route</param>
+        /// <param name="whatColumn">The name of the selected column</param>
+        /// <param name="newValue">The new value to insert in that location</param>
+        /// <returns>Int representing successful addition to the database.</returns>
+        public int UpdateRateTable(int rateID, string whatColumn, string newValue)
+        {
+            int done = 0;
+
+            done = 1; //set to true for testing
 
             return done;
         }
