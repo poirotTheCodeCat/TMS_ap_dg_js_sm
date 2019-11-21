@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TMS_ap_dg_js_sm.Business_Layer.orderManagement
+namespace TMS_ap_dg_js_sm
 {
-    class Contract
+    public class Contract
     {
         private string cName;
         private int jType;

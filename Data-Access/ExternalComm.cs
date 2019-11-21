@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace TMS_ap_dg_js_sm.Data_Access
 {
-    class ExternalComm
+    public class ExternalComm
     {
-
+        public List<Contract> GetContracts()
+        {
+            List<Contract> contracts = null;
+            return contracts;
+        }
     }
 }

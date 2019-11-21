@@ -8,6 +8,9 @@ namespace TMS_ap_dg_js_sm
 {
     class LocalComm
     {
-        //static int Add_Contract();
+        public Order CreateOrder(string searchItem)
+        {
+            return newOrder;
+        }
     }
 }
