@@ -56,9 +56,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Business-Layer\Logger.cs" />
-    <Compile Include="Business-Layer\orderManagement\Contract.cs" />
-    <Compile Include="Business-Layer\users\User.cs" />
+    <Compile Include="BusinessLayer\controllers\AdminController.cs" />
+    <Compile Include="BusinessLayer\Logger.cs" />
+    <Compile Include="BusinessLayer\orderManagement\Contract.cs" />
     <Page Include="UI-Layer\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -79,15 +79,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Business-Layer\users\Admin.cs" />
-    <Compile Include="Business-Layer\users\Buyer.cs" />
-    <Compile Include="Business-Layer\controllers\Controller.cs" />
-    <Compile Include="Business-Layer\orderManagement\Carrier.cs" />
+    <Compile Include="BusinessLayer\users\Admin.cs" />
+    <Compile Include="BusinessLayer\users\Buyer.cs" />
+    <Compile Include="BusinessLayer\controllers\Controller.cs" />
+    <Compile Include="BusinessLayer\controllers\BuyerController.cs" />
+    <Compile Include="BusinessLayer\orderManagement\Carrier.cs" />
     <Compile Include="Data-Access\ExternalComm.cs" />
     <Compile Include="Data-Access\LocalComm.cs" />
-    <Compile Include="Business-Layer\users\Planner.cs" />
-    <Compile Include="Business-Layer\orderManagement\Order.cs" />
-    <Compile Include="Business-Layer\orderManagement\Trip.cs" />
+    <Compile Include="BusinessLayer\users\Planner.cs" />
+    <Compile Include="BusinessLayer\controllers\PlannerController.cs" />
+    <Compile Include="BusinessLayer\orderManagement\Order.cs" />
+    <Compile Include="BusinessLayer\orderManagement\Trip.cs" />
     <Compile Include="UI-Layer\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
