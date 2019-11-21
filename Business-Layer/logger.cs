@@ -11,7 +11,7 @@ namespace TMS_ap_dg_js_sm.Business_Layer.users
     /// <summary>
     /// Logs program events and exceptions into a text file.
     /// </summary>
-    class logger
+    class Logger
     {
         private string uName;
         //private DateTime loginDateTime;

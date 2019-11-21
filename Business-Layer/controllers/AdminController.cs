@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TMS_ap_dg_js_sm.Business_Layer.controllers
+namespace TMS_ap_dg_js_sm
 {
-    class loginController
+    class AdminController
     {
     }
 }

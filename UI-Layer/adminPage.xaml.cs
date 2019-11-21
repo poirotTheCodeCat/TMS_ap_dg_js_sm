@@ -18,9 +18,9 @@ namespace TMS_ap_dg_js_sm
     /// <summary>
     /// Interaction logic for adminPage.xaml
     /// </summary>
-    public partial class adminPage : Page
+    public partial class AdminPage : Page
     {
-        public adminPage()
+        public AdminPage()
         {
             InitializeComponent();
         }
