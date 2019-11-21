@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TMS_ap_dg_js_sm.Data_Access
 {
-    class External_Comm
+    class ExternalComm
     {
 
     }

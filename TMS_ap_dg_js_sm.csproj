@@ -64,7 +64,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI-Layer\adminPage.xaml">
+    <Page Include="UI-Layer\AdminPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -72,7 +72,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI-Layer\plannerPage.xaml">
+    <Page Include="UI-Layer\PlannerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -85,8 +85,8 @@
     <Compile Include="Business-Layer\controllers\Controller.cs" />
     <Compile Include="Business-Layer\controllers\BuyerController.cs" />
     <Compile Include="Business-Layer\orderManagement\Carrier.cs" />
-    <Compile Include="Data-Access\External_Comm.cs" />
-    <Compile Include="Data-Access\Local_Comm.cs" />
+    <Compile Include="Data-Access\ExternalComm.cs" />
+    <Compile Include="Data-Access\LocalComm.cs" />
     <Compile Include="Business-Layer\users\Planner.cs" />
     <Compile Include="Business-Layer\controllers\PlannerController.cs" />
     <Compile Include="Business-Layer\orderManagement\Order.cs" />
@@ -94,8 +94,8 @@
     <Compile Include="UI-Layer\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI-Layer\adminPage.xaml.cs">
-      <DependentUpon>adminPage.xaml</DependentUpon>
+    <Compile Include="UI-Layer\AdminPage.xaml.cs">
+      <DependentUpon>AdminPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="configuration\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -104,8 +104,8 @@
     <Compile Include="UI-Layer\BuyerPage.xaml.cs">
       <DependentUpon>BuyerPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI-Layer\plannerPage.xaml.cs">
-      <DependentUpon>plannerPage.xaml</DependentUpon>
+    <Compile Include="UI-Layer\PlannerPage.xaml.cs">
+      <DependentUpon>PlannerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

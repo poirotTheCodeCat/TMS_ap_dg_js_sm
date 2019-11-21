@@ -18,9 +18,9 @@ namespace TMS_ap_dg_js_sm
     /// <summary>
     /// Interaction logic for plannerPage.xaml
     /// </summary>
-    public partial class plannerPage : Page
+    public partial class PlannerPage : Page
     {
-        public plannerPage()
+        public PlannerPage()
         {
             InitializeComponent();
         }
