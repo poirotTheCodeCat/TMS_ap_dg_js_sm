@@ -12,6 +12,7 @@ namespace TMS_ap_dg_js_sm
     /// <summary>
     /// Represents an admin user of the TMS program
     /// </summary>
+    /// <exception cref="fileIoException">Exception during file reading or writing in the ShowLogs() function</exception>
     class Admin
     {
         /// <summary>
@@ -22,7 +23,6 @@ namespace TMS_ap_dg_js_sm
         /// <param name="newPort">The requested new port number - default to blank in the case where the user only
         ///                       wants to update the ip address.</param>
         /// <returns>Int representing the successful change in IP/Port values.</returns>
-        /// <exception cref="fileIoException">Exception during file IO</exception>
         private int ChangeTmsConnSettings(string newIP, string newPort = "")
         {
             int isChanged = 0;
@@ -68,7 +68,7 @@ namespace TMS_ap_dg_js_sm
         /// This method is used show the current logs saved in the log text file to the screen.
         /// </summary>
         /// <returns>Int representing the successful printing of log file, else exception occured.</returns>
-        private int ShowLogFiles()
+        private int ShowLogs()
         {
             int done = 0;
 

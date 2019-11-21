@@ -13,7 +13,7 @@ namespace TMS_ap_dg_js_sm.Business_Layer.users
     /// </summary>
     class Logger
     {
-        private string uName;///hold the name of the logged in user
+        private string uName;///< hold the name of the logged in user
         //private DateTime loginDateTime;
         //private DateTime logoutDateTime;
         //private string logFileLocation;
