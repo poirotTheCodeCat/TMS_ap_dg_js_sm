@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace TMS_ap_dg_js_sm
 {
-
     class Local_Comm
     {
-        static int Add_Contract()
+        //static int Add_Contract();
     }
 }

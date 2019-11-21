@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TMS_ap_dg_js_sm
 {
-    class controller
+    class Bontroller
     {
         private bool isConnected;
         private string lastCommand;
@@ -43,7 +43,7 @@ namespace TMS_ap_dg_js_sm
          * Description : 
          * Returns : 
          */
-        public void CpmmectTpDB()
+        public void ConnectToDB()
         {
 
         }

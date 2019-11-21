@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TMS_ap_dg_js_sm.UI_Layer
 {
-    class user
+    class User
     {
         private string userID;
         private string password;
