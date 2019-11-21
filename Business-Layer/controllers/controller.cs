@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TMS_ap_dg_js_sm
 {
-    class Bontroller
+    class Controller
     {
         private bool isConnected;
         private string lastCommand;
