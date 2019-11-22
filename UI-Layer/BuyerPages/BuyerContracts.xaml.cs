@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Threading;
 
 namespace TMS_ap_dg_js_sm
 {
@@ -23,6 +24,38 @@ namespace TMS_ap_dg_js_sm
         public BuyerContracts()
         {
             InitializeComponent();
+            ThreadStart ts = new ThreadStart(refreshTimer);
+            Thread orderThread = new Thread(ts);
+            orderThread.Start();
+        }
+
+        /// <summary>
+        /// This method runs as a thread which activates every 10 seconds.
+        /// When activated the method calls the refreshOrders function to refresh the orders that are displayed
+        /// in the grid
+        /// </summary>
+        private void refreshTimer()
+        {
+            refreshOrders();            // refresh orders displayed
+            Thread.Sleep(10000);        // wait 10 seonds for the next refresh
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void refreshOrders()
+        {
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ContractsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
