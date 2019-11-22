@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Threading;
 
-namespace TMS_ap_dg_js_sm
+namespace TMS
 {
     /// <summary>
     /// Interaction logic for BuyerContracts.xaml

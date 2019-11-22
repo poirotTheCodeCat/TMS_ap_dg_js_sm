@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TMS_ap_dg_js_sm.Business_Layer.users;
+using TMS.Business_Layer.users;
 
-namespace TMS_ap_dg_js_sm
+namespace TMS
 {
     /// \class Planner
     /// <summary>

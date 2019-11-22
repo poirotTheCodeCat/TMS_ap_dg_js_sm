@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TMS_ap_dg_js_sm.Business_Layer.orderManagement;
-using TMS_ap_dg_js_sm.Data_Access;
+using TMS.Business_Layer.orderManagement;
+using TMS.Data_Access;
 
-namespace TMS_ap_dg_js_sm
+namespace TMS
 {
     /// \class Buyer
     /// <summary>

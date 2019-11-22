@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMS_ap_dg_js_sm.Properties
+namespace TMS.Properties
 {
 
 

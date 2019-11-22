@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using System.IO;
 
-namespace TMS_ap_dg_js_sm.Business_Layer.users
+namespace TMS.Business_Layer.users
 {
     /// <summary>
     /// This class records exceptions that occur during use of the program. It is used in all

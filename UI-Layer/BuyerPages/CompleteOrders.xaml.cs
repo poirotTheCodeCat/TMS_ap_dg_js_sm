@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TMS_ap_dg_js_sm
+namespace TMS
 {
     /// <summary>
     /// Interaction logic for CompleteOrders.xaml
