@@ -95,7 +95,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI-Layer\AdminPage.xaml">
+    <Page Include="UI-Layer\AdminPages\AdminPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -128,7 +128,7 @@
     <Compile Include="UI-Layer\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI-Layer\AdminPage.xaml.cs">
+    <Compile Include="UI-Layer\AdminPages\AdminPage.xaml.cs">
       <DependentUpon>AdminPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="configuration\App.xaml.cs">
@@ -175,8 +175,6 @@
   <ItemGroup>
     <Resource Include="UI-Layer\UI_Images\bacground_Login.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UI-Layer\AdminPages\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
