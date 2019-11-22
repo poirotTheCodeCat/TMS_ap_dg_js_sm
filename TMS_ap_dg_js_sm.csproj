@@ -67,11 +67,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI-Layer\BuyerPage.xaml">
+    <Page Include="UI-Layer\BuyerPages\BuyerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI-Layer\PlannerPage.xaml">
+    <Page Include="UI-Layer\PlannerPages\PlannerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -100,10 +100,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="UI-Layer\BuyerPage.xaml.cs">
+    <Compile Include="UI-Layer\BuyerPages\BuyerPage.xaml.cs">
       <DependentUpon>BuyerPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI-Layer\PlannerPage.xaml.cs">
+    <Compile Include="UI-Layer\PlannerPages\PlannerPage.xaml.cs">
       <DependentUpon>PlannerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
@@ -139,6 +139,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="UI-Layer\UI_Images\bacground_Login.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UI-Layer\AdminPages\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
