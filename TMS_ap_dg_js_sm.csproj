@@ -90,10 +90,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI-Layer\LoginPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UI-Layer\AdminPages\AdminPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -121,9 +117,6 @@
     <Compile Include="BusinessLayer\orderManagement\Trip.cs" />
     <Compile Include="UI-Layer\PlannerPages\NewOrdersPage.xaml.cs">
       <DependentUpon>NewOrdersPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI-Layer\LoginPage.xaml.cs">
-      <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI-Layer\AdminPages\AdminPage.xaml.cs">
       <DependentUpon>AdminPage.xaml</DependentUpon>

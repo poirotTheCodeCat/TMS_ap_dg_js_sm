@@ -24,5 +24,15 @@ namespace TMS_ap_dg_js_sm
         {
             InitializeComponent();
         }
+
+        private void NewOrder_Click(object sender, RoutedEventArgs e)
+        {
+            PlannerFrame.Content = new NewOrdersPage();
+        }
+
+        private void activeOrder_Click(object sender, RoutedEventArgs e)
+        {
+            PlannerFrame.Content = new ActiveOrdersPage();
+        }
     }
 }
