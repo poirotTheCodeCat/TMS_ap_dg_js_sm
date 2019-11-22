@@ -5,10 +5,31 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TMS_ap_dg_js_sm"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="730"
       Title="CreateOrderPage">
 
     <Grid>
-        
+        <Grid Height="410" Width="730">
+            <Rectangle Fill="#FFEAEAEA"></Rectangle>
+            <TextBox Text="Order Details" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="253,10,231,0" Width="246" Background="#FFEAEAEA" BorderBrush="#FFE3E3E3" BorderThickness="0" TextDecorations="Underline">
+            </TextBox>
+            <TextBox Height="30" Margin="37,94,395,286"/>
+            <Label Content="Client Name:" Margin="37,65,542,321" ></Label>
+            <Rectangle Fill="#FFB400B4" Height="30" VerticalAlignment="Bottom"></Rectangle>
+            <TextBox Height="35" Margin="37,154,395,221"/>
+            <TextBox Height="35" Width="300" Margin="361,154,59,221"/>
+            <TextBox Margin="37,217,395,134"/>
+            <Label Content="Origin:" Margin="37,126,542,255" />
+            <Label Content="Destination:" Margin="361,129,249,255" />
+            <Label Content="Suggested Carriers:" Margin="37,188,565,196" />
+            <TextBox Height="35" Margin="361,94,213,281"/>
+            <TextBox Height="35" Margin="521,94,59,281"/>
+            <Label Content="Job Type:" Margin="361,67,281,316" />
+            <Label Content="Quantity:" Margin="521,65,113,316" />
+            <ComboBox Height="35" HorizontalAlignment="Left" Margin="361,217,0,0" VerticalAlignment="Top" Width="300" Background="White">
+            </ComboBox>
+            <Button Content="Create Oreder" HorizontalAlignment="Left" Margin="536,308,0,0" VerticalAlignment="Top" Width="125" Height="58" Background="#FFB400B4" Foreground="White" FontSize="15" FontWeight="Bold"/>
+            <Label Content="Carriers:" HorizontalAlignment="Left" Margin="363,191,0,0" VerticalAlignment="Top" Width="78"/>
+        </Grid>
     </Grid>
 </Page>
