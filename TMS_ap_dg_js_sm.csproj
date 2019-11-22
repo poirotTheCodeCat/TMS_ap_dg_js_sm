@@ -59,7 +59,6 @@
     <Compile Include="BusinessLayer\controllers\AdminController.cs" />
     <Compile Include="BusinessLayer\Logger.cs" />
     <Compile Include="BusinessLayer\orderManagement\Contract.cs" />
-    <Compile Include="BusinessLayer\users\User.cs" />
     <Page Include="UI-Layer\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -138,7 +137,6 @@
   <ItemGroup>
     <None Include="configuration\App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="UI-Layer\UI_Images\bacground_Login.jpg" />
   </ItemGroup>
