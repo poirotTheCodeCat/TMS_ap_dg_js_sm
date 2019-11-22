@@ -56,6 +56,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UI-Layer\BuyerPages\CreateOrderPage.xaml.cs">
+      <DependentUpon>CreateOrderPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI-Layer\BuyerPages\CompleteOrders.xaml.cs">
+      <DependentUpon>CompleteOrders.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI-Layer\BuyerPages\BuyerContracts.xaml.cs">
       <DependentUpon>BuyerContracts.xaml</DependentUpon>
     </Compile>
@@ -65,6 +71,14 @@
     <Compile Include="BusinessLayer\controllers\AdminController.cs" />
     <Compile Include="BusinessLayer\Logger.cs" />
     <Compile Include="BusinessLayer\orderManagement\Contract.cs" />
+    <Page Include="UI-Layer\BuyerPages\CreateOrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI-Layer\BuyerPages\CompleteOrders.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI-Layer\BuyerPages\BuyerContracts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
