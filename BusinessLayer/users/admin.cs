@@ -10,10 +10,11 @@ namespace TMS_ap_dg_js_sm
 {
     /// \class Admin
     /// <summary>
-    /// Represents an admin user of the TMS program
+    /// Represents an Admin user of the TMS program. The Admin makes use of the LocalComm class
+    /// for updating information stored in the TMS database.
     /// </summary>
     /// <exception cref="fileIoException">Exception during file reading or writing in the ShowLogs() function</exception>
-    class Admin
+    public class Admin
     {
         /// <summary>
         /// This method will allow the admin user to change the current IP address used to access the TMS database.

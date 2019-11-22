@@ -12,7 +12,7 @@ namespace TMS_ap_dg_js_sm
     /// This class represents a Carrier object for the TMS system
     /// </summary>
     /// <exception cref="fileIoException">Exception during file reading or writing in all functions</exception>
-    class Carrier
+    public class Carrier
     {
         private string carrierName;///< Holds the carrier name as a string
         private string depotCity;///< Holds the depot city as a string

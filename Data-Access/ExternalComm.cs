@@ -10,6 +10,7 @@ namespace TMS_ap_dg_js_sm.Data_Access
     /// \class ExternalComm
     /// <summary>
     /// Responsible for any communications outside of the TMS System such as the Contract Marketplace database.
+    /// This class is used by the Buyer class which will be requesting Contracts from the Contract Marketplace.
     /// </summary>
     public class ExternalComm
     {
