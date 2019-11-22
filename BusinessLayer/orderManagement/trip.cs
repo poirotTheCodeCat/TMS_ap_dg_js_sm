@@ -9,9 +9,9 @@ namespace TMS_ap_dg_js_sm
 {
     /// \class Trip
     /// <summary>
-    /// This class represents a single trip.
+    /// This class represents a single trip and is used in the Order process.
     /// </summary>
-    class Trip
+    public class Trip
     {
         private DateTime startTime;///< The start date and time of the trip
         private DateTime endTime;///< The end date and time of the trip
