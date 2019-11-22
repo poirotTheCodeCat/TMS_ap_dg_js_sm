@@ -14,7 +14,7 @@ namespace TMS_ap_dg_js_sm
     /// <exception cref="fileIoException">Exception during file reading or writing in all functions</exception>
     class Carrier
     {
-        private string carrierName;///< Holds the carrier name name as a string
+        private string carrierName;///< Holds the carrier name as a string
         private string depotCity;///< Holds the depot city as a string
         private int ftlAvailable;///< Holds the number of available FTL trucks for the specified carrier
         private int ltlAvailable;///< Holds the number of available LTL trucks for the specified carrier
