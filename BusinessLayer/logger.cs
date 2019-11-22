@@ -21,12 +21,12 @@ namespace TMS_ap_dg_js_sm.Business_Layer.users
         //create a path variable to the location of the service exe
         private static string pathString = AppDomain.CurrentDomain.BaseDirectory + "TMSLog.txt";
 
-        //public logger(string userName)
-        //{
-        //    uName = userName;
-        //    //get log save location from the config file
-        //    //logFileLocation = ConfigurationManager.AppSettings.Get("logLocation");
-        //}
+        public Logger(string userName)
+        {
+            uName = userName;
+            //get log save location from the config file
+            //logFileLocation = ConfigurationManager.AppSettings.Get("logLocation");
+        }
 
         /// <summary>
         /// Writes any amount of text to a text file along with the time and date of the input.
