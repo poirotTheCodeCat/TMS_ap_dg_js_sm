@@ -56,12 +56,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UI-Layer\BuyerPages\BuyerContracts.xaml.cs">
+      <DependentUpon>BuyerContracts.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI-Layer\PlannerPages\ActiveOrdersPage.xaml.cs">
       <DependentUpon>ActiveOrdersPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="BusinessLayer\controllers\AdminController.cs" />
     <Compile Include="BusinessLayer\Logger.cs" />
     <Compile Include="BusinessLayer\orderManagement\Contract.cs" />
+    <Page Include="UI-Layer\BuyerPages\BuyerContracts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI-Layer\PlannerPages\ActiveOrdersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
