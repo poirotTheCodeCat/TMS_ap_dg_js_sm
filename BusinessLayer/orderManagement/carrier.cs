@@ -10,6 +10,7 @@ namespace TMS_ap_dg_js_sm
     /// \class Carrier
     /// <summary>
     /// This class represents a Carrier object for the TMS system
+    /// Carrier requires the use of the Order and Trip classes
     /// </summary>
     /// <exception cref="fileIoException">Exception during file reading or writing in all functions</exception>
     public class Carrier
