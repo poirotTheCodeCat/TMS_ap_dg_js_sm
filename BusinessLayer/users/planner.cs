@@ -9,98 +9,97 @@ namespace TMS_ap_dg_js_sm
 {
     /// \class Planner
     /// <summary>
-    /// Represents planner user object for the TMS system
+    /// Represents a Planner user object for the TMS system. The Planner makes use of the 
+    /// LocalComm class to update information in the TMS Database. It also uses objects in the
+    /// Order and Trip classes. 
     /// </summary>
-    class Planner
+    public class Planner
     {
-        private Order workingOrder;
-        private bool pendingOrders;
+        //private Order workingOrder;
+        //private bool pendingOrders;
 
         /// <summary>
-        /// This method selects carrier to view the details of that carrier.  It adds the information to a list to allow for fields to be auto populated 
-        /// for easy viewing
+        /// This method selects Carrier to view the details of that Carrier. 
         /// </summary>
-        /// <param name="carrierName">The carrierName parameter provides the function with the name of the carrier being searched.</param>
-        /// <returns>Returns the list of carrier information</returns>
-        public List<Carrier> SelectCarrier(string carrierName)
+        /// <param name="searchItem">The identifier for the Carrier that will be returned</param>
+        /// <returns>Carrier that is requested.</returns>
+        public Carrier GetCarrier(string searchItem)
         {
-            var carrier = new List<Carrier>();
+            Carrier carrier = new Carrier();
 
-            return  carrier;
+            return carrier;
         }
 
         /// <summary>
-        /// This method generates the trip origin and destination cities required by the order.
+        /// This method allows the Planner to create a Trip that will be added to an Order.
         /// </summary>
-        /// <param name="origin">The origin city ID number</param>
-        /// <param name="destination">The destination city ID number</param>
-        /// <returns>A list of the trip information</returns>
-        public List<Trip> GenerateTrip(int origin, int destination)
+        /// <param name="searchItem1">An identifier for the Order the Trip is required for</param>
+        /// <param name="searchItem2">An identifier for the Carrier completing the Trip</param>
+        /// <returns>List of trips that were created.</returns>
+        public List<Trip> CreateTrip(string searchItem1, string searchItem2)
         {
-
-            var trip = new List<Trip>();
-
+            List<Trip> trip = new List<Trip>();
 
             return trip;
         }
 
         /// <summary>
-        /// This method marks the order as approved by the planner
+        /// This method allows the Planner to mark an Order as approved.
         /// </summary>
-        /// <param name="orderNumber">The order ID number</param>
-        /// <returns>True if approved false if not yet approved</returns>
-        public int ApproveOrder(int orderNumber)//Possibly order ID??
+        /// <param name="searchItem">The identifier for the Order that needs to be marked 
+        ///                         approved</param>
+        /// <returns>Int representing an Order was successfully marked approved.</returns>
+        public int ApproveOrder(string searchItem)
         {
-            int done = 0;
+            int done = 1;
+           
+            return done;
+        }
+
+        /// <summary>
+        /// This method allows the Planner to mark and Order as completed.
+        /// </summary>
+        /// <param name="searchItem">The identifier for the Order that needs to be marked 
+        ///                         completed</param>
+        /// <returns>Int representing an Order was successfully marked completed.</returns>
+        public int CompleteOrder(string searchItem)//Again....Possibly orderID??
+        { 
+            int done = 1;
 
             return done;
         }
 
         /// <summary>
-        /// This method marks the order as completed by the planner
+        /// This method allows the Planner to view all Orders.
         /// </summary>
-        /// <param name="orderNumber">The order ID number</param>
-        /// <returns>True if approved false if not yet apporved</returns>
-        public int CompleteOrder(int orderNumber)//Again....Possibly orderID??
-        {
-
-            int done = 0;
-
-            return done;
-        }
-
-        /// <summary>
-        /// This order queries the database for all active orders in the TMS system
-        /// </summary>
-        /// <returns>A list of active orders</returns>
+        /// <returns>List of active Orders.</returns>
         public List<Order> ShowActiveOrders()
         {
-            var activeOrders = new List<Order>();
+            List<Order> activeOrderList = new List<Order>();
 
-
-            return activeOrders;
+            return activeOrderList;
         }
 
         /// <summary>
-        /// This order queries the database for all pending orders in the TMS system
+        /// This method allows the Planner to view all pending Orders.
         /// </summary>
-        /// <returns>A list of pending orders</returns>
+        /// <returns>List of pending Orders.</returns>
         public List<Order> ShowPendingOrders()
         {
-            var pendingOrders = new List<Order>();
+            List<Order> pendingOrderList = new List<Order>();
 
-
-            return pendingOrders;
+            return pendingOrderList;
         }
 
         /// <summary>
-        /// This method queries the database for the order values and calculates the sum
+        /// This method allows the Planner to generate an invoice summary of all Orders. 
         /// </summary>
-        /// <param name="orderNumber">The order ID number</param>
-        /// <returns>True if approved false if not yet approved</returns>
-        public int GenerateInvoiceSum(int orderNumber)//OrderID??
+        /// <param name="searchItem">The identifier for the invoices that need to be included
+        ///                         in the invoice summary</param>
+        /// <returns>Int representing an invoice was successfully generated</returns>
+        public int GenerateInvoiceSum(string searchItem) // 2 weeks or of all time
         {
-            int done = 0;
+            int done = 1;
 
             return done;
         }

@@ -8,7 +8,9 @@ namespace TMS_ap_dg_js_sm
 {
     /// \class LocalComm
     /// <summary>
-    /// Responsible for any communications with the local TMS database.
+    /// Responsible for any communications with the local TMS database. This class references 
+    /// the Order class as it returns those objects to the classes using LocalComm. It is used by
+    /// Admin, Buyer, and Planner classes. 
     /// </summary>
     class LocalComm
     {
@@ -25,10 +27,11 @@ namespace TMS_ap_dg_js_sm
         }
 
         /// <summary>
-        /// This method queries the TMS database for completed Orders.
+        /// This method queries the TMS database for the requested Orders.
         /// </summary>
-        /// <returns>List<Order></Order> of the completed Orders.</returns>
-        public List<Order> GetCompletedOrders()
+        /// <param name="searchItem">The identifier for the Orders that are being retrieved.</param>
+        /// <returns>List of Orders requested.</returns>
+        public List<Order> GetOrders(string searchItem)
         {
             List<Order> completedOrderList = null;
             return completedOrderList;
@@ -45,5 +48,20 @@ namespace TMS_ap_dg_js_sm
             string invoice = "";
             return invoice;
         }
+
+        /// <summary>
+        /// This method updates an Order's status in the TMS database.
+        /// </summary>
+        /// <param name="searchItem1">The identifier for the Order that requires
+        ///                             an update</param>
+        /// <param name="searchItem2">The identifier for the Status being added to
+        ///                             the Order</param>
+        /// <returns>String containing the information required for an invoice.</returns>
+        public Order UpdateOrderStatus(string searchItem1, string searchItem2)
+        {
+            Order order = new Order();
+            return order;
+        }
+
     }
 }

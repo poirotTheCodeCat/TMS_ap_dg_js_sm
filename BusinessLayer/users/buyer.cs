@@ -10,14 +10,16 @@ namespace TMS_ap_dg_js_sm
 {
     /// \class Buyer
     /// <summary>
-    /// Represents a buyer user of the TMS program
+    /// Represents a Buyer user of the TMS program. The Buyer makes use of the LocalComm class 
+    /// to update the TMS database and the ExternalComm class to communicate with the Contract
+    /// Marketplace. It also makes use of the Order class for managing Orders.
     /// </summary>
-    class Buyer
+    public class Buyer
     {
         /// <summary>
         /// This method will allow the Buyer to get contracts from the Contract Marketplace database. 
         /// </summary>
-        /// <returns>List<Contract> of the contracts from the Contract Marketplace.</returns>
+        /// <returns>Listmof the Contracts received from the Contract Marketplace.</returns>
         public List<Contract> GetContracts()
         {
             List<Contract> contractList = new ExternalComm().GetContracts();
@@ -40,10 +42,11 @@ namespace TMS_ap_dg_js_sm
         /// <summary>
         /// This method will allow the Buyer to view Orders marked by completion by the Planner.
         /// </summary>
-        /// <returns>List<Order></Order> of the completed Orders.</returns>
+        /// <returns>List of the completed Orders.</returns>
         public List<Order> GetCompletedOrders()
         {
-            List<Order> completedOrderList = new LocalComm().GetCompletedOrders();
+            string searchItem = "";
+            List<Order> completedOrderList = new LocalComm().GetOrders(searchItem);
             return completedOrderList;
         }
 
