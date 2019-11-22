@@ -76,27 +76,6 @@ namespace TMS_ap_dg_js_sm.Business_Layer.orderManagement
             set { dest = value; }
         }
 
-        /// <summary>
-        /// This method queries the Contract Marketplace to search for the desired contract 
-        /// </summary>
-        /// <returns>0 if successfully queried table. 1 if failed</returns>
-
-        public int GetContract()
-        {
-
-            int done = 0;
-
-            try
-            {
-                //SELECT contract from contract marketplace
-                done = 1;//Set to 1 for testing
-            }
-            catch (Exception fileIoException)
-            {
-                Logger.Log(fileIoException.ToString());
-            }
-            return done;
-
-        }
+        
     }
 }
