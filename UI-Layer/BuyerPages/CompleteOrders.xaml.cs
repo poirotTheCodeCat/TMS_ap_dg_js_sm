@@ -26,7 +26,8 @@ namespace TMS_ap_dg_js_sm
         }
 
         /// <summary>
-        /// 
+        /// This event handler fires off when the user selects something on the datagrid. Once this happens, it will fill in  a local
+        /// data member to store the information to be used in further UI processing 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -36,7 +37,7 @@ namespace TMS_ap_dg_js_sm
         }
 
         /// <summary>
-        /// 
+        /// This event handler calls a local method which will retrieve up to date orders information from the database
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -46,7 +47,7 @@ namespace TMS_ap_dg_js_sm
         }
 
         /// <summary>
-        /// 
+        /// This button will call a local method that will generate a report of all up to date Completed orders
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
