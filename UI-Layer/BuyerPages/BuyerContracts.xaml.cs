@@ -36,20 +36,22 @@ namespace TMS_ap_dg_js_sm
         /// </summary>
         private void refreshTimer()
         {
-            refreshOrders();            // refresh orders displayed
+            refreshContracts();            // refresh orders displayed
             Thread.Sleep(10000);        // wait 10 seonds for the next refresh
         }
 
         /// <summary>
-        /// 
+        /// This function will call a method from a class within the Business layer to retrieve the most up to date contracts
+        /// This will then display these contracts in the datagrid
         /// </summary>
-        public void refreshOrders()
+        public void refreshContracts()
         {
 
         }
 
         /// <summary>
-        /// 
+        /// This event will fire when the user selects something on the datagrid. It will record the current row in a local variable which
+        /// will be used to generate oreders from the contract marketplace
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
