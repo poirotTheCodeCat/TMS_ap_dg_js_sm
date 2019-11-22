@@ -24,5 +24,32 @@ namespace TMS_ap_dg_js_sm
         {
             InitializeComponent();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ContractsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// This method will be activated every 10 seconds. When it fires off, it will call a local method
+        /// which will reload the datagrid with the most up to date contracts
+        /// </summary>
+        private void refreshTimer()
+        {
+
+        }
+
+        /// <summary>
+        /// This method will call a function from the business layer to retrieve the most up to date order information. 
+        /// It will then display this information on the datagrid within the page
+        /// </summary>
+        public void refreshOrders()
+        {
+
+        }
     }
 }
