@@ -5,10 +5,26 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TMS_ap_dg_js_sm"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="410" d:DesignWidth="730"
       Title="CompleteOrders">
 
     <Grid>
-        
+        <Grid>
+            <Rectangle Fill="White"></Rectangle>
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Height="295" Width="550" Margin="90,35,90,80">
+                <DataGrid Name="CompletedOrderGrid" AutoGenerateColumns="False" SelectionChanged="CompletedOrderGrid_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="OrderID" Width="75"></DataGridTextColumn>
+                        <DataGridTextColumn Header="CarrierID" Width="80"></DataGridTextColumn>
+                        <DataGridTextColumn Header="CustomerID" Width="85"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Date of Order" Width="85"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Destination" Width="150"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Status" Width="75"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+            <Button Content="Refresh" HorizontalAlignment="Left" Margin="90,12,0,0" VerticalAlignment="Top" Width="54" Click="Refresh_Click" />
+            <Button x:Name="generateOrderButton" Content="Generate Report" HorizontalAlignment="Left" Margin="536,335,0,0" VerticalAlignment="Top" Width="104" Height="43" Foreground="White" Background="#FFCE02CE" Click="GenerateReport_Click"/>
+        </Grid>
     </Grid>
 </Page>
