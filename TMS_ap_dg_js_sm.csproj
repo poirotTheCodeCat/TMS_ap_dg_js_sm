@@ -138,7 +138,6 @@
   <ItemGroup>
     <None Include="configuration\App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="UI-Layer\UI_Images\bacground_Login.jpg" />
   </ItemGroup>

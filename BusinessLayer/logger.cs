@@ -115,4 +115,34 @@ namespace TMS_ap_dg_js_sm.Business_Layer.users
             file.Close();
         }
     }
+    /// \mainpage TMS Project      
+    /// 
+    ///
+    /// \section intro Program Introduction
+    /// <b>TMS Project</b> application is being in production and being created for OMNICorp.
+    ///
+    ///
+    ///
+    /// <hr>
+    /// \section requirements Project Requirements
+    /// - Track, Manage and Update transportation operations for the OMNIcorp Shipping Handling and Transportation (OSHT) system.
+    ///
+    /// <hr> 
+    /// \todo 
+    /// N/A
+    /// <hr>
+    /// \bug 
+    /// N/A
+    ///
+    /// <hr>
+    /// \section version Current version of the TMS Project  :
+    /// <ul>
+    /// <li>\authors   <b><i>The History Buffs</i></b>
+    /// <li>\version   0.0</li>
+    /// <li>\date      2019-11-21</li>
+    /// <li>\pre       In order to use the <i>TMS Project</i> - you must be involved in the development of operations of the OSHT system</li>
+    /// <li>\warning   Improper use of the <i>TMS Project</i> may result in incorrect results</li>
+    /// <li>\copyright SENG2020</li>
+    /// </ul>
+    ///
 }
