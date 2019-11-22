@@ -9,9 +9,9 @@ namespace TMS_ap_dg_js_sm
 {
     /// \class Planner
     /// <summary>
-    /// Represents planner user object fore the TMS system
+    /// Represents planner user object for the TMS system
     /// </summary>
-    /// <exception cref="fileIoException">Exception during file reading or writing in the CheckTripStatus() function</exception>
+    /// <exception cref="fileIoException">Exception during file reading or writing in all functions</exception>
     class Planner
     {
         private Order workingOrder;
