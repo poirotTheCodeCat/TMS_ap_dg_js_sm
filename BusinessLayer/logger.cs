@@ -9,7 +9,8 @@ using System.IO;
 namespace TMS_ap_dg_js_sm.Business_Layer.users
 {
     /// <summary>
-    /// Logs program events and exceptions into a text file.
+    /// This class records exceptions that occur during use of the program. It is used in all
+    /// user classes as needed in the event of an error.
     /// </summary>
     class Logger
     {

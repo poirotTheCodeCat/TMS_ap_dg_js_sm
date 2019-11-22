@@ -9,7 +9,7 @@ namespace TMS_ap_dg_js_sm.Business_Layer.orderManagement
 {
     /// \class Contract
     /// <summary>
-    /// This class represents a Contract object for the TMS system
+    /// This class represents a Contract object for the TMS system. Contract is used in the Buyer class.
     /// </summary>
     /// <exception cref="fileIoException">Exception during file reading or writing in all functions</exception>
     public class Contract

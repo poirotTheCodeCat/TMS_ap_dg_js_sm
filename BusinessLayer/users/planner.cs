@@ -11,7 +11,6 @@ namespace TMS_ap_dg_js_sm
     /// <summary>
     /// Represents planner user object for the TMS system
     /// </summary>
-    /// <exception cref="fileIoException">Exception during file reading or writing in all functions</exception>
     class Planner
     {
         private Order workingOrder;
@@ -27,20 +26,11 @@ namespace TMS_ap_dg_js_sm
         {
             var carrier = new List<Carrier>();
 
-            try
-            {
-               //Select Carrier from table
-            }
-            catch (Exception fileIoException)
-            {
-                Logger.Log(fileIoException.ToString());
-            }
-
             return  carrier;
         }
 
         /// <summary>
-        /// This method generates the trip origin and detination cities required by the order.
+        /// This method generates the trip origin and destination cities required by the order.
         /// </summary>
         /// <param name="origin">The origin city ID number</param>
         /// <param name="destination">The destination city ID number</param>
@@ -50,14 +40,6 @@ namespace TMS_ap_dg_js_sm
 
             var trip = new List<Trip>();
 
-            try
-            {
-                //Add to trip to 'TRIP' list
-            }
-            catch (Exception fileIoException)
-            {
-                Logger.Log(fileIoException.ToString());
-            }
 
             return trip;
         }
@@ -66,20 +48,11 @@ namespace TMS_ap_dg_js_sm
         /// This method marks the order as approved by the planner
         /// </summary>
         /// <param name="orderNumber">The order ID number</param>
-        /// <returns>True if approved false if not yet apporved</returns>
+        /// <returns>True if approved false if not yet approved</returns>
         public int ApproveOrder(int orderNumber)//Possibly order ID??
         {
             int done = 0;
 
-             try
-            {
-                //Mark order as approved by Planner
-                done = 1;//Set to 1 for testing
-            }
-            catch (Exception fileIoException)
-            {
-                Logger.Log(fileIoException.ToString());
-            }
             return done;
         }
 
@@ -93,15 +66,6 @@ namespace TMS_ap_dg_js_sm
 
             int done = 0;
 
-            try
-            {
-                //Mark order as complete by Planner
-                done = 1;//Set to 1 for testing
-            }
-            catch (Exception fileIoException)
-            {
-                Logger.Log(fileIoException.ToString());
-            }
             return done;
         }
 
@@ -113,14 +77,6 @@ namespace TMS_ap_dg_js_sm
         {
             var activeOrders = new List<Order>();
 
-            try
-            {
-                //Select * From orders table that are active
-            }
-            catch (Exception fileIoException)
-            {
-                Logger.Log(fileIoException.ToString());
-            }
 
             return activeOrders;
         }
@@ -133,36 +89,19 @@ namespace TMS_ap_dg_js_sm
         {
             var pendingOrders = new List<Order>();
 
-            try
-            {
-                //Select * From orders table that are active
-            }
-            catch (Exception fileIoException)
-            {
-                Logger.Log(fileIoException.ToString());
-            }
 
             return pendingOrders;
         }
 
         /// <summary>
-        /// This method quieries the database for the order values and calculates the sum
+        /// This method queries the database for the order values and calculates the sum
         /// </summary>
         /// <param name="orderNumber">The order ID number</param>
-        /// <returns>True if approved false if not yet apporved</returns>
+        /// <returns>True if approved false if not yet approved</returns>
         public int GenerateInvoiceSum(int orderNumber)//OrderID??
         {
             int done = 0;
 
-            try
-            {
-                //SELECT invoice sum from relevant table
-                done = 1;//Set to 1 for testing
-            }
-            catch (Exception fileIoException)
-            {
-                Logger.Log(fileIoException.ToString());
-            }
             return done;
         }
 

@@ -9,7 +9,8 @@ namespace TMS_ap_dg_js_sm
 {
     /// \class Order
     /// <summary>
-    /// Represents an order object for the TMS system
+    /// Represents an order object for the TMS system. Orders are created by the Buyer and approved by the Planner.
+    /// Order require the use of the Carrier and Trip classes.
     /// </summary>
     public class Order
     {

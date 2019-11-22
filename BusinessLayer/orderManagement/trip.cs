@@ -9,7 +9,9 @@ namespace TMS_ap_dg_js_sm
 {
     /// \class Trip
     /// <summary>
-    /// This class represents a single trip and is used in the Order process.
+    /// This class represents a single trip and is used in the ordering/planning process.
+    /// Trip requires the existence of an Order object to exist. Trips are completed by
+    /// Carriers. 
     /// </summary>
     public class Trip
     {
