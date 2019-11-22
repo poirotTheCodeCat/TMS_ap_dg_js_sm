@@ -5,21 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TMS_ap_dg_js_sm"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="700" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Title="MainWindow"  Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Grid>
-        <Rectangle Height="200" VerticalAlignment="Top" >
-            <Rectangle.Fill>
-                <LinearGradientBrush EndPoint="0.5, 1" StartPoint="0.5, 0">
-                    <GradientStop Color="#FF4CC0FC"/>
-                    <GradientStop Color="#FF216480" Offset="1"/>
-                    <GradientStop Color="#FF348DBF" Offset="0.5"/>
-                </LinearGradientBrush>
-            </Rectangle.Fill>
-        </Rectangle>
-        <Rectangle Width="440" Fill="White" StrokeThickness="3" Margin="130,100,130,65">
-            <Rectangle.Effect>
-                <DropShadowEffect Color="#FF636363" Direction="-90" BlurRadius="15"/>
-            </Rectangle.Effect>
-        </Rectangle>
+        <Grid HorizontalAlignment="Left" Width="65" Margin="0,0,0,1" Grid.RowSpan="2">
+            <Rectangle Fill="#FF0097C3"></Rectangle>
+            <Button Content="A" Background="#FF0097C3" Foreground="White" HorizontalAlignment="Center" Width="60" Margin="0,38,0,321" FontSize="40" Click="Admin_Click"/>
+            <Button Content="P" Background="#FF0097C3" Foreground="White" HorizontalAlignment="Center" Width="60" Margin="0,106,0,249" FontSize="40" Click="Planner_Click"/>
+            <Button Content="B" Background="#FF0097C3" Foreground="White" HorizontalAlignment="Center" Width="60" Margin="0,178,0,182" FontSize="40" Click="Buyer_Click"/>
+            <Button Content="X" Height="50" Background="#FF0097C3" Foreground="#FFFF4040" HorizontalAlignment="Center" Width="60" Margin="0,362,0,10.5" FontSize="40" Click="Exit_Click"/>
+        </Grid>
+        <Frame x:Name="MainFrame" HorizontalAlignment="Right" Width="730" Margin="0,0,0,1" Grid.RowSpan="2" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2"></Frame>
     </Grid>
 </Window>

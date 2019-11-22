@@ -23,6 +23,27 @@ namespace TMS_ap_dg_js_sm
         public MainWindow()
         {
             InitializeComponent();
+            MainFrame.Content = new BuyerPage();
+        }
+
+        private void Admin_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Content = new AdminPage();
+        }
+
+        private void Planner_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Content = new PlannerPage();
+        }
+
+        private void Buyer_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Content = new BuyerPage();
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
