@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TMS.Business_Layer.orderManagement;
+using TMS.Business_Layer;
 
-namespace TMS.Data_Access
+namespace TMS
 {
     /// \class ExternalComm
     /// <summary>

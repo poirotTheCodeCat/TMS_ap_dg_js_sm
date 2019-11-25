@@ -88,9 +88,9 @@ namespace TMS
         /// <summary>
         /// This method queries the DBMS for the selected carrier infromation. 
         /// </summary>
-        /// <param name="carrierName">carrier name ID number</param>
+        /// <param name="searchItem">The identifier for the requested Carrier</param>
         /// <returns>0 if successfully queried table. 1 if failed</returns>
-        public int GetCarrierInfo(int carrierName)
+        public int GetCarrierInfo(string searchItem)
         {
             int done = 0;
 

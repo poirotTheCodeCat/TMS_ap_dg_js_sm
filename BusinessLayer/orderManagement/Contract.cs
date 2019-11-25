@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TMS.Business_Layer.users;
 
-namespace TMS.Business_Layer.orderManagement
+namespace TMS
 {
     /// \class Contract
     /// <summary>

@@ -88,10 +88,11 @@ namespace TMS
         /// <summary>
         /// This method will check the current location of the order along its route via a trip object.
         /// </summary>
-        /// <param name="currentDestination">The current location of the order</param>
+        /// <param name="searchItem">The identifier for the Trip/Order being checked</param>
         /// <returns>Updated or current destination</returns>
-        public int CheckTripStatus(int currentDestination)
+        public int CheckTripStatus(string searchItem)
         {
+            // aren't we checking order status here? Order has a status, but a trip shouldn't?
             int done = 0;
 
             done = 1;
