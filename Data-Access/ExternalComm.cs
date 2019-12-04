@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,8 +21,7 @@ namespace TMS
         /// <returns>List<Contract> of the contracts from the Contract Marketplace.</returns>
         public List<Contract> GetContracts()
         {
-            List<Contract> contracts = null;
-            return contracts;
+            return new List<Contract>();
         }
     }
 }
