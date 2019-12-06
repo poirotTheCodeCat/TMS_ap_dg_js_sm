@@ -15,8 +15,16 @@ namespace TMS
     /// </summary>
     public class Planner
     {
+        private int PalletThreshold { get; set; }
         //private Order workingOrder;
         //private bool pendingOrders;
+
+
+
+           public Planner()
+        {
+            PalletThreshold = 17;
+        }
 
         /// <summary>
         /// This method selects Carrier to view the details of that Carrier. 
@@ -125,5 +133,45 @@ namespace TMS
             }
         }
 
+
+        /// <summary>
+        /// This method checks whether the Contract selected can be added to the 
+        /// Order being created based on the origin city, job type, and van type.
+        /// </summary>
+        /// <param name="listOfContracts">The identifier for the Contracts currently added
+        ///                         to the order being created.</param>                        
+        /// <returns>Bool representing whether the Contract can be added to the Order</returns>
+        public bool CheckOrder(List<Contract> listOfContracts)
+        {
+            int totalQuantity = 0;
+
+
+            foreach(Contract c in listOfContracts)
+            {
+                totalQuantity += c.Quantity;
+            }
+            if(totalQuantity < PalletThreshold)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+
+        }
+
+        /// <summary>
+        /// This method checks whether the Contract selected can be added to the 
+        /// Order being created based on the origin city, job type, and van type.
+        /// </summary>
+        /// <param name="listOfContracts">The identifier for the Contracts currently added
+        ///                         to the order being created.</param>                        
+        /// <returns>Bool representing whether the Contract can be added to the Order</returns>
+        public void AddPendingOrder(Contract pendingContract)
+        {
+            new LocalComm().AddContract(pendingContract);
+        }
     }
 }

@@ -22,6 +22,7 @@ namespace TMS
         private int quant;///< Holds the quantity of vans available
         private string origin;///< Holds origin city
         private string dest;///< Holds the destination city
+        private int contractStatus;///< Holds the contract status
 
 
         /// <summary>
@@ -87,6 +88,12 @@ namespace TMS
         {
             get { return dest; }
             set { dest = value; }
+        }
+
+        public int ContractStatus
+        {
+            get { return contractStatus; }
+            set { contractStatus = value; }
         }
 
         private List<Contract> CurrentContracts;

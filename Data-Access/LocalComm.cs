@@ -1,5 +1,8 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +17,7 @@ namespace TMS
     /// </summary>
     class LocalComm
     {
+        private string connectionString = ConfigurationManager.ConnectionStrings["cmConnStr"].ConnectionString;
         /// <summary>
         /// This method adds a new Order to the TMS database.
         /// <param name="searchItem">The identifier for the Contract that will be used 
@@ -61,6 +65,33 @@ namespace TMS
         {
             Order order = new Order();
             return order;
+        }
+
+        /// <summary>
+        /// This method will query the Contract Marketplace database for Contracts. 
+        /// </summary>
+        /// <returns>List<Contract> of the contracts from the Contract Marketplace.</returns>
+        public void AddContract(Contract pending)
+        {
+
+            using (var myConn = new MySqlConnection(connectionString))
+            {
+
+                var myCommand = new MySqlCommand("AddContract", myConn);
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.Parameters.AddWithValue("@status", pending.ContractStatus);
+                myCommand.Parameters.AddWithValue("@name", pending.ClientName);
+                myCommand.Parameters.AddWithValue("@jType", pending.JobType);
+                myCommand.Parameters.AddWithValue("@vType", pending.VanType);
+                myCommand.Parameters.AddWithValue("@quant", pending.Quantity);
+                myCommand.Parameters.AddWithValue("@orig", pending.Origin);
+                myCommand.Parameters.AddWithValue("@dest", pending.Destination);
+
+                myConn.Open();
+
+                myCommand.ExecuteNonQuery();
+
+            }
         }
 
     }
