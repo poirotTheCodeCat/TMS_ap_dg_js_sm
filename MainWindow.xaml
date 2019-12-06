@@ -11,11 +11,11 @@
             <Grid Height="75" VerticalAlignment="Top">
                 <Label Content="TMS" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
-            <Button x:Name="AdminBtn" Content="Admin" FontSize="20" Height="50" Margin="0,79,0,316"/>
+            <Button x:Name="AdminBtn" Content="Admin" FontSize="20" Height="50" Margin="0,79,0,316" Click="Admin_Click"/>
             <Rectangle Stroke="Gray"/>
-            <Button x:Name="BuyerBtn" Content="Buyer" FontSize="20" Height="50" Margin="0,129,0,266"/>
-            <Button x:Name="PlannerBtn" Content="Planner" FontSize="20" Height="50" Margin="0,179,0,216"/>
-            <Button x:Name="CloseBtn" Content="Close" FontSize="20" Height="50" Margin="0,385,0,10"/>
+            <Button x:Name="BuyerBtn" Content="Buyer" FontSize="20" Height="50" Margin="0,129,0,266" Click="Buyer_Click"/>
+            <Button x:Name="PlannerBtn" Content="Planner" FontSize="20" Height="50" Margin="0,179,0,216" Click="Planner_Click"/>
+            <Button x:Name="CloseBtn" Content="Close" FontSize="20" Height="50" Margin="0,385,0,10" Click="Exit_Click"/>
         </Grid>
         <Frame x:Name="MainFrame" Width="645" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
     </Grid>

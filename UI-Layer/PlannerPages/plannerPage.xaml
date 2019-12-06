@@ -10,6 +10,9 @@
       Background="White">
 
     <Grid>
-        
+        <DockPanel x:Name="PlannerOptions" VerticalAlignment="Top" Height="30" Background="LightGray">
+            <Button x:Name="NewOrders" Content="New Orders" Height="30" Width="150" HorizontalAlignment="Left" Click="NewOrder_Click" Background="Gray"/>
+            <Button x:Name="ActiveOrders" Content="Active Orders" Height="30" Width="150" HorizontalAlignment="Left" Click="activeOrder_Click" Background="Gray"/>
+        </DockPanel>
     </Grid>
 </Page>

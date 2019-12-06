@@ -21,32 +21,28 @@ namespace TMS
     /// </summary>
     public partial class BuyerContracts : Page
     {
+        private List<Contract> contractsToDisplay = new List<Contract>();
+        private Contract selectedContract = new Contract();
+        private Buyer buyer = new Buyer();
+
         public BuyerContracts()
         {
             InitializeComponent();
-            ThreadStart ts = new ThreadStart(refreshTimer);
-            Thread orderThread = new Thread(ts);
-            orderThread.Start();
+            fillContractList();
+            fillContractData();
         }
 
-        /// <summary>
-        /// This method runs as a thread which activates every 10 seconds.
-        /// When activated the method calls the refreshOrders function to refresh the orders that are displayed
-        /// in the grid
-        /// </summary>
-        private void refreshTimer()
+        private void fillContractList()
         {
-            refreshContracts();            // refresh orders displayed
-            Thread.Sleep(10000);        // wait 10 seonds for the next refresh
+            // contractsToDisplay = buyer.getContracts();
         }
 
-        /// <summary>
-        /// This function will call a method from a class within the Business layer to retrieve the most up to date contracts
-        /// This will then display these contracts in the datagrid
-        /// </summary>
-        public void refreshContracts()
+        private void fillContractData()
         {
-
+            foreach(Contract c in contractsToDisplay)
+            {
+                ContractData.Items.Add(c);
+            }
         }
 
         /// <summary>
@@ -57,7 +53,29 @@ namespace TMS
         /// <param name="e"></param>
         private void ContractsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            DataGrid gridSelection = (DataGrid)sender;
+            Contract newContract = gridSelection.SelectedItem as Contract;
 
+            if(newContract == null)
+            {
+                return;
+            }
+
+            selectedContract = newContract;
+        }
+
+        /// <summary>
+        /// On this click the buyer will attempt to send the contract to be added to the database
+        /// Note that once it is in the database it will be marked to be completed 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RequestOrder_Click(object sender, RoutedEventArgs e)
+        {
+            if(selectedContract != null)
+            {
+                //buyer.addContract(selectedContract);
+            }
         }
     }
 }
