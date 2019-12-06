@@ -104,6 +104,26 @@ namespace TMS
             return done;
         }
 
+        /// <summary>
+        /// This method checks whether the Contract selected can be added to the 
+        /// Order being created based on the origin city, job type, and van type.
+        /// </summary>
+        /// <param name="contracts">The identifier for the Contracts currently added
+        ///                         to the order being created.</param>
+        /// <param name="contractToAdd">The identifier for the Contract requesting 
+        ///                         to be added to the order being created.</param>                         
+        /// <returns>Bool representing whether the Contract can be added to the Order</returns>
+        public bool CheckGroupedContracts(List <Contract> contracts, Contract contractToAdd)
+        {
+            if((contractToAdd.Origin == contracts[0].Origin) && (contractToAdd.JobType == 1) && (contractToAdd.VanType == contracts[0].VanType))
+            {
+                return true;
+            }
+            else
+            {
+                return false; 
+            }
+        }
 
     }
 }

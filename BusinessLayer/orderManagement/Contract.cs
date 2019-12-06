@@ -115,6 +115,7 @@ namespace TMS
         {
             
             List<Contract> contractList = new ExternalComm().GetContracts();
+            
             List<Contract> ltlContracts = new List<Contract>(); 
 
             foreach(var c in contractList)
@@ -148,6 +149,7 @@ namespace TMS
                    
             }
             return contractList;
+            
 
            
         }
