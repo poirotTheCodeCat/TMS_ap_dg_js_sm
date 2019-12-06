@@ -7,13 +7,16 @@
         mc:Ignorable="d"
         Title="MainWindow"  Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Grid>
-        <Grid HorizontalAlignment="Left" Width="65" Margin="0,0,0,1" Grid.RowSpan="2">
-            <Rectangle Fill="#FF0097C3"></Rectangle>
-            <Button Content="A" Background="#FF0097C3" Foreground="White" HorizontalAlignment="Center" Width="60" Margin="0,38,0,321" FontSize="40" Click="Admin_Click"/>
-            <Button Content="P" Background="#FF0097C3" Foreground="White" HorizontalAlignment="Center" Width="60" Margin="0,106,0,249" FontSize="40" Click="Planner_Click"/>
-            <Button Content="B" Background="#FF0097C3" Foreground="White" HorizontalAlignment="Center" Width="60" Margin="0,178,0,182" FontSize="40" Click="Buyer_Click"/>
-            <Button Content="X" Height="50" Background="#FF0097C3" Foreground="#FFFF4040" HorizontalAlignment="Center" Width="60" Margin="0,362,0,10.5" FontSize="40" Click="Exit_Click"/>
+        <Grid Width="150" HorizontalAlignment="Left">
+            <Grid Height="75" VerticalAlignment="Top">
+                <Label Content="TMS" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+            <Button x:Name="AdminBtn" Content="Admin" FontSize="20" Height="50" Margin="0,79,0,316" Click="Admin_Click"/>
+            <Rectangle Stroke="Gray"/>
+            <Button x:Name="BuyerBtn" Content="Buyer" FontSize="20" Height="50" Margin="0,129,0,266" Click="Buyer_Click"/>
+            <Button x:Name="PlannerBtn" Content="Planner" FontSize="20" Height="50" Margin="0,179,0,216" Click="Planner_Click"/>
+            <Button x:Name="CloseBtn" Content="Close" FontSize="20" Height="50" Margin="0,385,0,10" Click="Exit_Click"/>
         </Grid>
-        <Frame x:Name="MainFrame" HorizontalAlignment="Right" Width="730" Margin="0,0,0,1" Grid.RowSpan="2" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2"></Frame>
+        <Frame x:Name="MainFrame" Width="645" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
     </Grid>
 </Window>

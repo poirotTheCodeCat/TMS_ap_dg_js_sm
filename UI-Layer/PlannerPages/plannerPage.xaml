@@ -5,19 +5,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TMS"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="730"
-      Title="plannerPage">
-
+      d:DesignHeight="450" d:DesignWidth="650"
+      Title="plannerPage"
+      Background="White">
 
     <Grid>
-        <Rectangle Fill="White"></Rectangle>
-        <Grid Height="40" VerticalAlignment="Top">
-            <Rectangle Fill="Purple"></Rectangle>
-            <Button Content="New Orders" Width="200" Background="Purple" Foreground="White" HorizontalAlignment="Left" BorderBrush="#FFC8C8C8" BorderThickness="1,0" Click="NewOrder_Click"></Button>
-            <Button Content="Active Orders" Width="200" Background="Purple" Foreground="White" HorizontalAlignment="Left" Margin="199,0,0,0" BorderBrush="#FFC8C8C8" BorderThickness="1,0" Click="activeOrder_Click"></Button>
-        </Grid>
-        <Grid Height="410" VerticalAlignment="Bottom">
-            <Frame Name="PlannerFrame" NavigationUIVisibility="Hidden"/>
-        </Grid>
+        <DockPanel x:Name="PlannerOptions" VerticalAlignment="Top" Height="30" Background="LightGray">
+            <Button x:Name="NewOrders" Content="New Orders" Height="30" Width="150" HorizontalAlignment="Left" Click="NewOrder_Click" Background="Gray"/>
+            <Button x:Name="ActiveOrders" Content="Active Orders" Height="30" Width="150" HorizontalAlignment="Left" Click="activeOrder_Click" Background="Gray"/>
+        </DockPanel>
     </Grid>
 </Page>
