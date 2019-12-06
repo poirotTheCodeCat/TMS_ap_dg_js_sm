@@ -17,7 +17,7 @@ namespace TMS
     /// </summary>
     class LocalComm
     {
-        private string connectionString = ConfigurationManager.ConnectionStrings["cmConnStr"].ConnectionString;
+        private string connectionString = ConfigurationManager.ConnectionStrings["tmsConnStr"].ConnectionString;
         /// <summary>
         /// This method adds a new Order to the TMS database.
         /// <param name="searchItem">The identifier for the Contract that will be used 
@@ -94,5 +94,53 @@ namespace TMS
             }
         }
 
+        public List<Contract> GetPendingOrders()
+        {
+            const string sqlStatement = @" SELECT * FROM Contract WHERE ContractStatus=0;";
+
+
+            using (var myConn = new MySqlConnection(connectionString))
+            {
+
+                var myCommand = new MySqlCommand(sqlStatement, myConn);
+
+
+                //For offline connection we weill use  MySqlDataAdapter class.  
+                var myAdapter = new MySqlDataAdapter
+                {
+                    SelectCommand = myCommand
+                };
+
+                var dataTable = new DataTable();
+
+                myAdapter.Fill(dataTable);
+
+                var contracts = DataTableToContractsList(dataTable);
+
+                return contracts;
+            }
+        }
+        private List<Contract> DataTableToContractsList(DataTable table)
+        {
+            var contracts = new List<Contract>();
+
+            foreach (DataRow row in table.Rows)
+            {
+                contracts.Add(new Contract
+                {
+
+                    ClientName = row["CustomerName"].ToString(),
+                    ContractStatus = Convert.ToInt32(row["ContractStatus"]),
+                    JobType = Convert.ToInt32(row["JobType"]),
+                    Quantity = Convert.ToInt32(row["Quantity"]),
+                    Origin = row["Origin"].ToString(),
+                    Destination = row["Destination"].ToString(),
+                    VanType = Convert.ToInt32(row["VanType"]),
+
+                });;
+            }
+
+            return contracts;
+        }
     }
 }

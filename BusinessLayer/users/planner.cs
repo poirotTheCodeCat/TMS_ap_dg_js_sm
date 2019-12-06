@@ -92,9 +92,11 @@ namespace TMS
         /// This method allows the Planner to view all pending Orders.
         /// </summary>
         /// <returns>List of pending Orders.</returns>
-        public List<Order> ShowPendingOrders()
+        public List<Contract> ShowPendingOrders()
         {
-            List<Order> pendingOrderList = new List<Order>();
+            List<Contract> pendingOrderList = new List<Contract>();
+
+            pendingOrderList = new LocalComm().GetPendingOrders();
 
             return pendingOrderList;
         }

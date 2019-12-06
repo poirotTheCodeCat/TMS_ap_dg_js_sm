@@ -34,7 +34,7 @@ namespace TMS
 
         private void fillContractList()
         {
-            // contractsToDisplay = buyer.getContracts();
+            contractsToDisplay = buyer.GetContracts();
         }
 
         private void fillContractData()
@@ -74,7 +74,7 @@ namespace TMS
         {
             if(selectedContract != null)
             {
-                //buyer.addContract(selectedContract);
+                buyer.AddContract(selectedContract);
             }
         }
     }
