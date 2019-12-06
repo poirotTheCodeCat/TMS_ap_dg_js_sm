@@ -91,7 +91,8 @@ namespace TMS
 
         private List<Contract> CurrentContracts;
         public List<Contract> SingleContracts;
-        public CombineContracts CombineContracts;
+        public CombineContracts CombinedContracts;
+        private List<string> CityCompare;
 
 
 
@@ -114,7 +115,41 @@ namespace TMS
         {
             
             List<Contract> contractList = new ExternalComm().GetContracts();
+            List<Contract> ltlContracts = new List<Contract>(); 
+
+            foreach(var c in contractList)
+            {
+                if(c.JobType == 1)
+                {
+                    ltlContracts.Add(c);
+                    CityCompare.Add(c.origin);
+                }
+            }
+
+            if(ltlContracts.Count > 1)
+            {
+
+                var ltlOrigin = ltlContracts[0];
+
+                for (int i = 1; i < ltlContracts.Count; i++)
+                {
+                    if ((ltlOrigin.Origin == ltlContracts[i].Origin) && (ltlOrigin.VanType == ltlContracts[i].VanType))
+                    {
+                        CombinedContracts = new CombineContracts
+                        {
+                            ContractList = new List<Contract>()
+                        };
+                        contractList.Add(ltlContracts[i]);
+                        contractList.Add(ltlOrigin);
+
+                    }
+
+                }
+                   
+            }
             return contractList;
+
+           
         }
 
     }
