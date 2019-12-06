@@ -11,8 +11,8 @@
 
     <Grid>
         <StackPanel Height="30" VerticalAlignment="Top" Background="LightGray" Orientation="Horizontal">
-            <Button x:Name="ContractPageBtn" Content="Contracts" Width="150" VerticalAlignment="Stretch" HorizontalAlignment="Left" Height="30"/>
-            <Button x:Name="CompletedOrdersBtn" Content="Completed Orders" Width="150" Height="30" VerticalAlignment="Stretch" HorizontalAlignment="Left"/>
+            <Button x:Name="ContractPageBtn" Content="Contracts" Width="150" VerticalAlignment="Stretch" HorizontalAlignment="Left" Height="30" Click="ContractPageBtn_Click"/>
+            <Button x:Name="CompletedOrdersBtn" Content="Completed Orders" Width="150" Height="30" VerticalAlignment="Stretch" HorizontalAlignment="Left" Click="CompletedOrdersBtn_Click"/>
         </StackPanel>
         <Frame x:Name="OrderFrame" Margin="0,30,0,0" />
     </Grid>

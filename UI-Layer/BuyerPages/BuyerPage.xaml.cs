@@ -24,5 +24,15 @@ namespace TMS
         {
             InitializeComponent();
         }
+
+        private void ContractPageBtn_Click(object sender, RoutedEventArgs e)
+        {
+            OrderFrame.Content = new BuyerContracts();
+        }
+
+        private void CompletedOrdersBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
