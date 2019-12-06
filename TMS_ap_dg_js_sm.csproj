@@ -56,6 +56,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UI-Layer\AdminPages\LogfilePage.xaml.cs">
+      <DependentUpon>LogfilePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI-Layer\BuyerPages\CreateOrderPage.xaml.cs">
       <DependentUpon>CreateOrderPage.xaml</DependentUpon>
     </Compile>
@@ -70,6 +73,10 @@
     </Compile>
     <Compile Include="BusinessLayer\Logger.cs" />
     <Compile Include="BusinessLayer\orderManagement\Contract.cs" />
+    <Page Include="UI-Layer\AdminPages\LogfilePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI-Layer\BuyerPages\CreateOrderPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -161,9 +168,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="configuration\App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="UI-Layer\UI_Images\bacground_Login.jpg" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

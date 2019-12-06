@@ -5,10 +5,17 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TMS"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="adminPage">
+      d:DesignHeight="450" d:DesignWidth="650"
+      Title="adminPage"
+      Background="White">
 
     <Grid>
-        
+        <DataGrid x:Name="DatabaseDisplay" Margin="45,107,45,70"></DataGrid>
+        <Button x:Name="AlterBtn" Content="Alter Data" HorizontalAlignment="Left" Margin="520,385,0,0" VerticalAlignment="Top" Width="85" Height="37"/>
+        <Button x:Name="LogfilesBtn" Content="View Logfiles" HorizontalAlignment="Left" Margin="149,385,0,0" VerticalAlignment="Top" Width="85" Height="37"/>
+        <Button x:Name="BackupBtn" Content="Backup Database" HorizontalAlignment="Left" Margin="45,385,0,0" VerticalAlignment="Top" Width="99" Height="37"/>
+        <Button x:Name="RefreshBtn" Content="Refresh" HorizontalAlignment="Left" Margin="45,65,0,0" VerticalAlignment="Top" Width="57" Height="31"/>
+        <Button x:Name="ConfigBtn" Content="Configuration" HorizontalAlignment="Left" Margin="107,65,0,0" VerticalAlignment="Top" Width="101" Height="31"/>
+        <ComboBox x:Name="DBTables" HorizontalAlignment="Left" Margin="372,65,0,0" VerticalAlignment="Top" Width="233" Height="31"/>
     </Grid>
 </Page>
