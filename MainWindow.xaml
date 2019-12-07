@@ -8,9 +8,9 @@
         Title="MainWindow"  Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Grid>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" >
-            <Button x:Name="BuyerBtn" Content="Buyer" Width="100" Click="BuyerBtn_Click"/>
-            <Button x:Name="PlannerBtn" Content="Planner" Width="100" Click="PlannerBtn_Click"/>
-            <Button x:Name="AdminBtn" Content="Admin" Width="100" Click="AdminBtn_Click"/>
+            <Button x:Name="BuyerBtn" Content="Buyer" Width="100" Click="Buyer_Click"/>
+            <Button x:Name="PlannerBtn" Content="Planner" Width="100" Click="Planner_Click"/>
+            <Button x:Name="AdminBtn" Content="Admin" Width="100" Click="Admin_Click"/>
         </StackPanel>
         <Frame x:Name="MainFrame" Height="422" VerticalAlignment="Bottom" NavigationUIVisibility="Hidden" Margin="100,0,0,0.5"/>
     </Grid>
