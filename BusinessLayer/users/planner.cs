@@ -27,7 +27,7 @@ namespace TMS
         }
 
         /// <summary>
-        /// This method selects Carrier to view the details of that Carrier. 
+        /// This method gets a Carrier to view the details of that Carrier. 
         /// </summary>
         /// <param name="searchItem">The identifier for the Carrier that will be returned</param>
         /// <returns>Carrier that is requested.</returns>
@@ -38,6 +38,37 @@ namespace TMS
             return carrier;
         }
 
+        /// <summary>
+        /// This method updates the availability of the Carrier based on the job type being requested. 
+        /// </summary>
+        /// <param name="carrier">The identifier for the Carrier that will be returned</param>
+        /// <param name="jobType">The identifier for the Carrier that will be returned</param>
+        /// <param name="quantityPallets">The LTL load being requested by the Contract(s)</param>
+        /// <returns>Bool of whether the Carrier has availability for the Contract or only partial availability</returns>
+        public bool UpdateCarrierAvailability(Carrier carrier, int jobType=0, int quantityPallets=0)
+        {
+            bool availability = true;
+
+            // Assuming that the UI will only show Carriers with availability of the job type of the Contract(s) in the cart 
+            // If the job type is an FTL, there must be available trucks 
+            if(jobType == 0)    
+            {
+                LocalComm.UpdateCarrierFTL();
+            }
+            else 
+            {
+                if(carrier.LtlAvail < quantityPallets)
+                {
+                    availability = false;
+                }
+
+                // Do we want UpdateCarrierLTL to only subtract from availability or should it be able to 
+                // also add back to the availablilty? 
+                LocalComm.UpdateCarrierLTL(quantityPallets*-1);
+            }
+
+            return availability;
+        }
         /// <summary>
         /// This method allows the Planner to create a Trip that will be added to an Order.
         /// </summary>

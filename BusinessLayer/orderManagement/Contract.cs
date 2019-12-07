@@ -110,7 +110,7 @@ namespace TMS
         /// <returns>Listmof the Contracts received from the Contract Marketplace.</returns>
         public List<Contract> GetContracts()
         {
-            List<Contract> contractList = new ExternalComm().GetContracts();
+            List<Contract> contractList = new ExternalComm().GetMarketplaceContracts();
             return contractList;
         }
 
