@@ -53,7 +53,7 @@ namespace TMS
             // If the job type is an FTL, there must be available trucks 
             if (jobType == 0)
             {
-                LocalComm.UpdateCarrierFTL(-1);
+                new LocalComm().UpdateCarrierFTL(-1);
             }
             else
             {
@@ -62,12 +62,12 @@ namespace TMS
                     remainingLoad = quantityPallets - carrier.LtlAvail;
                     if (remainingLoad > 0)
                     {
-                        LocalComm.UpdateCarrierLTL(carrier.LtlAvail * -1);
+                        new LocalComm().UpdateCarrierLTL(carrier.LtlAvail * -1);
 
                     }
                     else
                     {
-                        LocalComm.UpdateCarrierLTL(quantityPallets * -1);
+                        new LocalComm().UpdateCarrierLTL(quantityPallets * -1);
 
                     }
                 }

@@ -144,6 +144,44 @@ namespace TMS
             }
         }
 
+        /// <summary>
+        /// retrieves a list of carriers from the database and generates a list of Carrier objects which it returns
+        /// </summary>
+        /// <returns></returns>
+        public void UpdateCarrierFTL(int value)
+        {
+            using (var myConn = new MySqlConnection(connectionString))
+            {
+                var myCommand = new MySqlCommand("UpdateCarrierFTL", myConn);
+                myCommand.CommandType = CommandType.StoredProcedure;
+
+                myCommand.Parameters.AddWithValue("@value", value);
+               
+                myConn.Open();
+
+                myCommand.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// retrieves a list of carriers from the database and generates a list of Carrier objects which it returns
+        /// </summary>
+        /// <returns></returns>
+        public void UpdateCarrierLTL(int value)
+        {
+            using (var myConn = new MySqlConnection(connectionString))
+            {
+                var myCommand = new MySqlCommand("UpdateCarrierLTL", myConn);
+                myCommand.CommandType = CommandType.StoredProcedure;
+
+                myCommand.Parameters.AddWithValue("@value", value);
+
+                myConn.Open();
+
+                myCommand.ExecuteNonQuery();
+            }
+        }
+
 
         /// <summary>
         /// This generates a list of carriers from what is returned from the Carriers Table within the database
