@@ -22,7 +22,7 @@ namespace TMS
         private int ltlAvailable;///< Holds the number of available LTL trucks for the specified carrier
         private double ftlRate;///< Holds the rate of FTL for the specified carrier
         private double ltlRate;///< Holds the rate of LTL for the specified carrier
-        private double reeferCharge;///< Holds the rate of a reffer for the specified carrier
+        private double reeferCharge;///< Holds the rate of a reefer for the specified carrier
 
 
         /// <summary>
