@@ -148,15 +148,16 @@ namespace TMS
         /// retrieves a list of carriers from the database and generates a list of Carrier objects which it returns
         /// </summary>
         /// <returns></returns>
-        public void UpdateCarrierFTL(int value)
+        public void UpdateCarrierFTL(Carrier carrier)
         {
             using (var myConn = new MySqlConnection(connectionString))
             {
                 var myCommand = new MySqlCommand("UpdateCarrierFTL", myConn);
                 myCommand.CommandType = CommandType.StoredProcedure;
 
-                myCommand.Parameters.AddWithValue("@value", value);
-               
+                myCommand.Parameters.AddWithValue("@id", carrier.CarrierID);
+                myCommand.Parameters.AddWithValue("@value", carrier.FtlAvail);
+
                 myConn.Open();
 
                 myCommand.ExecuteNonQuery();
@@ -167,14 +168,15 @@ namespace TMS
         /// retrieves a list of carriers from the database and generates a list of Carrier objects which it returns
         /// </summary>
         /// <returns></returns>
-        public void UpdateCarrierLTL(int value)
+        public void UpdateCarrierLTL(Carrier carrier)
         {
             using (var myConn = new MySqlConnection(connectionString))
             {
                 var myCommand = new MySqlCommand("UpdateCarrierLTL", myConn);
                 myCommand.CommandType = CommandType.StoredProcedure;
 
-                myCommand.Parameters.AddWithValue("@value", value);
+                myCommand.Parameters.AddWithValue("@id", carrier.CarrierID);
+                myCommand.Parameters.AddWithValue("@value", carrier.FtlAvail);
 
                 myConn.Open();
 
