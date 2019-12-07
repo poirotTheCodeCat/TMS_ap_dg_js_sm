@@ -100,7 +100,7 @@ namespace TMS
         /// </summary>
         /// <param name="searchItem">The identifier for the requested Carrier</param>
         /// <returns>0 if successfully queried table. 1 if failed</returns>
-        public int GetCarrierInfo(string searchItem)
+        public int GetCarrierInfo()
         {
             int done = 0;
 
