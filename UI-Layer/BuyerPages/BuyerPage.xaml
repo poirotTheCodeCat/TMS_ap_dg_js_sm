@@ -5,15 +5,22 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TMS"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="650"
+      d:DesignHeight="422" d:DesignWidth="700"
       Title="BuyerPage"
       Background="White">
 
     <Grid>
-        <StackPanel Height="30" VerticalAlignment="Top" Background="LightGray" Orientation="Horizontal">
-            <Button x:Name="ContractPageBtn" Content="Contracts" Width="150" VerticalAlignment="Stretch" HorizontalAlignment="Left" Height="30" Click="ContractPageBtn_Click"/>
-            <Button x:Name="CompletedOrdersBtn" Content="Completed Orders" Width="150" Height="30" VerticalAlignment="Stretch" HorizontalAlignment="Left" Click="CompletedOrdersBtn_Click"/>
-        </StackPanel>
-        <Frame x:Name="OrderFrame" Margin="0,30,0,0" />
+        <DataGrid x:Name="ContractGrid" Margin="59,36,59,78" SelectionChanged="ContractGrid_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Client Name" Width="*" Binding="{Binding Path=Client_Name}"/>
+                <DataGridTextColumn Header="Job Type" Width="*" Binding="{Binding Path=Job_Type}"/>
+                <DataGridTextColumn Header="Quantity" Width="*" Binding="{Binding Path=Quantity}"/>
+                <DataGridTextColumn Header="Origin" Width="*" Binding="{Binding Path=Origin}"/>
+                <DataGridTextColumn Header="Destination" Width="*" Binding="{Binding Path=Destination}"/>
+                <DataGridTextColumn Header="Van Type" Width="*" Binding="{Binding Path=Van_Type}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="CreateBtn" Content="Create Order" HorizontalAlignment="Left" Margin="550,355,0,0" VerticalAlignment="Top" Width="91" Height="34" Click="CreateBtn_Click" IsEnabled="False"/>
+        <Button x:Name="RefreshBtn" Content="Refresh" HorizontalAlignment="Left" Margin="59,355,0,0" VerticalAlignment="Top" Width="55" Height="34" Click="RefreshBtn_Click"/>
     </Grid>
 </Page>
