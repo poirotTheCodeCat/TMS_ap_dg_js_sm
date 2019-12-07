@@ -22,7 +22,7 @@ namespace TMS
     {
         private List<Contract> allContracts = new List<Contract>();        // allContracts is used to hold all existing contracts -> can be updated
         private Contract selectedContract = new Contract();
-        private List<Contract> selectedContracts = new List<Contract>();        // Will store the list of currently selected contracts for the trip
+        private List<Contract> orderContracts = new List<Contract>();        // Will store the list of currently selected contracts for the trip
 
         private List<Carrier> AllCarriers = new List<Carrier>();
         private List<Order> currentOrderList = new List<Order>();
@@ -76,14 +76,32 @@ namespace TMS
         {
             // insert error checking function
 
+            // add the selected item to the list
+            orderContracts.Add(selectedContract);
 
-            ContractsGrid.Items.Remove(selectedContract);           // remove the item from the contract datagrid
-
+            // Add contract to orderTabe 
             TripGrid.Items.Add(selectedContract);
-            // move the contract into the second thingy
-            // make contract into order
-            selectedContract = new Contract();      // reset the selected button
 
+            // remove contract from display table 
+            ContractsGrid.Items.Remove(selectedContract);
+
+            // reset currently selected contract
+            selectedContract = new Contract();
+
+            // de activate add button
+            AddBtn.IsEnabled = false;
+
+            // if only contract in list -> display carriers of origin city
+            if(orderContracts.Count > 1)
+            {
+                // display the list of cities
+                displayCarriers(orderContracts[0].Origin);
+            } 
+        }
+
+        private void displayCarriers(string city)
+        {
+            
         }
 
         private void checkGrid()
@@ -93,38 +111,10 @@ namespace TMS
 
         private void SubmitBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            // planner.createOrder(selectedContracts)
         }
 
-        /*
-        /// <summary>
-        /// if the FTL button is checked then switch the content presented on the screen to only show FTL contracts
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void FTLBtn_Checked(object sender, RoutedEventArgs e)
-        {
-            if(showType == App.LTL)
-            {
-                showType = App.FTL;
-            }
-            // call display function
-        }
-
-        /// <summary>
-        /// if the LTL button is checked then switch the content presented on the screen to only show LTL contracts
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void LTLBtn_Checked(object sender, RoutedEventArgs e)
-        {
-            if (showType == App.FTL)
-            {
-                showType = App.LTL;
-            }
-            // call display function
-        }
-        */
+       
 
         private void CarrierSelection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -140,6 +130,16 @@ namespace TMS
             {
                 selectedContract = contract;
             }
+        }
+
+        private void CompleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RemoveBtn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

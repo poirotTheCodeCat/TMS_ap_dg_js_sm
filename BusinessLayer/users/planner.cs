@@ -61,16 +61,16 @@ namespace TMS
                 if (carrier.LtlAvail < quantityPallets)
                 {
                     remainingLoad = quantityPallets - carrier.LtlAvail;
-                    if (remainingLoad > 0)
-                    {
+                    
                         carrier.LtlAvail = 0;
                         new LocalComm().UpdateCarrierLTL(carrier);
-                    }
-                    else
-                    {
-                        carrier.LtlAvail = quantityPallets;
-                        new LocalComm().UpdateCarrierLTL(carrier);
-                    }
+                    
+                    
+                }
+                else
+                {
+                    carrier.LtlAvail = quantityPallets;
+                    new LocalComm().UpdateCarrierLTL(carrier);
                 }
             }
 

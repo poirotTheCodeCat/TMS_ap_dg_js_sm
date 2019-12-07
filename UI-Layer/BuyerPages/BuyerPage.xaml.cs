@@ -75,7 +75,7 @@ namespace TMS
         /// </summary>
         private void fillList()
         {
-            displayContracts = buyer.GetContracts();
+            displayContracts = buyer.GetMarketplaceContracts();
         }
 
         /// <summary>

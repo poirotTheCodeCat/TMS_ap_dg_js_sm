@@ -45,5 +45,10 @@ namespace TMS
         {
             this.Close();
         }
+
+        private void BuyerBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

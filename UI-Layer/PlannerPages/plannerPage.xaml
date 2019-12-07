@@ -33,15 +33,27 @@
         </DataGrid>
 
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="157">
-            <Label Content="Current Orders" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="490,10,0,0"/>
+            <Label Content="Current Orders" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="483,10,0,0"/>
             <Rectangle Stroke="Gray"/>
-            <DataGrid  x:Name="CurrentOrderGrid" Margin="10,10,292,10"></DataGrid>
+            <DataGrid  x:Name="CurrentOrderGrid" Margin="10,10,292,10">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Customer" Width="*" Binding="{Binding Path=CName}"/>
+                    <DataGridTextColumn Header="Contract ID" Width="*" Binding="{Binding Path=}"/>
+                    <DataGridTextColumn Header="Carrier ID" Width="*" Binding="{Binding Path=}"/>
+                    <DataGridTextColumn Header="Confirmed" Width="*" Binding="{Binding Path=}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button x:Name="CompleteBtn" Content="Complete Order" Click="CompleteBtn_Click" Margin="500,102,97,13"/>
         </Grid>
-        <Button x:Name="AddBtn" Content="Add" HorizontalAlignment="Left" Margin="508,216,0,0" VerticalAlignment="Top" Width="84" Height="31" Click="AddContract_Click"/>
-        <Button x:Name="OrderBtn" Content="Place Order" HorizontalAlignment="Left" Margin="597,216,0,0" VerticalAlignment="Top" Width="84" Height="31" Click="SubmitBtn_Click"/>
-        <ComboBox x:Name="citySelect" HorizontalAlignment="Left" Margin="508,10,0,0" VerticalAlignment="Top" Width="182" Height="23"/>
-        <ComboBox x:Name="CarrierSelect" HorizontalAlignment="Left" Margin="508,38,0,0" VerticalAlignment="Top" Width="182" Height="23"/>
-        <RadioButton Content="FTL" HorizontalAlignment="Left" Margin="423,16,0,0" VerticalAlignment="Top"/>
-        <RadioButton Content="LTL" HorizontalAlignment="Left" Margin="423,38,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="AddBtn" Content="Add" HorizontalAlignment="Left" Margin="516,216,0,0" VerticalAlignment="Top" Width="84" Height="31" Click="AddContract_Click"/>
+        <Button x:Name="OrderBtn" Content="Place Order" HorizontalAlignment="Left" Margin="605,216,0,0" VerticalAlignment="Top" Width="84" Height="31" Click="SubmitBtn_Click"/>
+        
+        <ComboBox x:Name="citySelect" HorizontalAlignment="Left" Margin="429,10,0,0" VerticalAlignment="Top" Width="250" Height="23"/>
+
+        <Button x:Name="RemoveBtn" Content="Remove" HorizontalAlignment="Left" Margin="427,216,0,0" VerticalAlignment="Top" Width="84" Height="31" Click="RemoveBtn_Click"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="429,133,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="147"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="595,133,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="84"/>
+
+        <DataGrid Margin="429,38,21,316" ></DataGrid>
     </Grid>
 </Page>
