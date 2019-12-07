@@ -5,15 +5,43 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TMS"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="650"
+      d:DesignHeight="422" d:DesignWidth="700"
       Title="plannerPage"
       Background="White">
 
     <Grid>
-        <DockPanel x:Name="PlannerOptions" VerticalAlignment="Top" Height="30" Background="LightGray">
-            <Button x:Name="NewOrders" Content="New Orders" Height="30" Width="150" HorizontalAlignment="Left" Click="NewOrder_Click" Background="Gray"/>
-            <Button x:Name="ActiveOrders" Content="Active Orders" Height="30" Width="150" HorizontalAlignment="Left" Click="activeOrder_Click" Background="Gray"/>
-        </DockPanel>
-        <Frame x:Name="PlannerFrame" Margin="0,35,0,0"/>
+
+        <DataGrid x:Name="ContractsGrid" Margin="10,10,293,291" SelectionChanged="ContractsGrid_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Path=ContractID}" Width="40"/>
+                <DataGridTextColumn Header="Client" Binding="{Binding Path=Client_Name}" Width="75"/>
+                <DataGridTextColumn Header="Origin" Binding="{Binding Path=Origin}" Width="*"/>
+                <DataGridTextColumn Header="Destination" Binding="{Binding Path=Destination}" Width="*"/>
+                <DataGridTextColumn Header="Job Type" Binding="{Binding Path=Job_Type}" Width="60"/>
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Path=Quantity}" Width="60"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid x:Name="TripGrid" Margin="10,139,293,175">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Path=ContractID}" Width="40"/>
+                <DataGridTextColumn Header="Client" Binding="{Binding Path=Client_Name}" Width="75"/>
+                <DataGridTextColumn Header="Origin" Binding="{Binding Path=Origin}" Width="*"/>
+                <DataGridTextColumn Header="Destination" Binding="{Binding Path=Destination}" Width="*"/>
+                <DataGridTextColumn Header="Job Type" Binding="{Binding Path=Job_Type}" Width="60"/>
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Path=Quantity}" Width="60"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="157">
+            <Label Content="Current Orders" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="490,10,0,0"/>
+            <Rectangle Stroke="Gray"/>
+            <DataGrid  x:Name="CurrentOrderGrid" Margin="10,10,292,10"></DataGrid>
+        </Grid>
+        <Button x:Name="AddBtn" Content="Add" HorizontalAlignment="Left" Margin="508,216,0,0" VerticalAlignment="Top" Width="84" Height="31" Click="AddContract_Click"/>
+        <Button x:Name="OrderBtn" Content="Place Order" HorizontalAlignment="Left" Margin="597,216,0,0" VerticalAlignment="Top" Width="84" Height="31" Click="SubmitBtn_Click"/>
+        <ComboBox x:Name="citySelect" HorizontalAlignment="Left" Margin="508,10,0,0" VerticalAlignment="Top" Width="182" Height="23"/>
+        <ComboBox x:Name="CarrierSelect" HorizontalAlignment="Left" Margin="508,38,0,0" VerticalAlignment="Top" Width="182" Height="23"/>
+        <RadioButton Content="FTL" HorizontalAlignment="Left" Margin="423,16,0,0" VerticalAlignment="Top"/>
+        <RadioButton Content="LTL" HorizontalAlignment="Left" Margin="423,38,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Page>

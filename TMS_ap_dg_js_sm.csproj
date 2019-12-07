@@ -77,40 +77,8 @@
     </ApplicationDefinition>
     <Compile Include="BusinessLayer\orderManagement\CombineContracts.cs" />
     <Compile Include="BusinessLayer\orderManagement\TransportationCorridor.cs" />
-    <Compile Include="UI-Layer\BuyerPages\CreateOrderPage.xaml.cs">
-      <DependentUpon>CreateOrderPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI-Layer\BuyerPages\CompleteOrders.xaml.cs">
-      <DependentUpon>CompleteOrders.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI-Layer\BuyerPages\BuyerContracts.xaml.cs">
-      <DependentUpon>BuyerContracts.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI-Layer\PlannerPages\ActiveOrdersPage.xaml.cs">
-      <DependentUpon>ActiveOrdersPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="BusinessLayer\Logger.cs" />
     <Compile Include="BusinessLayer\orderManagement\Contract.cs" />
-    <Page Include="UI-Layer\BuyerPages\CreateOrderPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI-Layer\BuyerPages\CompleteOrders.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI-Layer\BuyerPages\BuyerContracts.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI-Layer\PlannerPages\ActiveOrdersPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI-Layer\PlannerPages\NewOrdersPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UI-Layer\AdminPages\AdminPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -136,9 +104,6 @@
     <Compile Include="BusinessLayer\users\Planner.cs" />
     <Compile Include="BusinessLayer\orderManagement\Order.cs" />
     <Compile Include="BusinessLayer\orderManagement\Trip.cs" />
-    <Compile Include="UI-Layer\PlannerPages\NewOrdersPage.xaml.cs">
-      <DependentUpon>NewOrdersPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI-Layer\AdminPages\AdminPage.xaml.cs">
       <DependentUpon>AdminPage.xaml</DependentUpon>
     </Compile>
