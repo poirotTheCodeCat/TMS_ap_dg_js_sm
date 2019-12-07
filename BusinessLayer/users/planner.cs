@@ -63,12 +63,10 @@ namespace TMS
                     if (remainingLoad > 0)
                     {
                         new LocalComm().UpdateCarrierLTL(carrier.LtlAvail * -1);
-
                     }
                     else
                     {
                         new LocalComm().UpdateCarrierLTL(quantityPallets * -1);
-
                     }
                 }
             }
