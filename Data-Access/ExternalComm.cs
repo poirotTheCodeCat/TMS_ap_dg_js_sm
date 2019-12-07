@@ -23,7 +23,7 @@ namespace TMS
         /// This method will query the Contract Marketplace database for Contracts. 
         /// </summary>
         /// <returns>List<Contract> of the contracts from the Contract Marketplace.</returns>
-        public List<Contract> GetContracts()
+        public List<Contract> GetMarketplaceContracts()
         {
             const string sqlStatement = @" SELECT * FROM Contract;";
 

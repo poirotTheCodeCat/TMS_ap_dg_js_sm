@@ -20,9 +20,9 @@ namespace TMS
         /// This method will allow the Buyer to get contracts from the Contract Marketplace database. 
         /// </summary>
         /// <returns>Listmof the Contracts received from the Contract Marketplace.</returns>
-        public List<Contract> GetContracts()
+        public List<Contract> GetMarketplaceContracts()
         {
-            List<Contract> contractList = new ExternalComm().GetContracts();
+            List<Contract> contractList = new ExternalComm().GetMarketplaceContracts();
             return contractList; 
         }
 

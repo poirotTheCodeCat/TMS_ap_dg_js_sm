@@ -96,7 +96,7 @@ namespace TMS
         {
             List<Contract> pendingOrderList = new List<Contract>();
 
-            pendingOrderList = new LocalComm().GetPendingOrders();
+            pendingOrderList = new LocalComm().GetPendingContracts();
 
             return pendingOrderList;
         }

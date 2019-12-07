@@ -94,7 +94,7 @@ namespace TMS
             }
         }
 
-        public List<Contract> GetPendingOrders()
+        public List<Contract> GetPendingContracts()
         {
             const string sqlStatement = @" SELECT * FROM Contract WHERE ContractStatus=0;";
 
@@ -153,7 +153,7 @@ namespace TMS
         private List<Carrier> GetCarriersList(DataTable table)
         {
             var carriers = new List<Carrier>();
-            List<string> cityLists;
+           
 
             foreach (DataRow row in table.Rows)
             {
@@ -174,47 +174,7 @@ namespace TMS
             return carriers;
         }
 
-        /// <summary>
-        /// This generates a list of city names based on the carrier_ID of a carrier -> returns all cities where they are
-        /// located
-        /// </summary>
-        /// <param name="Carrier_ID"></param>
-        /// <returns></returns>
-        private List<string> getCarrierCities(string Carrier_ID)
-        {
-            using (var myConn = new MySqlConnection(connectionString))
-            {
-                const string SqlStatement = @"SELECT City_ID FROM CarrierCities
-                                            WHERE Carrier_ID = @Carrier_ID;";
-
-                var myCommand = new MySqlCommand(SqlStatement, myConn);
-                myCommand.Parameters.AddWithValue("@Carrier_ID", Carrier_ID);
-                var myAdapter = new MySqlDataAdapter
-                {
-                    SelectCommand = myCommand
-                };
-
-                var dataTable = new DataTable();
-
-                myAdapter.Fill(dataTable);
-                return generateCityList(dataTable);
-            }
-        }
-
-        /// <summary>
-        /// generates the list cities used by a certain carrier within the CarrierCities table 
-        /// </summary>
-        /// <param name="table"></param>
-        /// <returns></returns>
-        private List<string> generateCityList(DataTable table)
-        {
-            List<string> cityList = new List<string>();
-            foreach (DataRow row in table.Rows)
-            {
-                cityList.Add(row["City_ID"].ToString());
-            }
-            return cityList;
-        }
+       
         private List<Contract> DataTableToContractsList(DataTable table)
         {
             var contracts = new List<Contract>();

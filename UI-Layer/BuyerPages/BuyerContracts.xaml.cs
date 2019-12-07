@@ -34,7 +34,7 @@ namespace TMS
 
         private void fillContractList()
         {
-            contractsToDisplay = buyer.GetContracts();
+            contractsToDisplay = buyer.GetMarketplaceContracts();
         }
 
         private void fillContractData()
