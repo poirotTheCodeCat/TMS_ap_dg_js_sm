@@ -163,7 +163,7 @@ namespace TMS
                 {
                     CarrierID = Convert.ToInt32(row["CarrierID"]),
                     CarrierName = row["CarrierName"].ToString(),
-                    DepotCityID = row["DepotCityID"].ToString(),
+                    DepotCity = row["DepotCity"].ToString(),
                     FtlAvail = Convert.ToInt32(row["FtlAvail"]),
                     LtlAvail = Convert.ToInt32(row["LtlAvail"]),
                     FtlRate = Convert.ToDouble(row["FtlRate"]),

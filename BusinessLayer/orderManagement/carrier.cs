@@ -22,7 +22,7 @@ namespace TMS
         private int ltlAvailable;///< Holds the number of available LTL trucks for the specified carrier
         private double ftlRate;///< Holds the rate of FTL for the specified carrier
         private double ltlRate;///< Holds the rate of LTL for the specified carrier
-        private int refferCharge;///< Holds the rate of a reffer for the specified carrier
+        private double reeferCharge;///< Holds the rate of a reffer for the specified carrier
 
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace TMS
         /// <summary>
         /// Gets and sets ftlAvailable
         /// </summary>
-        public int FtlAvailable
+        public int FtlAvail
         {
             get { return ftlAvailable; }
             set { ftlAvailable = value; }
@@ -62,7 +62,7 @@ namespace TMS
         /// <summary>
         /// Gets and sets ltlAvailable
         /// </summary>
-        public int LtlAvailable
+        public int LtlAvail
         {
             get { return ltlAvailable; }
             set { ltlAvailable = value; }
@@ -89,10 +89,10 @@ namespace TMS
         /// <summary>
         /// Gets and sets refferCharge
         /// </summary>
-        public int RefferCharge
+        public double ReefRate
         {
-            get { return refferCharge; }
-            set { refferCharge = value; }
+            get { return reeferCharge; }
+            set { reeferCharge = value; }
         }
 
         /// <summary>
