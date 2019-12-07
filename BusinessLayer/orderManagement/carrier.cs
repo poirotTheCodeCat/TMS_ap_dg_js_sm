@@ -15,6 +15,7 @@ namespace TMS
     /// <exception cref="fileIoException">Exception during file reading or writing in all functions</exception>
     public class Carrier
     {
+        private int carrierID;///< Holds the carrier name as a string
         private string carrierName;///< Holds the carrier name as a string
         private string depotCity;///< Holds the depot city as a string
         private int ftlAvailable;///< Holds the number of available FTL trucks for the specified carrier
@@ -23,6 +24,15 @@ namespace TMS
         private double ltlRate;///< Holds the rate of LTL for the specified carrier
         private int refferCharge;///< Holds the rate of a reffer for the specified carrier
 
+
+        /// <summary>
+        /// Gets and sets carrierName
+        /// </summary>
+        public int CarrierID
+        {
+            get { return carrierID; }
+            set { carrierID = value; }
+        }
         /// <summary>
         /// Gets and sets carrierName
         /// </summary>

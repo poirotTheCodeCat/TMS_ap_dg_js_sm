@@ -120,6 +120,101 @@ namespace TMS
                 return contracts;
             }
         }
+
+        /// <summary>
+        /// retrieves a list of carriers from the database and generates a list of Carrier objects which it returns
+        /// </summary>
+        /// <returns></returns>
+        public List<Carrier> getCarriers()
+        {
+            using (var myConn = new MySqlConnection(connectionString))
+            {
+                const string SqlStatement = @"SELECT * FROM Carriers";
+
+                var myCommand = new MySqlCommand(SqlStatement, myConn);
+                var myAdapter = new MySqlDataAdapter
+                {
+                    SelectCommand = myCommand
+                };
+
+                var dataTable = new DataTable();
+
+                myAdapter.Fill(dataTable);
+                return GetCarriersList(dataTable);
+            }
+        }
+
+
+        /// <summary>
+        /// This generates a list of carriers from what is returned from the Carriers Table within the database
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
+        private List<Carrier> GetCarriersList(DataTable table)
+        {
+            var carriers = new List<Carrier>();
+            List<string> cityLists;
+
+            foreach (DataRow row in table.Rows)
+            {
+               
+
+                carriers.Add(new Carrier
+                {
+                    CarrierID = Convert.ToInt32(row["CarrierID"]),
+                    CarrierName = row["CarrierName"].ToString(),
+                    DepotCityID = row["DepotCityID"].ToString(),
+                    FtlAvail = Convert.ToInt32(row["FtlAvail"]),
+                    LtlAvail = Convert.ToInt32(row["LtlAvail"]),
+                    FtlRate = Convert.ToDouble(row["FtlRate"]),
+                    LtlRate = Convert.ToDouble(row["LtlRate"]),
+                    ReefRate = Convert.ToDouble(row["ReefRate"]),
+                });
+            }
+            return carriers;
+        }
+
+        /// <summary>
+        /// This generates a list of city names based on the carrier_ID of a carrier -> returns all cities where they are
+        /// located
+        /// </summary>
+        /// <param name="Carrier_ID"></param>
+        /// <returns></returns>
+        private List<string> getCarrierCities(string Carrier_ID)
+        {
+            using (var myConn = new MySqlConnection(connectionString))
+            {
+                const string SqlStatement = @"SELECT City_ID FROM CarrierCities
+                                            WHERE Carrier_ID = @Carrier_ID;";
+
+                var myCommand = new MySqlCommand(SqlStatement, myConn);
+                myCommand.Parameters.AddWithValue("@Carrier_ID", Carrier_ID);
+                var myAdapter = new MySqlDataAdapter
+                {
+                    SelectCommand = myCommand
+                };
+
+                var dataTable = new DataTable();
+
+                myAdapter.Fill(dataTable);
+                return generateCityList(dataTable);
+            }
+        }
+
+        /// <summary>
+        /// generates the list cities used by a certain carrier within the CarrierCities table 
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
+        private List<string> generateCityList(DataTable table)
+        {
+            List<string> cityList = new List<string>();
+            foreach (DataRow row in table.Rows)
+            {
+                cityList.Add(row["City_ID"].ToString());
+            }
+            return cityList;
+        }
         private List<Contract> DataTableToContractsList(DataTable table)
         {
             var contracts = new List<Contract>();
