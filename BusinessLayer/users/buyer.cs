@@ -67,5 +67,11 @@ namespace TMS
             return done;
         }
 
+        public void AddContract(Contract newContract)
+        {
+            LocalComm comm = new LocalComm();
+            comm.AddContract(newContract);
+        }
+
     }
 }

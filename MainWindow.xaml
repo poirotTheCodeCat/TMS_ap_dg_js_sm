@@ -17,6 +17,6 @@
             <Button x:Name="PlannerBtn" Content="Planner" FontSize="20" Height="50" Margin="0,179,0,216" Click="Planner_Click"/>
             <Button x:Name="CloseBtn" Content="Close" FontSize="20" Height="50" Margin="0,385,0,10" Click="Exit_Click"/>
         </Grid>
-        <Frame x:Name="MainFrame" Width="645" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
+        <Frame x:Name="MainFrame" Width="645" HorizontalAlignment="Right" VerticalAlignment="Stretch" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

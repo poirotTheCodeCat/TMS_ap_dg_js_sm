@@ -15,14 +15,24 @@ namespace TMS
     /// <exception cref="fileIoException">Exception during file reading or writing in all functions</exception>
     public class Carrier
     {
+        private int carrierID;///< Holds the carrier name as a string
         private string carrierName;///< Holds the carrier name as a string
         private string depotCity;///< Holds the depot city as a string
         private int ftlAvailable;///< Holds the number of available FTL trucks for the specified carrier
         private int ltlAvailable;///< Holds the number of available LTL trucks for the specified carrier
         private double ftlRate;///< Holds the rate of FTL for the specified carrier
         private double ltlRate;///< Holds the rate of LTL for the specified carrier
-        private int refferCharge;///< Holds the rate of a reffer for the specified carrier
+        private double reeferCharge;///< Holds the rate of a reffer for the specified carrier
 
+
+        /// <summary>
+        /// Gets and sets carrierName
+        /// </summary>
+        public int CarrierID
+        {
+            get { return carrierID; }
+            set { carrierID = value; }
+        }
         /// <summary>
         /// Gets and sets carrierName
         /// </summary>
@@ -43,7 +53,7 @@ namespace TMS
         /// <summary>
         /// Gets and sets ftlAvailable
         /// </summary>
-        public int FtlAvailable
+        public int FtlAvail
         {
             get { return ftlAvailable; }
             set { ftlAvailable = value; }
@@ -52,7 +62,7 @@ namespace TMS
         /// <summary>
         /// Gets and sets ltlAvailable
         /// </summary>
-        public int LtlAvailable
+        public int LtlAvail
         {
             get { return ltlAvailable; }
             set { ltlAvailable = value; }
@@ -79,10 +89,10 @@ namespace TMS
         /// <summary>
         /// Gets and sets refferCharge
         /// </summary>
-        public int RefferCharge
+        public double ReefRate
         {
-            get { return refferCharge; }
-            set { refferCharge = value; }
+            get { return reeferCharge; }
+            set { reeferCharge = value; }
         }
 
         /// <summary>

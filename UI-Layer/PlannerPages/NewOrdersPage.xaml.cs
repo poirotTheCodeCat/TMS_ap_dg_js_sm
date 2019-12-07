@@ -24,20 +24,9 @@ namespace TMS
         public NewOrdersPage()
         {
             InitializeComponent();
-            ThreadStart ts = new ThreadStart(refreshTimer);
-            Thread ordersThread = new Thread(ts);
-            ordersThread.Start();
+            refreshOrders();
         }
 
-        /// <summary>
-        /// The refresh timer is to be set as a thread that fires every 10 seconds. When it fires, it calls the refreshOrders() method.
-        /// This should automatically refresh the page every 10 seconds (or 10000 milliseconds)
-        /// </summary>
-        private void refreshTimer()
-        {
-            refreshOrders();
-            Thread.Sleep(10000);        // need to put hardcoded value into external source to be accessed
-        }
 
         /// <summary>
         /// This method calls an external method within the business logic layer, which will return a list of orders which will then be used
@@ -45,7 +34,13 @@ namespace TMS
         /// </summary>
         public void refreshOrders()
         {
+            ContractsGrid.Items.Clear();
+            var pending = new Planner().ShowPendingOrders();
 
+            foreach (var p in pending)
+            {
+                ContractsGrid.Items.Add(p);
+            }
         }
 
         /// <summary>
@@ -67,6 +62,7 @@ namespace TMS
         private void Refresh_Click(object sender, RoutedEventArgs e)
         {
             refreshOrders();            // call the refreshOrders method
+
         }
     }
 }

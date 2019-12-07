@@ -76,6 +76,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BusinessLayer\orderManagement\CombineContracts.cs" />
+    <Compile Include="BusinessLayer\orderManagement\TransportationCorridor.cs" />
     <Compile Include="UI-Layer\BuyerPages\CreateOrderPage.xaml.cs">
       <DependentUpon>CreateOrderPage.xaml</DependentUpon>
     </Compile>
@@ -182,9 +183,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="configuration\App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="UI-Layer\UI_Images\bacground_Login.jpg" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

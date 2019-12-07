@@ -27,12 +27,12 @@ namespace TMS
 
         private void NewOrder_Click(object sender, RoutedEventArgs e)
         {
-            PlannerFrame.Content = new NewOrdersPage();
+           PlannerFrame.Content = new NewOrdersPage();
         }
 
         private void activeOrder_Click(object sender, RoutedEventArgs e)
         {
-            PlannerFrame.Content = new ActiveOrdersPage();
+         //   PlannerFrame.Content = new ActiveOrdersPage();
         }
     }
 }

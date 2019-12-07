@@ -10,15 +10,15 @@
       Background="White">
 
     <Grid>
-        <DataGrid x:Name="ContractData" Margin="60,55,60,80">
+        <DataGrid x:Name="ContractData" Margin="60,55,60,80" SelectionChanged="ContractsGrid_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Contract ID" Binding="{Binding Path=ContractId}" Width="*"/>
-                <DataGridTextColumn Header="Customer" Binding="{Binding Path=CName}" Width="*"/>
-                <DataGridTextColumn Header="Job Type" Binding="{Binding Path=JType}" Width="*"/>
-                <DataGridTextColumn Header="Van" Binding="{Binding Path=VType}" Width="*"/>
-                <DataGridTextColumn Header="Origin" Binding="{Binding Path=CName}" Width="*"/>
-                <DataGridTextColumn Header="Destination" Binding="{Binding Path=Dest}" Width="*"/>
-                <DataGridTextColumn Header="Quantity" Binding="{Binding Path=Quant}" Width="*"/>
+                
+                <DataGridTextColumn Header="Customer" Binding="{Binding Path=ClientName}" Width="*"/>
+                <DataGridTextColumn Header="Job Type" Binding="{Binding Path=JobType}" Width="*"/>
+                <DataGridTextColumn Header="Van" Binding="{Binding Path=VanType}" Width="*"/>
+                <DataGridTextColumn Header="Origin" Binding="{Binding Path=Origin}" Width="*"/>
+                <DataGridTextColumn Header="Destination" Binding="{Binding Path=Destination}" Width="*"/>
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Path=Quantity}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="RequestOrder" Content="Request Order" Height="30" Width="100" Margin="490,345,60,45" Click="RequestOrder_Click"/>
