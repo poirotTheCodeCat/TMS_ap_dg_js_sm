@@ -22,7 +22,7 @@ namespace TMS
     {
         private List<Contract> allContracts = new List<Contract>();        // allContracts is used to hold all existing contracts -> can be updated
         private Contract selectedContract = new Contract();
-        private List<Contract> selectedContracts = new List<Contract>();        // Will store the list of currently selected contracts for the trip
+        private List<Contract> orderContracts = new List<Contract>();        // Will store the list of currently selected contracts for the trip
 
         private List<Carrier> AllCarriers = new List<Carrier>();
         private List<Order> currentOrderList = new List<Order>();
@@ -76,14 +76,32 @@ namespace TMS
         {
             // insert error checking function
 
+            // add the selected item to the list
+            orderContracts.Add(selectedContract);
 
-            ContractsGrid.Items.Remove(selectedContract);           // remove the item from the contract datagrid
-
+            // Add contract to orderTabe 
             TripGrid.Items.Add(selectedContract);
-            // move the contract into the second thingy
-            // make contract into order
-            selectedContract = new Contract();      // reset the selected button
 
+            // remove contract from display table 
+            ContractsGrid.Items.Remove(selectedContract);
+
+            // reset currently selected contract
+            selectedContract = new Contract();
+
+            // de activate add button
+            AddBtn.IsEnabled = false;
+
+            // if only contract in list -> display carriers of origin city
+            if(orderContracts.Count > 1)
+            {
+                // display the list of cities
+                displayCarriers(orderContracts[0].Origin);
+            } 
+        }
+
+        private void displayCarriers(string city)
+        {
+            
         }
 
         private void checkGrid()
