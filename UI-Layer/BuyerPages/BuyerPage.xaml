@@ -12,12 +12,12 @@
     <Grid>
         <DataGrid x:Name="ContractGrid" Margin="59,36,59,78" SelectionChanged="ContractGrid_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Client Name" Width="*" Binding="{Binding Path=Client_Name}"/>
-                <DataGridTextColumn Header="Job Type" Width="*" Binding="{Binding Path=Job_Type}"/>
+                <DataGridTextColumn Header="Client Name" Width="*" Binding="{Binding Path=ClientName}"/>
+                <DataGridTextColumn Header="Job Type" Width="*" Binding="{Binding Path=JobType}"/>
                 <DataGridTextColumn Header="Quantity" Width="*" Binding="{Binding Path=Quantity}"/>
                 <DataGridTextColumn Header="Origin" Width="*" Binding="{Binding Path=Origin}"/>
                 <DataGridTextColumn Header="Destination" Width="*" Binding="{Binding Path=Destination}"/>
-                <DataGridTextColumn Header="Van Type" Width="*" Binding="{Binding Path=Van_Type}"/>
+                <DataGridTextColumn Header="Van Type" Width="*" Binding="{Binding Path=VanType}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="CreateBtn" Content="Create Order" HorizontalAlignment="Left" Margin="550,355,0,0" VerticalAlignment="Top" Width="91" Height="34" Click="CreateBtn_Click" IsEnabled="False"/>

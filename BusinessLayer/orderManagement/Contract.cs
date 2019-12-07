@@ -121,7 +121,7 @@ namespace TMS
         public List<Contract> SortContracts()
         {
             
-            List<Contract> contractList = new ExternalComm().GetContracts();
+            List<Contract> contractList = new ExternalComm().GetMarketplaceContracts();
             
             List<Contract> ltlContracts = new List<Contract>(); 
 

@@ -96,35 +96,7 @@ namespace TMS
             // planner.createOrder(selectedContracts)
         }
 
-        /*
-        /// <summary>
-        /// if the FTL button is checked then switch the content presented on the screen to only show FTL contracts
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void FTLBtn_Checked(object sender, RoutedEventArgs e)
-        {
-            if(showType == App.LTL)
-            {
-                showType = App.FTL;
-            }
-            // call display function
-        }
-
-        /// <summary>
-        /// if the LTL button is checked then switch the content presented on the screen to only show LTL contracts
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void LTLBtn_Checked(object sender, RoutedEventArgs e)
-        {
-            if (showType == App.FTL)
-            {
-                showType = App.LTL;
-            }
-            // call display function
-        }
-        */
+       
 
         private void CarrierSelection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
