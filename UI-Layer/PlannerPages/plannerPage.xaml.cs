@@ -93,7 +93,7 @@ namespace TMS
 
         private void SubmitBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            // planner.createOrder(selectedContracts)
         }
 
         /*
@@ -140,6 +140,16 @@ namespace TMS
             {
                 selectedContract = contract;
             }
+        }
+
+        private void CompleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RemoveBtn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
