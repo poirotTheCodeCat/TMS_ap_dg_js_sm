@@ -125,7 +125,7 @@ namespace TMS
         /// retrieves a list of carriers from the database and generates a list of Carrier objects which it returns
         /// </summary>
         /// <returns></returns>
-        public List<Carrier> getCarriers()
+        public List<Carrier> GetCarriers()
         {
             using (var myConn = new MySqlConnection(connectionString))
             {

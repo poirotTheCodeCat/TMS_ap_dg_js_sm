@@ -31,11 +31,11 @@ namespace TMS
         /// </summary>
         /// <param name="searchItem">The identifier for the Carrier that will be returned</param>
         /// <returns>Carrier that is requested.</returns>
-        public Carrier GetCarrier(string searchItem)
+        List<Carrier> GetCarriers()
         {
-            Carrier carrier = new Carrier();
+            List<Carrier> carriers = new LocalComm().GetCarriers();
 
-            return carrier;
+            return carriers;
         }
 
         /// <summary>
