@@ -4,36 +4,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace mockTMS
+namespace TMS
 {
-    class TransportCorridor
+    public class TransportCorridor
     {
-        private string transportCorridor_ID;
-        private string city_Name;
+        private string transportCorridorID;
+        private string cityName;
         private int distance;
-        private double time_Between;
+        private double timeBetween;
         private string west;
         private string east;
 
-        public string TransportCorridor_ID
+        public string TransportCorridorID
         {
-            get { return transportCorridor_ID; }
-            set { transportCorridor_ID = value; }
+            get { return transportCorridorID; }
+            set { transportCorridorID = value; }
         }
-        public string City_Name
+        public string CityName
         {
-            get { return city_Name; }
-            set { city_Name = value; }
+            get { return cityName; }
+            set { cityName = value; }
         }
         public int Distance
         {
             get { return distance; }
             set { distance = value; }
         }
-        public double Time_Between
+        public double TimeBetween
         {
-            get { return time_Between; }
-            set { time_Between = value; }
+            get { return timeBetween; }
+            set { timeBetween = value; }
         }
         public string West
         {

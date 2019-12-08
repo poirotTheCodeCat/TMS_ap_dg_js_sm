@@ -22,14 +22,29 @@ namespace TMS
         private int quant;///< Holds the quantity of vans available
         private string origin;///< Holds origin city
         private string dest;///< Holds the destination city
+        private DateTime? endTime;
+        private double price;
+        private int buyerSelected;
+        private int plannerConfirmed;
         private int contractStatus;///< Holds the contract status
+
+        /* 1. BuyerSelected = 0 
+         * - Appears in buyer screen, not in planner 
+         * 2. BuyerSelected = 1 && EndTime doesn't exist, Price doesn't exist, no associated arriers etc.;
+         * - Appears in planner screen 
+         * 3. PlannerCompleted = 0 && EndTime, Price, associated carriers exist 
+         * - Active order 
+         * 4. PlannerCompleted = 1 
+         * - Completed order 
+         */
+
 
 
         /// <summary>
         /// Get and set contractId  
         /// </summary>
         /// 
-        public int ContractId
+        public int ContractID
         {
             get { return contractId; }
             set { contractId = value; }
@@ -90,11 +105,31 @@ namespace TMS
             set { dest = value; }
         }
 
-        public int ContractStatus
+        public double Price
         {
-            get { return contractStatus; }
-            set { contractStatus = value; }
+            get { return price; }
+            set { price = value; }
         }
+
+        public DateTime? EndTime
+        {
+            get { return endTime; }
+            set { endTime = value; }
+        }
+
+        public int BuyerSelected
+        {
+            get { return buyerSelected; }
+            set { buyerSelected = value; }
+        }
+
+        public int PlannerConfirmed
+        {
+            get { return plannerConfirmed; }
+            set { plannerConfirmed = value; }
+        }
+
+
 
         private List<Contract> CurrentContracts;
         public List<Contract> SingleContracts;
@@ -112,6 +147,15 @@ namespace TMS
         {
             List<Contract> contractList = new ExternalComm().GetMarketplaceContracts();
             return contractList;
+        }
+
+        /// <summary>
+        /// This method will allow the Buyer to get contracts from the Contract Marketplace database. 
+        /// </summary>
+        /// <returns>Listmof the Contracts received from the Contract Marketplace.</returns>
+        public void UpdateContract()
+        {
+            new LocalComm().UpdateContract(this);
         }
 
         /// <summary>
