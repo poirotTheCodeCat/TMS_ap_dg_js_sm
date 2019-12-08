@@ -77,6 +77,7 @@ namespace TMS
         private void AddContract_Click(object sender, RoutedEventArgs e)
         {
             // insert error checking function
+            
 
             // add the selected item to the list
             orderContracts.Add(selectedContract);
@@ -98,6 +99,19 @@ namespace TMS
             } 
         }
 
+        /// <summary>
+        /// This evaluates the current contract and ajusts the UI according to the business rules 
+        /// </summary>
+        /// <param name="contract"></param>
+        public void checkContract(Contract contract)
+        {
+
+        }
+
+        /// <summary>
+        /// This displays all carriers that belong to a certain city on the screen
+        /// </summary>
+        /// <param name="city"></param>
         private void displayCarriers(string city)
         {
             List<Carrier> carriers = new Planner().GetCarriers();
@@ -115,20 +129,25 @@ namespace TMS
             }
         }
 
-        private void checkGrid()
-        {
-
-        }
-
+        /// <summary>
+        /// This button event fires when the submit button is pressed -> it generates an order from whatever is currently in the orderlist
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SubmitBtn_Click(object sender, RoutedEventArgs e)
         {
             // planner.createOrder(selectedContracts)
+            if(!AddBtn.IsEnabled)       // if the Add button has been deactivated re enable it
+            {
+                AddBtn.IsEnabled = true;
+            }
         }
 
        
 
         private void CarrierSelection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
         }
 
         private void ContractsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
