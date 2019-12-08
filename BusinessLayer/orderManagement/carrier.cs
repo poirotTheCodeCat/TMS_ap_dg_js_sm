@@ -22,7 +22,9 @@ namespace TMS
         private double ftlRate;///< Holds the rate of FTL for the specified carrier
         private double ltlRate;///< Holds the rate of LTL for the specified carrier
         private double reeferCharge;///< Holds the rate of a reefer for the specified carrier
+        private int pallets;
         private List<string> depotCities;
+        private string depotCityString;
 
 
         /// <summary>
@@ -93,6 +95,22 @@ namespace TMS
             set { depotCities = value; }
         }
 
+        public string DepotCityString
+        {
+            get { return depotCityString; }
+            set
+            {
+                foreach(string s in DepotCities)
+                {
+                    depotCityString += s + "\n";
+                }
+            }
+        }
+        public int Pallets
+        {
+            get { return pallets; }
+            set { pallets = value; }
+        }
 
         /// <summary>
         /// This method queries the DBMS for the selected carrier infromation. 
