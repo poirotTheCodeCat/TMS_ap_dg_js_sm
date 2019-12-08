@@ -156,6 +156,7 @@ namespace TMS
             return done;
         }
 
+        /*
         double GetClientCharge(List<Contract> contracts, List<Carrier> orderCarriers, List<Carrier> originalCarriers)
         {
             int jobType = contracts[0].JobType;
@@ -166,6 +167,7 @@ namespace TMS
             }
 
         }
+        */
 
         double GetCharge(List<Contract> contracts, List<Carrier> orderCarriers, List<Carrier> originalCarriers)
         {
