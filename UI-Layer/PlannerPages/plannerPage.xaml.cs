@@ -45,8 +45,15 @@ namespace TMS
         public PlannerPage()
         {
             InitializeComponent();
-            fillLists();            // fill the allContracts list with data from the database
-            generateContractData();
+            try
+            {
+                fillLists();            // fill the allContracts list with data from the database
+                generateContractData();
+            }
+            catch
+            {
+                MessageBox.Show("Unable to connect IP or Port information");
+            }
         }
 
         //                                      Methods 

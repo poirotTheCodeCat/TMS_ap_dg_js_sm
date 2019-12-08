@@ -28,6 +28,7 @@ namespace TMS
         {
             int done = 0;
 
+
             done = 1; //set to true for testing
 
             return done;
@@ -44,7 +45,7 @@ namespace TMS
         public int ChangeCmpConnSettings(string newIP, string newPort = "")
         {
             int done = 0;
-
+            
             done = 1; //set to true for testing
 
             return done;
@@ -133,6 +134,43 @@ namespace TMS
             done = 1; //set to true for testing
 
             return done;
+        }
+
+        /// <summary>
+        /// This method gets a Carrier to view the details of that Carrier. 
+        /// </summary>
+       
+        /// <returns>Carrier that is requested.</returns>
+        public List<Carrier> GetCarriers()
+        {
+            List<Carrier> carriers = new Planner().GetCarriers();
+           
+            return carriers;
+        }
+
+        /// <summary>
+        /// This method gets a Carrier to view the details of that Carrier. 
+        /// </summary>
+        /// <returns>Routes that are requested.</returns>
+        public List<TransportCorridor> GetRoutes()
+        {
+
+            List<TransportCorridor> routes = new LocalComm().GetRoutes();
+            
+
+            return routes;
+        }
+
+        /// <summary>
+        /// This method gets a Carrier to view the details of that Carrier. 
+        /// </summary>
+        /// <returns>Rates that are requested.</returns>
+        public List<double> GetRates()
+        {
+            List<double> rates = new LocalComm().GetRates();
+            
+
+            return rates;
         }
     }
 }

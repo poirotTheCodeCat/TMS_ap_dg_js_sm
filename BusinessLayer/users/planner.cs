@@ -237,13 +237,41 @@ namespace TMS
         /// </summary>
         /// <param name="contracts"></param>
         /// <param name="orderCarriers"></param>
-        public void CreateOrder(List<Contract> contracts, List<Carrier> carriers, List<Carrier> originalCarriers)
+        public void CreateOrder(List<Contract> contracts, List<Carrier> carriers)
         {
             // 1. Create a trip for each carrier and contract 
             // 2. Generate the price to be used for invoice generation 
             // 3. Add order lines for customer id, end time, status (for planner confirmation), price)
-      
+
+            int remaining = 0; 
             // Add all carriers to each contract 
+            // Update Carrier availability 
+            if(contracts.Count == 1 && contracts[0].JobType == 1)
+            {
+                remaining = contracts[0].Quantity;
+                for (int i = 0; i < carriers.Count; i++)
+                {
+                    // If it is not the last carrier added 
+                    if (i == carriers.Count - 1)
+                    {
+                        carriers[i].LtlAvail -= remaining;
+                        new LocalComm().UpdateCarrierLTL(carriers[i]);
+                    }
+                    else
+                    {
+                        remaining -= carriers[i].LtlAvail;
+                        carriers[i].LtlAvail = 0;
+                        new LocalComm().UpdateCarrierLTL(carriers[i]);
+                    }
+                }
+            }
+            else // FTL or combined LTLs, only one carrier  
+            {
+                carriers[0].FtlAvail -= 1;
+                new LocalComm().UpdateCarrierFTL(carriers[0]);
+            }
+            
+            /*
             foreach(Carrier carr in carriers)
             {
                 // Update Carrier availability 
@@ -263,6 +291,7 @@ namespace TMS
                     new LocalComm().AddTrip(con.ContractID, carr.CarrierID);
                 }
             }
+            */
 
             DateTime startTime = DateTime.Now;
             // BuyerSelected = 1 
@@ -270,7 +299,7 @@ namespace TMS
             // EndTime != null 
             foreach(Contract con in contracts)
             {
-                con.Price = GetClientCharge(con, carriers, originalCarriers);
+               // con.Price = GetClientCharge(con, carriers, originalCarriers);
                 con.EndTime = startTime.AddHours(CalculateTime(con));
                 con.UpdateContract();
             }

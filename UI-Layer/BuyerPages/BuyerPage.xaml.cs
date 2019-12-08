@@ -27,10 +27,18 @@ namespace TMS
         public BuyerPage()
         {
             InitializeComponent();
-            // call function that will fill the datagrid
-            fillList();
-            // create thread that automatically refreshes datagrid for new contracts from the marketplace
-            fillGrid();
+
+            try
+            {
+                // call function that will fill the datagrid
+                fillList();
+                // create thread that automatically refreshes datagrid for new contracts from the marketplace
+                fillGrid();
+            }
+            catch
+            {
+                MessageBox.Show("Unable to connect IP or Port information");
+            }
         }
 
         /// <summary>
