@@ -174,8 +174,8 @@ namespace TMS
                 if(c.DepotCities.Contains(city))
                 {
                     displayString = c.CarrierName + " || " + c.FtlAvail + " || " + c.LtlAvail + " || " + c.FtlRate + " || " + c.LtlAvail;
-                    citySelect.Items.Add(displayString);
-                    currCarriers.Add(c);
+                    carrierSelect.Items.Add(displayString);
+                    carriersToDisplay.Add(c);
                 }
             }
         }
@@ -190,8 +190,15 @@ namespace TMS
             // check the orderlist vs the carrier LTL/FTL rate
             // if(confirmContract())
             // planner.CreateOrder(orderContracts, currCarriers);
+            if(currCarriers.Count == 0)
+            {
+                Error.Content = "You must enter a Carrier";
+                return;
+            }
 
-            if(!AddBtn.IsEnabled)       // if the Add button has been deactivated re enable it
+            planner.CreateOrder(orderContracts, currCarriers);
+
+            if (!AddBtn.IsEnabled)       // if the Add button has been deactivated re enable it
             {
                 AddBtn.IsEnabled = true;
             }
@@ -217,13 +224,16 @@ namespace TMS
         {
             DataGrid selection = (DataGrid)sender;
             Carrier removeCarrier = selection.SelectedItem as Carrier;
+            if(removeCarrier != null)
+            {
+                string addString = removeCarrier.CarrierName + " || " + removeCarrier.FtlAvail + " || " + removeCarrier.LtlAvail + " || " + removeCarrier.FtlRate + " || " + removeCarrier.LtlAvail;
 
-            citySelect.Items.Remove(removeCarrier);     // remove the carrier from the datagrid
-            currCarriers.Remove(removeCarrier);     // remove the carrier from the list of current carriers
+                CarrierGrid.Items.Remove(removeCarrier);     // remove the carrier from the datagrid
+                currCarriers.Remove(removeCarrier);     // remove the carrier from the list of current carriers
 
-            string addString = removeCarrier.CarrierName + " || " + removeCarrier.FtlAvail + " || " + removeCarrier.LtlAvail + " || " + removeCarrier.FtlRate + " || " + removeCarrier.LtlAvail;
-
-            citySelect.Items.Add(addString);
+                carrierSelect.Items.Add(addString);
+            }
+            
         }
 
 
@@ -311,13 +321,13 @@ namespace TMS
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void citySelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void carrier_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;       
             int index = comboBox.SelectedIndex;         // get the index of the selected combobox
             if (index >= 0)
             {
-                Carrier carrier = currCarriers[index];      // get the current carrier 
+                Carrier carrier = carriersToDisplay[index];      // get the current carrier 
 
 
                 CarrierGrid.Items.Add(carrier);             // add the carrier 
@@ -325,7 +335,7 @@ namespace TMS
 
                 string displayString = carrier.CarrierName + " || " + carrier.FtlAvail + " || " + carrier.LtlAvail + " || " + carrier.FtlRate + " || " + carrier.LtlAvail;
 
-                citySelect.Items.Remove(displayString);     // remove the selected carrier from the combobox
+                carrierSelect.Items.Remove(displayString);     // remove the selected carrier from the combobox
             }
         }
 
