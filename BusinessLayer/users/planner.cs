@@ -169,6 +169,38 @@ namespace TMS
         {
             double distance = CalculateTime(contract);
             double price = 0;
+            double dailyCharge = 150;
+            int daysTravelled = 0;
+            int pallets = 0;
+
+            double d = distance;
+            while(d > 24)
+            {
+                d -= 24;
+                ++daysTravelled;
+            }
+            // This means only one Carrier
+            if(contract.JobType == 1)
+            {
+                contract.Price = (distance * orderCarriers[0].FtlRate) + (daysTravelled * dailyCharge);
+            }
+            else
+            {
+                // Finds the number of pallets carried by each carrier, bills appropriately 
+                foreach(Carrier orderC in orderCarriers)
+                {
+                    foreach(Carrier origC in originalCarriers)
+                    {
+                        if(origC.CarrierID == orderC.CarrierID)
+                        {
+                            pallets = origC.LtlAvail - orderC.LtlAvail;
+                            contract.Price += pallets * distance * orderC.LtlRate;
+                        }
+                    }
+                }
+
+                contract.Price += daysTravelled * dailyCharge;
+            }
             return price;
         }
         
@@ -228,7 +260,6 @@ namespace TMS
                 con.UpdateContract();
             }
 
-            
         }
 
         /// <summary>

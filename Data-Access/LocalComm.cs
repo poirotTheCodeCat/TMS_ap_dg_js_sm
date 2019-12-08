@@ -65,7 +65,7 @@ namespace TMS
                 myCommand.Parameters.AddWithValue("@endT", contract.EndTime);
                 myCommand.Parameters.AddWithValue("@p", contract.Price);
                 myCommand.Parameters.AddWithValue("@buyerSel", contract.BuyerSelected);
-                myCommand.Parameters.AddWithValue("@plannerCompl", contract.PlannerConfirmed);
+                myCommand.Parameters.AddWithValue("@plannerConf", contract.PlannerConfirmed);
 
                 myConn.Open();
 
