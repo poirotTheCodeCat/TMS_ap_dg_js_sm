@@ -98,13 +98,7 @@ namespace TMS
         public string DepotCityString
         {
             get { return depotCityString; }
-            set
-            {
-                foreach(string s in DepotCities)
-                {
-                    depotCityString += s + "\n";
-                }
-            }
+            set { depotCityString = value; }
         }
         public int Pallets
         {
