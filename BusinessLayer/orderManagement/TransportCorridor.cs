@@ -53,9 +53,6 @@ namespace TMS
             set { routes = value; }
         }
 
-        public TransportCorridor()
-        {
-            Routes = new LocalComm().GetRoutes();
-        }
+        
     }
 }
