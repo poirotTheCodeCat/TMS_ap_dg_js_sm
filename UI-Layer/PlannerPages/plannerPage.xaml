@@ -54,6 +54,16 @@
         <TextBox HorizontalAlignment="Left" Height="23" Margin="429,133,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="147"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="595,133,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="84"/>
 
-        <DataGrid Margin="429,38,21,316" ></DataGrid>
+        <DataGrid x:Name="CarrierGrid" Margin="429,38,21,316" >
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn Width="30" Binding="{Binding}"/>
+                <DataGridTextColumn Header="Carrier" Binding="{Binding Path=CarrierName}" Width="75"/>
+                <DataGridTextColumn Header="LTL Rate" Binding="{Binding Path=LtlRate}" Width="75"/>
+                <DataGridTextColumn Header="FTL Rate" Binding="{Binding Path=FtlRate}" Width="75"/>
+                <DataGridTextColumn Header="LTL Avail" Binding="{Binding Path=LtlAvailable}" Width="75"/>
+                <DataGridTextColumn Header="FTL Avail" Binding="{Binding Path=FtlAvailable}" Width="75"/>
+                <DataGridTextColumn Header="Reefer Rate" Binding="{Binding Path=ReeferCharge}" Width="75"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

@@ -31,7 +31,7 @@ namespace TMS
         /// </summary>
         /// <param name="searchItem">The identifier for the Carrier that will be returned</param>
         /// <returns>Carrier that is requested.</returns>
-        List<Carrier> GetCarriers()
+        public List<Carrier> GetCarriers()
         {
             List<Carrier> carriers = new LocalComm().GetCarriers();
 

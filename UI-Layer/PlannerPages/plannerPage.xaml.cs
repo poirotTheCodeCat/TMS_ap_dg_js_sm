@@ -101,7 +101,11 @@ namespace TMS
 
         private void displayCarriers(string city)
         {
-            
+            List<Carrier> carriers = new Planner().GetCarriers();
+            foreach(Carrier c in carriers)
+            {
+
+            }
         }
 
         private void checkGrid()
