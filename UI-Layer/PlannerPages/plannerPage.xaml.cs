@@ -150,7 +150,7 @@ namespace TMS
             // check the orderlist vs the carrier LTL/FTL rate
             // if(confirmContract())
 
-            // planner.createOrder(selectedContracts)       // generate the order
+            
 
             if(!AddBtn.IsEnabled)       // if the Add button has been deactivated re enable it
             {
