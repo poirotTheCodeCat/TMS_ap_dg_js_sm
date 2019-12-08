@@ -65,7 +65,7 @@ namespace TMS
                 myCommand.Parameters.AddWithValue("@endT", contract.EndTime);
                 myCommand.Parameters.AddWithValue("@p", contract.Price);
                 myCommand.Parameters.AddWithValue("@buyerSel", contract.BuyerSelected);
-                myCommand.Parameters.AddWithValue("@plannerSel", contract.PlannerSelected);
+                myCommand.Parameters.AddWithValue("@plannerCompl", contract.PlannerConfirmed);
 
                 myConn.Open();
 
@@ -324,13 +324,11 @@ namespace TMS
                     Origin = row["Origin"].ToString(),
                     Destination = row["Destination"].ToString(),
                     VanType = Convert.ToInt32(row["VanType"]),
-                    EndTime = Convert.ToDateTime(row["EndTime"]),
+                    EndTime = string.IsNullOrEmpty(row["EndTime"].ToString()) ? (DateTime?)null : DateTime.Parse(row["EndTime"].ToString()),
                     Price = Convert.ToDouble(row["Price"]),
                     BuyerSelected = Convert.ToInt32(row["BuyerSelected"]),
-                    PlannerSelected = Convert.ToInt32(row["PlannerSelected"])
-
-
-                }); ;;
+                    PlannerConfirmed = Convert.ToInt32(row["PlannerConfirmed"])
+                });
             }
 
             return contracts;

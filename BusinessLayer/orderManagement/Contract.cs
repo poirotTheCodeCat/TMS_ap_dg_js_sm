@@ -22,10 +22,10 @@ namespace TMS
         private int quant;///< Holds the quantity of vans available
         private string origin;///< Holds origin city
         private string dest;///< Holds the destination city
-        private DateTime endTime;
+        private DateTime? endTime;
         private double price;
         private int buyerSelected;
-        private int plannerCompleted;
+        private int plannerConfirmed;
         private int contractStatus;///< Holds the contract status
 
         /* 1. BuyerSelected = 0 
@@ -111,7 +111,7 @@ namespace TMS
             set { price = value; }
         }
 
-        public DateTime EndTime
+        public DateTime? EndTime
         {
             get { return endTime; }
             set { endTime = value; }
@@ -123,10 +123,10 @@ namespace TMS
             set { buyerSelected = value; }
         }
 
-        public int PlannerSelected
+        public int PlannerConfirmed
         {
-            get { return plannerCompleted; }
-            set { plannerCompleted = value; }
+            get { return plannerConfirmed; }
+            set { plannerConfirmed = value; }
         }
 
 

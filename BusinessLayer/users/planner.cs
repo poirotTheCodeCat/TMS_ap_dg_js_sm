@@ -142,7 +142,7 @@ namespace TMS
 
             foreach(Contract c in allContracts)
             {
-                if(c.PlannerSelected == 0 && c.EndTime == null)
+                if(c.PlannerConfirmed == 0 && c.EndTime == null)
                 {
                     pendingOrderList.Add(c);
                 }
