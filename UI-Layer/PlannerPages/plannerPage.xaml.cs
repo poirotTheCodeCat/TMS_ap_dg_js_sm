@@ -90,11 +90,8 @@ namespace TMS
             // reset currently selected contract
             selectedContract = new Contract();
 
-            // de activate add button
-            AddBtn.IsEnabled = false;
-
             // if only contract in list -> display carriers of origin city
-            if(orderContracts.Count > 1)
+            if(orderContracts.Count == 1)
             {
                 // display the list of cities
                 displayCarriers(orderContracts[0].Origin);
@@ -104,12 +101,17 @@ namespace TMS
         private void displayCarriers(string city)
         {
             List<Carrier> carriers = new Planner().GetCarriers();
+            List<Carrier> displayCarriers = new List<Carrier>();
             foreach(Carrier c in carriers)
             {
-                if(c.DepotCity == city)
+                if(c.DepotCities.Contains(city))
                 {
-                    CarrierGrid.Items.Add(c);
+                    displayCarriers.Add(c);
                 }
+            }
+            foreach(Carrier display in displayCarriers)
+            {
+                CarrierGrid.Items.Add(display);
             }
         }
 
@@ -127,14 +129,6 @@ namespace TMS
 
         private void CarrierSelection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DataGrid gridSelection = (DataGrid)sender;
-            Contract contractToDelete = gridSelection.SelectedItem as Contract;
-
-            if(contractToDelete != null)
-            {
-                RemoveBtn.IsEnabled = true;
-                deleteContract = contractToDelete;
-            }
         }
 
         private void ContractsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -169,9 +163,6 @@ namespace TMS
                 // reset deleteContact
                 deleteContract = new Contract();
 
-                // deactivate button
-                RemoveBtn.IsEnabled = false;
-
                 //if(list is empty or null) -> clear carriers list and display
                 if(orderContracts.Count == 0)
                 {
@@ -181,6 +172,17 @@ namespace TMS
         }
 
         private void TripGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DataGrid gridSelection = (DataGrid)sender;
+            Contract contractToDelete = gridSelection.SelectedItem as Contract;
+
+            if (contractToDelete != null)
+            {
+                deleteContract = contractToDelete;
+            }
+        }
+
+        private void GenerateInvoiceBtn_Click(object sender, RoutedEventArgs e)
         {
 
         }

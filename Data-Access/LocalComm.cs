@@ -129,7 +129,7 @@ namespace TMS
         {
             using (var myConn = new MySqlConnection(connectionString))
             {
-                const string SqlStatement = @"SELECT * FROM Carriers";
+                const string SqlStatement = @"SELECT * FROM Carrier";
 
                 var myCommand = new MySqlCommand(SqlStatement, myConn);
                 var myAdapter = new MySqlDataAdapter
@@ -197,17 +197,18 @@ namespace TMS
 
             foreach (DataRow row in table.Rows)
             {
-               
+
 
                 carriers.Add(new Carrier
                 {
                     CarrierID = Convert.ToInt32(row["CarrierID"]),
+                    CarrierName = row["CarrierName"].ToString(),
                     FtlAvail = Convert.ToInt32(row["FtlAvail"]),
                     LtlAvail = Convert.ToInt32(row["LtlAvail"]),
                     FtlRate = Convert.ToDouble(row["FtlRate"]),
                     LtlRate = Convert.ToDouble(row["LtlRate"]),
                     ReefRate = Convert.ToDouble(row["ReefRate"]),
-                });
+                }) ;
             }
             return carriers;
         }
