@@ -14,6 +14,7 @@ namespace TMS
         private double timeBetween;
         private string west;
         private string east;
+        private List<TransportCorridor> routes = new List<TransportCorridor>();
 
         public string TransportCorridorID
         {
@@ -44,6 +45,17 @@ namespace TMS
         {
             get { return east; }
             set { east = value; }
+        }
+
+        public List<TransportCorridor> Routes
+        {
+            get { return routes; }
+            set { routes = value; }
+        }
+
+        public TransportCorridor()
+        {
+            Routes = new LocalComm().GetRoutes();
         }
     }
 }
