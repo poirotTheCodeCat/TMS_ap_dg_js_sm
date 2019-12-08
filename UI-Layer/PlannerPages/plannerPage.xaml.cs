@@ -104,7 +104,10 @@ namespace TMS
             List<Carrier> carriers = new Planner().GetCarriers();
             foreach(Carrier c in carriers)
             {
-
+                if(c.DepotCity == city)
+                {
+                    CarrierGrid.Items.Add(c);
+                }
             }
         }
 
