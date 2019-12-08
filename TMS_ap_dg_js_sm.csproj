@@ -76,7 +76,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BusinessLayer\orderManagement\CombineContracts.cs" />
-    <Compile Include="BusinessLayer\orderManagement\TransportationCorridor.cs" />
+    <Compile Include="BusinessLayer\orderManagement\TransportCorridor.cs" />
     <Compile Include="BusinessLayer\Logger.cs" />
     <Compile Include="BusinessLayer\orderManagement\Contract.cs" />
     <Page Include="UI-Layer\AdminPages\AdminPage.xaml">

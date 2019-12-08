@@ -16,12 +16,14 @@ namespace TMS
     public class Planner
     {
         private int PalletThreshold { get; set; }
+        private List<TransportCorridor> transportCorridors = new List<TransportCorridor>();
+        
         //private Order workingOrder;
         //private bool pendingOrders;
 
 
 
-           public Planner()
+        public Planner()
         {
             PalletThreshold = 17;
         }
@@ -58,7 +60,6 @@ namespace TMS
             if (jobType == 0)
             {
                 carrier.FtlAvail -= 1;
-                new LocalComm().UpdateCarrierFTL(carrier);
             }
             else
             {
@@ -67,19 +68,18 @@ namespace TMS
                     remainingLoad = quantityPallets - carrier.LtlAvail;
                     
                         carrier.LtlAvail = 0;
-                        new LocalComm().UpdateCarrierLTL(carrier);
                     
                     
                 }
                 else
                 {
                     carrier.LtlAvail = quantityPallets;
-                    new LocalComm().UpdateCarrierLTL(carrier);
                 }
             }
 
             return remainingLoad;
         }
+
         /// <summary>
         /// This method allows the Planner to create a Trip that will be added to an Order.
         /// </summary>
@@ -137,8 +137,16 @@ namespace TMS
         public List<Contract> ShowPendingOrders()
         {
             List<Contract> pendingOrderList = new List<Contract>();
+            List<Contract> allContracts = new LocalComm().GetLocalContracts();
+            //pendingOrderList = new LocalComm().GetPendingContracts();
 
-            pendingOrderList = new LocalComm().GetPendingContracts();
+            foreach(Contract c in allContracts)
+            {
+                if(c.PlannerSelected == 0 && c.EndTime == null)
+                {
+                    pendingOrderList.Add(c);
+                }
+            }
 
             return pendingOrderList;
         }
@@ -156,32 +164,179 @@ namespace TMS
             return done;
         }
 
-        /*
-        double GetClientCharge(List<Contract> contracts, List<Carrier> orderCarriers, List<Carrier> originalCarriers)
+        
+        double GetClientCharge(Contract contract, List<Carrier> orderCarriers, List<Carrier> originalCarriers)
         {
-            int jobType = contracts[0].JobType;
-            double charge = 0.00; 
-            if(jobType == 0)
-            {
-
-            }
-
+            double distance = CalculateTime(contract);
+            double price = 0;
+            return price;
         }
-        */
+        
 
-        double GetCharge(List<Contract> contracts, List<Carrier> orderCarriers, List<Carrier> originalCarriers)
+        double GetBreakevenCharge(List<Contract> contracts, List<Carrier> orderCarriers, List<Carrier> originalCarriers)
         {
             int jobType = contracts[0].JobType;
             double charge = 0.00;
             if (jobType == 0)
             {
-
             }
+
+            return charge;
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="contracts"></param>
+        /// <param name="orderCarriers"></param>
+        void CreateOrder(List<Contract> contracts, List<Carrier> carriers, List<Carrier> originalCarriers)
+        {
+            // 1. Create a trip for each carrier and contract 
+            // 2. Generate the price to be used for invoice generation 
+            // 3. Add order lines for customer id, end time, status (for planner confirmation), price)
+      
+            // Add all carriers to each contract 
+            foreach(Carrier carr in carriers)
+            {
+                // Update Carrier availability 
+                if(contracts[0].JobType == 0)
+                {
+                    new LocalComm().UpdateCarrierFTL(carr);
+                }
+                else
+                {
+                    new LocalComm().UpdateCarrierLTL(carr);
+                }
+
+                // Create a trip for each carrier and Contract 
+                // | CarrierID | Contract ID |  
+                foreach (Contract con in contracts)
+                {
+                    new LocalComm().AddTrip(con.ContractID, carr.CarrierID);
+                }
+            }
+
+            DateTime startTime = DateTime.Now;
+            // BuyerSelected = 1 
+            // PlannerSelected = 0
+            // EndTime != null 
+            foreach(Contract con in contracts)
+            {
+                con.Price = GetClientCharge(con, carriers, originalCarriers);
+                con.EndTime = startTime.AddHours(CalculateTime(con));
+                con.UpdateContract();
+            }
+
+            
+        }
+
+        /// <summary>
+        /// Calculates the total time needed to complete the trip in hours
+        /// </summary>
+        /// <param name="startCity"></param>
+        /// <param name="endCity"></param>
+        /// <param name="jobType"></param>
+        /// <returns></returns>
+        public double CalculateTime(Contract contract)
+        {
+
+            int originIndex = -1;
+            int DestIndex = -1;
+            int daysAdded = 0;
+            double layoverTime = 2;
+            double restTime = 0;
+            double totalTime = 0;
+            double driveTime = 0;
 
 
+            foreach (TransportCorridor t in transportCorridors)
+            {
+                // find the index of the start city
+                // find the index of the second city
+                if (contract.Origin == t.CityName)        // check if the city is the origin city
+                {
+                    originIndex = transportCorridors.IndexOf(t);
+                }
+                if (contract.Destination == t.CityName)          // check if the city is the destination city
+                {
+                    DestIndex = transportCorridors.IndexOf(t);
+                }
+                if (originIndex != -1 && DestIndex != -1)
+                {
+                    break;
+                }
+            }
+
+            if (originIndex < DestIndex)     // if the destination is west
+            {
+                for (int i = originIndex; i <= DestIndex; i++)
+                {
+                    // Add two hours for each intermediate city if LTL, or if loading/unloading for FTL and LTL
+                    if (contract.Origin == transportCorridors[i].CityName || contract.Origin == transportCorridors[i].CityName
+                        || contract.JobType == 1)
+                    {
+                        restTime += layoverTime;
+                        totalTime += restTime;
+                    }
+                    if (totalTime < 12 && driveTime < 8)
+                    {
+                        driveTime += transportCorridors[i].TimeBetween;
+                        totalTime += driveTime;
+
+                    }
+                    if (totalTime >= 12 || driveTime >= 8)
+                    {
+                        ++daysAdded;
+                        restTime = 0;
+                        driveTime = 0;
+
+                        // The final time is calculated by totalTime + (daysAdded*24), totalTime serves as the 
+                        // remainder of hours if a whole day wasn't required, set to 0 if the last city 
+                        // has been reached so too much time isn't added.
+                        if (contract.Origin == transportCorridors[i].CityName)
+                        {
+                            totalTime = 0;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (originIndex > DestIndex)     // if the destination is east
+                {
+                    for (int j = originIndex; j >= DestIndex; j--)
+                    {
+                        if (contract.Origin == transportCorridors[j-1].CityName || contract.Origin == transportCorridors[j-1].CityName
+                        || contract.JobType == 1)
+                        {
+                            restTime += layoverTime;
+                            totalTime += restTime;
+                        }
+                        if (totalTime < 12 && driveTime < 8)
+                        {
+                            driveTime += transportCorridors[j - 1].TimeBetween;
+                            totalTime += driveTime;
+
+                        }
+                        if (totalTime >= 12 || driveTime >= 8)
+                        {
+                            ++daysAdded;
+                            restTime = 0;
+                            driveTime = 0;
+                            if (contract.Origin == transportCorridors[j - 1].CityName)
+                            {
+                                totalTime = 0;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return totalTime + (daysAdded * 24);
+        }
+            
+       
         /// <summary>
         /// This method checks whether the Contract selected can be added to the 
         /// Order being created based on the origin city, job type, and van type.

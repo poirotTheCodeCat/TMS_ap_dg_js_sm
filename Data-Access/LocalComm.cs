@@ -53,24 +53,30 @@ namespace TMS
             return invoice;
         }
 
-        /// <summary>
-        /// This method updates an Order's status in the TMS database.
-        /// </summary>
-        /// <param name="searchItem1">The identifier for the Order that requires
-        ///                             an update</param>
-        /// <param name="searchItem2">The identifier for the Status being added to
-        ///                             the Order</param>
-        /// <returns>String containing the information required for an invoice.</returns>
-        public Order UpdateOrderStatus(string searchItem1, string searchItem2)
+
+        public void UpdateContract(Contract contract)
         {
-            Order order = new Order();
-            return order;
+            using (var myConn = new MySqlConnection(connectionString))
+            {
+
+                var myCommand = new MySqlCommand("UpdateContract", myConn);
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.Parameters.AddWithValue("@id", contract.ContractID);
+                myCommand.Parameters.AddWithValue("@endT", contract.EndTime);
+                myCommand.Parameters.AddWithValue("@p", contract.Price);
+                myCommand.Parameters.AddWithValue("@buyerSel", contract.BuyerSelected);
+                myCommand.Parameters.AddWithValue("@plannerSel", contract.PlannerSelected);
+
+                myConn.Open();
+
+                myCommand.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
-        /// This method will query the Contract Marketplace database for Contracts. 
+        /// This method will query add a Contract to the TMS Database
         /// </summary>
-        /// <returns>List<Contract> of the contracts from the Contract Marketplace.</returns>
+        /// <returns>None.</returns>
         public void AddContract(Contract pending)
         {
 
@@ -79,7 +85,7 @@ namespace TMS
 
                 var myCommand = new MySqlCommand("AddContract", myConn);
                 myCommand.CommandType = CommandType.StoredProcedure;
-                myCommand.Parameters.AddWithValue("@status", pending.ContractStatus);
+                //myCommand.Parameters.AddWithValue("@status", pending.ContractStatus);
                 myCommand.Parameters.AddWithValue("@name", pending.ClientName);
                 myCommand.Parameters.AddWithValue("@jType", pending.JobType);
                 myCommand.Parameters.AddWithValue("@vType", pending.VanType);
@@ -94,9 +100,57 @@ namespace TMS
             }
         }
 
+        /// <summary>
+        /// This method will add an Orderline to the TMS Database 
+        /// </summary>
+        /// <returns>None.</returns>
+        public void AddTrip(int contract, int carrier)
+        {
+            using (var myConn = new MySqlConnection(connectionString))
+            {
+
+                var myCommand = new MySqlCommand("AddTrip", myConn);
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.Parameters.AddWithValue("@contract", contract);
+                myCommand.Parameters.AddWithValue("@carrier", carrier);
+
+                myConn.Open();
+
+                myCommand.ExecuteNonQuery();
+
+            }
+        }
+
         public List<Contract> GetPendingContracts()
         {
             const string sqlStatement = @" SELECT * FROM Contract WHERE ContractStatus=0;";
+
+
+            using (var myConn = new MySqlConnection(connectionString))
+            {
+
+                var myCommand = new MySqlCommand(sqlStatement, myConn);
+
+
+                //For offline connection we weill use  MySqlDataAdapter class.  
+                var myAdapter = new MySqlDataAdapter
+                {
+                    SelectCommand = myCommand
+                };
+
+                var dataTable = new DataTable();
+
+                myAdapter.Fill(dataTable);
+
+                var contracts = DataTableToContractsList(dataTable);
+
+                return contracts;
+            }
+        }
+
+        public List<Contract> GetLocalContracts()
+        {
+            const string sqlStatement = @" SELECT * FROM Contract;";
 
 
             using (var myConn = new MySqlConnection(connectionString))
@@ -262,16 +316,21 @@ namespace TMS
             {
                 contracts.Add(new Contract
                 {
-
+                    ContractID = Convert.ToInt32(row["ContractID"]),
                     ClientName = row["CustomerName"].ToString(),
-                    ContractStatus = Convert.ToInt32(row["ContractStatus"]),
+                    //ContractStatus = Convert.ToInt32(row["ContractStatus"]),
                     JobType = Convert.ToInt32(row["JobType"]),
                     Quantity = Convert.ToInt32(row["Quantity"]),
                     Origin = row["Origin"].ToString(),
                     Destination = row["Destination"].ToString(),
                     VanType = Convert.ToInt32(row["VanType"]),
+                    EndTime = Convert.ToDateTime(row["EndTime"]),
+                    Price = Convert.ToDouble(row["Price"]),
+                    BuyerSelected = Convert.ToInt32(row["BuyerSelected"]),
+                    PlannerSelected = Convert.ToInt32(row["PlannerSelected"])
 
-                });;
+
+                }); ;;
             }
 
             return contracts;
