@@ -166,7 +166,7 @@ namespace TMS
         }
 
         
-        double GetClientCharge(Contract contract, List<Carrier> orderCarriers, List<Carrier> originalCarriers)
+        public double GetClientCharge(Contract contract, List<Carrier> orderCarriers, List<Carrier> originalCarriers)
         {
             double distance = CalculateTime(contract);
             double dailyCharge = 150;
@@ -220,7 +220,7 @@ namespace TMS
         }
         
 
-        double GetBreakevenCharge(List<Contract> contracts, List<Carrier> orderCarriers, List<Carrier> originalCarriers)
+        public double GetBreakevenCharge(List<Contract> contracts, List<Carrier> orderCarriers, List<Carrier> originalCarriers)
         {
             int jobType = contracts[0].JobType;
             double charge = 0.00;
@@ -237,7 +237,7 @@ namespace TMS
         /// </summary>
         /// <param name="contracts"></param>
         /// <param name="orderCarriers"></param>
-        void CreateOrder(List<Contract> contracts, List<Carrier> carriers, List<Carrier> originalCarriers)
+        public void CreateOrder(List<Contract> contracts, List<Carrier> carriers, List<Carrier> originalCarriers)
         {
             // 1. Create a trip for each carrier and contract 
             // 2. Generate the price to be used for invoice generation 
