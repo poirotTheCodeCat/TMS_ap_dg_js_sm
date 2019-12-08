@@ -49,16 +49,16 @@
             <Button x:Name="GenerateInvoiceBtn" Content="Generate Invoice" Click="GenerateInvoiceBtn_Click" Margin="493,105,111,10"/>
             <Button x:Name="SimulateDayBtn" Content="Simulate Day" Click="CompleteBtn_Click" Margin="594,58,10,57"/>
         </Grid>
-        <Button x:Name="AddBtn" Content="Add" HorizontalAlignment="Left" Margin="516,216,0,0" VerticalAlignment="Top" Width="84" Height="31" Click="AddContract_Click"/>
-        <Button x:Name="OrderBtn" Content="Place Order" HorizontalAlignment="Left" Margin="605,216,0,0" VerticalAlignment="Top" Width="84" Height="31" Click="SubmitBtn_Click"/>
-        
-        <ComboBox x:Name="citySelect" HorizontalAlignment="Left" Margin="429,10,0,0" VerticalAlignment="Top" Width="250" Height="23"/>
+        <Button x:Name="AddBtn" Content="Add" HorizontalAlignment="Left" Margin="516,204,0,0" VerticalAlignment="Top" Width="84" Height="31" Click="AddContract_Click"/>
+        <Button x:Name="OrderBtn" Content="Place Order" HorizontalAlignment="Left" Margin="605,204,0,0" VerticalAlignment="Top" Width="84" Height="31" Click="SubmitBtn_Click"/>
 
-        <Button x:Name="RemoveBtn" Content="Remove" HorizontalAlignment="Left" Margin="427,216,0,0" VerticalAlignment="Top" Width="84" Height="31" Click="RemoveBtn_Click"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="429,133,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="147"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="595,133,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="84"/>
+        <ComboBox x:Name="citySelect" HorizontalAlignment="Left" Margin="429,10,0,0" VerticalAlignment="Top" Width="250" Height="23" SelectionChanged="citySelect_SelectionChanged"/>
 
-        <DataGrid x:Name="CarrierGrid" Margin="429,38,21,294" >
+        <Button x:Name="RemoveBtn" Content="Remove" HorizontalAlignment="Left" Margin="427,204,0,0" VerticalAlignment="Top" Width="84" Height="31" Click="RemoveBtn_Click"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="429,141,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="147"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="595,141,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="84"/>
+
+        <DataGrid x:Name="CarrierGrid" Margin="429,38,21,294" SelectionChanged="CarrierGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Carrier" Binding="{Binding Path=CarrierName}" Width="75"/>
                 <DataGridTextColumn Header="LTL Rate" Binding="{Binding Path=LtlRate}" Width="75"/>
@@ -68,5 +68,6 @@
                 <DataGridTextColumn Header="Reefer Rate" Binding="{Binding Path=ReefRate}" Width="75"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Label x:Name="Error" Content="" HorizontalAlignment="Left" Margin="429,240,0,0" VerticalAlignment="Top" Width="260" Height="25"/>
     </Grid>
 </Page>

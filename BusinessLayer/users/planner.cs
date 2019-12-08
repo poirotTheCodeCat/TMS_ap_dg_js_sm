@@ -26,6 +26,7 @@ namespace TMS
         public Planner()
         {
             PalletThreshold = 17;
+            transportCorridors = new TransportCorridor().Routes;
         }
 
         /// <summary>
@@ -67,9 +68,7 @@ namespace TMS
                 {
                     remainingLoad = quantityPallets - carrier.LtlAvail;
                     
-                        carrier.LtlAvail = 0;
-                    
-                    
+                        carrier.LtlAvail = 0;  
                 }
                 else
                 {
@@ -99,35 +98,10 @@ namespace TMS
         /// <param name="searchItem">The identifier for the Order that needs to be marked 
         ///                         approved</param>
         /// <returns>Int representing an Order was successfully marked approved.</returns>
-        public int ApproveOrder(string searchItem)
+        public void ConfirmOrder(Contract contract)
         {
-            int done = 1;
-           
-            return done;
-        }
-
-        /// <summary>
-        /// This method allows the Planner to mark and Order as completed.
-        /// </summary>
-        /// <param name="searchItem">The identifier for the Order that needs to be marked 
-        ///                         completed</param>
-        /// <returns>Int representing an Order was successfully marked completed.</returns>
-        public int CompleteOrder(string searchItem)//Again....Possibly orderID??
-        { 
-            int done = 1;
-
-            return done;
-        }
-
-        /// <summary>
-        /// This method allows the Planner to view all Orders.
-        /// </summary>
-        /// <returns>List of active Orders.</returns>
-        public List<Order> ShowActiveOrders()
-        {
-            List<Order> activeOrderList = new List<Order>();
-
-            return activeOrderList;
+            contract.PlannerConfirmed = 1;
+            new LocalComm().UpdateContract(contract);
         }
 
         /// <summary>
@@ -157,18 +131,44 @@ namespace TMS
         /// <param name="searchItem">The identifier for the invoices that need to be included
         ///                         in the invoice summary</param>
         /// <returns>Int representing an invoice was successfully generated</returns>
-        public int GenerateInvoiceSum(string searchItem) // 2 weeks or of all time
+        public List<Contract> GenerateInvoiceSum(int summaryTime = 0) // 2 weeks or of all time
         {
-            int done = 1;
+            DateTime? conStartTime = new DateTime();
+            DateTime conEndTime = new DateTime();
+            List<Contract> localContracts = new LocalComm().GetLocalContracts();
+            List<Contract> summaryContracts = new List<Contract>();
+            
+            
+            DateTime? sumStartTime = DateTime.Now.AddHours(24 * 14 * -1);
+            foreach (Contract c in localContracts)
+            {
+                if(c.PlannerConfirmed == 1)
+                {   
+                    if(summaryTime == 1)
+                    {
+                        conEndTime = Convert.ToDateTime(c.EndTime);
+                        conStartTime = conEndTime.AddHours((double)24 * 14 * -1);
+                        if (conStartTime >= sumStartTime)
+                        {
+                            summaryContracts.Add(c);
+                        }
+                    }
+                    else
+                    {
+                        summaryContracts.Add(c);
+                    }
+                        
+                }
+                    
+            }
 
-            return done;
+            return summaryContracts;
         }
 
         
-        double GetClientCharge(Contract contract, List<Carrier> orderCarriers, List<Carrier> originalCarriers)
+        public double GetClientCharge(Contract contract, List<Carrier> orderCarriers, List<Carrier> originalCarriers)
         {
             double distance = CalculateTime(contract);
-            double price = 0;
             double dailyCharge = 150;
             int daysTravelled = 0;
             int pallets = 0;
@@ -180,32 +180,47 @@ namespace TMS
                 ++daysTravelled;
             }
             // This means only one Carrier
-            if(contract.JobType == 1)
+            if (contract.JobType == 1)
             {
                 contract.Price = (distance * orderCarriers[0].FtlRate) + (daysTravelled * dailyCharge);
             }
-            else
+            else if (contract.VanType == 0)
             {
                 // Finds the number of pallets carried by each carrier, bills appropriately 
-                foreach(Carrier orderC in orderCarriers)
+                foreach (Carrier orderC in orderCarriers)
                 {
-                    foreach(Carrier origC in originalCarriers)
+                    foreach (Carrier origC in originalCarriers)
                     {
-                        if(origC.CarrierID == orderC.CarrierID)
+                        if (origC.CarrierID == orderC.CarrierID)
                         {
                             pallets = origC.LtlAvail - orderC.LtlAvail;
                             contract.Price += pallets * distance * orderC.LtlRate;
                         }
                     }
                 }
-
-                contract.Price += daysTravelled * dailyCharge;
             }
-            return price;
+            else
+            {
+                // Finds the number of pallets carried by each carrier, bills appropriately 
+                foreach (Carrier orderC in orderCarriers)
+                {
+                    foreach (Carrier origC in originalCarriers)
+                    {
+                        if (origC.CarrierID == orderC.CarrierID)
+                        {
+                            pallets = origC.LtlAvail - orderC.LtlAvail;
+                            contract.Price += pallets * distance * orderC.ReefRate;
+                        }
+                    }
+                }
+            }
+
+            contract.Price += daysTravelled * dailyCharge;
+            return contract.Price;
         }
         
 
-        double GetBreakevenCharge(List<Contract> contracts, List<Carrier> orderCarriers, List<Carrier> originalCarriers)
+        public double GetBreakevenCharge(List<Contract> contracts, List<Carrier> orderCarriers, List<Carrier> originalCarriers)
         {
             int jobType = contracts[0].JobType;
             double charge = 0.00;
@@ -222,7 +237,7 @@ namespace TMS
         /// </summary>
         /// <param name="contracts"></param>
         /// <param name="orderCarriers"></param>
-        void CreateOrder(List<Contract> contracts, List<Carrier> carriers, List<Carrier> originalCarriers)
+        public void CreateOrder(List<Contract> contracts, List<Carrier> carriers, List<Carrier> originalCarriers)
         {
             // 1. Create a trip for each carrier and contract 
             // 2. Generate the price to be used for invoice generation 
