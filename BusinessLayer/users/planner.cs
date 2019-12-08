@@ -167,6 +167,19 @@ namespace TMS
 
         }
 
+        double GetCharge(List<Contract> contracts, List<Carrier> orderCarriers, List<Carrier> originalCarriers)
+        {
+            int jobType = contracts[0].JobType;
+            double charge = 0.00;
+            if (jobType == 0)
+            {
+
+            }
+
+        }
+
+
+
         /// <summary>
         /// This method checks whether the Contract selected can be added to the 
         /// Order being created based on the origin city, job type, and van type.
