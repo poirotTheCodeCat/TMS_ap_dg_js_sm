@@ -31,9 +31,13 @@ namespace TMS
         /// </summary>
         /// <param name="searchItem">The identifier for the Carrier that will be returned</param>
         /// <returns>Carrier that is requested.</returns>
-        List<Carrier> GetCarriers()
+        public List<Carrier> GetCarriers()
         {
             List<Carrier> carriers = new LocalComm().GetCarriers();
+            foreach(Carrier c in carriers)
+            {
+                c.DepotCities = new LocalComm().GetCarrierCities(c.CarrierID);
+            }
 
             return carriers;
         }
@@ -152,6 +156,17 @@ namespace TMS
             return done;
         }
 
+        double GetClientCharge(List<Contract> contracts, List<Carrier> orderCarriers, List<Carrier> originalCarriers)
+        {
+            int jobType = contracts[0].JobType;
+            double charge = 0.00; 
+            if(jobType == 0)
+            {
+
+            }
+
+        }
+
         /// <summary>
         /// This method checks whether the Contract selected can be added to the 
         /// Order being created based on the origin city, job type, and van type.
@@ -176,7 +191,7 @@ namespace TMS
 
         /// <summary>
         /// This method checks whether the Contract selected can be added to the 
-        /// Order being created based on the origin city, job type, and van type.
+        /// Order being created based on the pallet threshold
         /// </summary>
         /// <param name="listOfContracts">The identifier for the Contracts currently added
         ///                         to the order being created.</param>                        
