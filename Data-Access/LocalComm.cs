@@ -198,6 +198,27 @@ namespace TMS
             }
         }
 
+        public List<TransportCorridor> GetRoutes()
+        {
+            using (var myConn = new MySqlConnection(connectionString))
+            {
+                const string SqlStatement = @"SELECT * FROM TransportCorridor";
+
+                var myCommand = new MySqlCommand(SqlStatement, myConn);
+                var myAdapter = new MySqlDataAdapter
+                {
+                    SelectCommand = myCommand
+                };
+
+                var dataTable = new DataTable();
+
+                myAdapter.Fill(dataTable);
+
+                return DataTableToRoutes(dataTable);
+            }
+            
+        }
+
         /// <summary>
         /// retrieves a list of carriers from the database and generates a list of Carrier objects which it returns
         /// </summary>
@@ -299,6 +320,25 @@ namespace TMS
         /// </summary>
         /// <param name="table"></param>
         /// <returns></returns>
+
+        private List<TransportCorridor> DataTableToRoutes(DataTable table)
+        {
+            List<TransportCorridor> routes = new List<TransportCorridor>();
+            foreach (DataRow row in table.Rows)
+            {
+                routes.Add(new TransportCorridor
+                {
+                    TransportCorridorID = row["TransportCorridorID"].ToString(),
+                    CityName = row["CityName"].ToString(),
+                    Distance = Convert.ToInt32(row["CityName"]),
+                    TimeBetween = Convert.ToDouble(row["TimeBetween"]),
+                    West = row["West"].ToString(),
+                    East = row["East"].ToString()
+                });
+            }
+            return routes;
+        }
+
         private List<string> DataTableToCityList(DataTable table)
         {
             List<string> cityList = new List<string>();
@@ -318,7 +358,6 @@ namespace TMS
                 {
                     ContractID = Convert.ToInt32(row["ContractID"]),
                     ClientName = row["CustomerName"].ToString(),
-                    //ContractStatus = Convert.ToInt32(row["ContractStatus"]),
                     JobType = Convert.ToInt32(row["JobType"]),
                     Quantity = Convert.ToInt32(row["Quantity"]),
                     Origin = row["Origin"].ToString(),
