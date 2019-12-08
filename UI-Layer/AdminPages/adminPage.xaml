@@ -21,7 +21,7 @@
             <ComboBoxItem Content = "Route Table" />
             <ComboBoxItem Content="Rate Table"/>
             <ComboBoxItem Content = "Carrier Data" />
-        </ ComboBox >
+        </ComboBox>
 
         <!--Route Table Elements -->
             <Grid x:Name="DataGridFullGrid">
