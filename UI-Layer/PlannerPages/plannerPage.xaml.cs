@@ -189,7 +189,7 @@ namespace TMS
         {
             // check the orderlist vs the carrier LTL/FTL rate
             // if(confirmContract())
-            // planner.CreateOrder(orderContracts, currCarriers);
+            planner.CreateOrder(orderContracts, currCarriers);
 
             if(!AddBtn.IsEnabled)       // if the Add button has been deactivated re enable it
             {
