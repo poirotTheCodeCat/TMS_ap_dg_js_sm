@@ -17,12 +17,12 @@ namespace TMS
     {
         private int carrierID;///< Holds the carrier name as a string
         private string carrierName;///< Holds the carrier name as a string
-        private string depotCity;///< Holds the depot city as a string
         private int ftlAvailable;///< Holds the number of available FTL trucks for the specified carrier
         private int ltlAvailable;///< Holds the number of available LTL trucks for the specified carrier
         private double ftlRate;///< Holds the rate of FTL for the specified carrier
         private double ltlRate;///< Holds the rate of LTL for the specified carrier
         private double reeferCharge;///< Holds the rate of a reefer for the specified carrier
+        private List<string> depotCities;
 
 
         /// <summary>
@@ -41,15 +41,7 @@ namespace TMS
             get { return carrierName; }
             set { carrierName = value; }
         }
-        /// <summary>
-        /// Gets and sets depotCity
-        /// </summary>
-
-        public string DepotCity
-        {
-            get { return depotCity; }
-            set { depotCity = value; }
-        }
+     
         /// <summary>
         /// Gets and sets ftlAvailable
         /// </summary>
@@ -94,6 +86,13 @@ namespace TMS
             get { return reeferCharge; }
             set { reeferCharge = value; }
         }
+
+        public List<string> DepotCities
+        {
+            get { return depotCities; }
+            set { depotCities = value; }
+        }
+
 
         /// <summary>
         /// This method queries the DBMS for the selected carrier infromation. 

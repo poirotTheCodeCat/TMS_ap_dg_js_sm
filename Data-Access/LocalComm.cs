@@ -202,8 +202,6 @@ namespace TMS
                 carriers.Add(new Carrier
                 {
                     CarrierID = Convert.ToInt32(row["CarrierID"]),
-                    CarrierName = row["CarrierName"].ToString(),
-                    DepotCity = row["DepotCity"].ToString(),
                     FtlAvail = Convert.ToInt32(row["FtlAvail"]),
                     LtlAvail = Convert.ToInt32(row["LtlAvail"]),
                     FtlRate = Convert.ToDouble(row["FtlRate"]),
@@ -214,7 +212,47 @@ namespace TMS
             return carriers;
         }
 
-       
+        /// <summary>
+        /// This generates a list of city names based on the carrier_ID of a carrier -> returns all cities where they are
+        /// located
+        /// </summary>
+        /// <param name="Carrier_ID"></param>
+        /// <returns></returns>
+        public List<string> GetCarrierCities(int id)
+        {
+            using (var myConn = new MySqlConnection(connectionString))
+            {
+                const string SqlStatement = @"SELECT CityID FROM CarrierCities
+                                            WHERE CarrierID = @id;";
+
+                var myCommand = new MySqlCommand(SqlStatement, myConn);
+                myCommand.Parameters.AddWithValue("@id", id);
+                var myAdapter = new MySqlDataAdapter
+                {
+                    SelectCommand = myCommand
+                };
+
+                var dataTable = new DataTable();
+
+                myAdapter.Fill(dataTable);
+                return DataTableToCityList(dataTable);
+            }
+        }
+
+        /// <summary>
+        /// generates the list cities used by a certain carrier within the CarrierCities table 
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
+        private List<string> DataTableToCityList(DataTable table)
+        {
+            List<string> cityList = new List<string>();
+            foreach (DataRow row in table.Rows)
+            {
+                cityList.Add(row["CityID"].ToString());
+            }
+            return cityList;
+        }
         private List<Contract> DataTableToContractsList(DataTable table)
         {
             var contracts = new List<Contract>();
