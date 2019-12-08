@@ -25,8 +25,8 @@ namespace TMS
         private DateTime? endTime;
         private double price;
         private int buyerSelected;
-        private int plannerConfirmed;
-        private int contractStatus;///< Holds the contract status
+        private int plannerConfirmed;           // if the planner has added the contract to an order or not
+        private int contractStatus;///< Holds contractStatus //if the order is completed or if it is not 
 
         /* 1. BuyerSelected = 0 
          * - Appears in buyer screen, not in planner 
@@ -127,6 +127,12 @@ namespace TMS
         {
             get { return plannerConfirmed; }
             set { plannerConfirmed = value; }
+        }
+
+        public int ContractStatus
+        {
+            get { return contractStatus; }
+            set { contractStatus = value; }
         }
 
 

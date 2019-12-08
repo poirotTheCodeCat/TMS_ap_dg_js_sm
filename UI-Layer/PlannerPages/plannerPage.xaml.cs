@@ -20,21 +20,26 @@ namespace TMS
     /// </summary>
     public partial class PlannerPage : Page
     {
+        private DateTime percievedTime = new DateTime();
+        private DateTime currTime = DateTime.Now;
+
         private Contract selectedContract = new Contract();
         private Contract deleteContract = new Contract();
+        private Contract contractToComplete = new Contract();               
 
         private List<Contract> allContracts = new List<Contract>();        // allContracts is used to hold all existing contracts -> can be updated
         private List<Contract> orderContracts = new List<Contract>();        // Will store the list of currently selected contracts for the trip
 
-        private List<Carrier> AllCarriers = new List<Carrier>();
-        private List<Order> currentOrderList = new List<Order>();
+        private List<Carrier> AllCarriers = new List<Carrier>();            // all carriers in database
+        private List<Order> currentOrderList = new List<Order>();           // holds all orders selected for creating order
 
 
         private Planner planner = new Planner();                            // used to access planner logic
         private List<Carrier> carriersToDisplay = new List<Carrier>();
         private List<Carrier> currCarriers = new List<Carrier>();
 
-        private bool isFTL;
+        private bool multipleCarriers = true;
+        private bool multipleLTL = false;
 
 
         public PlannerPage()
@@ -44,6 +49,10 @@ namespace TMS
             generateContractData();
         }
 
+        //                                      Methods 
+        // **********************************************************************************************
+        // **********************************************************************************************
+
         /// <summary>
         /// This fills the contractdata datatable with the displayContracts list
         /// </summary>
@@ -52,6 +61,14 @@ namespace TMS
             foreach (Contract c in allContracts)
             {
                 ContractsGrid.Items.Add(c);
+            }
+
+            foreach(Contract cont in allContracts)
+            {
+                if((cont.PlannerConfirmed == 1) && (cont.ContractStatus == 0))
+                {
+                    CurrentOrderGrid.Items.Add(cont);
+                }
             }
         }
 
@@ -66,10 +83,19 @@ namespace TMS
             allContracts = planner.ShowPendingOrders();
         }
 
-
-        private void updateContracts()
+        /// <summary>
+        /// This is called to reset everything on the page -> called when a new order is created
+        /// </summary>
+        private void refreshData()
         {
+            // clear all lists
+            allContracts.Clear();
+            currCarriers.Clear();
+            orderContracts.Clear();
+            currentOrderList.Clear();
 
+            fillLists();
+            generateContractData();
         }
 
         /// <summary>
@@ -79,27 +105,14 @@ namespace TMS
         /// <param name="e"></param>
         private void AddContract_Click(object sender, RoutedEventArgs e)
         {
-            if (checkContract(selectedContract))         // insert error checking function
+            ProcessContractSelection(selectedContract);
+            // if only contract in list -> display carriers of origin city
+            if (orderContracts.Count == 1)
             {
-                // add the selected item to the list
-                orderContracts.Add(selectedContract);
-
-                // Add contract to orderTabe 
-                TripGrid.Items.Add(selectedContract);
-
-                // remove contract from display table 
-                ContractsGrid.Items.Remove(selectedContract);
-
-                // reset currently selected contract
-                selectedContract = new Contract();
-
-                // if only contract in list -> display carriers of origin city
-                if (orderContracts.Count == 1)
-                {
-                    // display the list of cities
-                    displayCarriers(orderContracts[0].Origin);
-                }
+                // display the list of cities
+                displayCarriers(orderContracts[0].Origin);
             }
+            
         }
 
 
@@ -107,16 +120,36 @@ namespace TMS
         /// This evaluates the current contract and ajusts the UI according to the business rules 
         /// </summary>
         /// <param name="contract"></param>
-        public bool checkContract(Contract contract)
+        public void ProcessContractSelection(Contract contract)
         {
-            // if the contract is an FTL -> clear the list of contracts in the Contract GridView
-            if (contract.JobType == 0)
+            // check if it is ftl
+            // check for other items in orderContract list
+            if(contract.JobType == 0 || currentOrderList.Count > 0)
             {
-                // set isFTL = true
-                isFTL = true;
-                ContractsGrid.Items.Clear();
+                if (contract.JobType == 1)        // if there are already items in the order list then we cannot add an FTL
+                {
+                    if (!planner.CheckGroupedContracts(orderContracts, contract))
+                    {
+                        Error.Content = "Cannot add FTL to Order";
+                        return;
+                    }
+                }
+                else
+                {
+                    if (currCarriers.Count > 1)
+                    {
+                        Error.Content = "You can only have one carrier to add another LTL";
+                        return;
+                    }
+                }
             }
-            return true;
+
+            ContractsGrid.IsEnabled = false;
+            orderContracts.Add(contract);
+            TripGrid.Items.Add(contract);
+            ContractsGrid.Items.Remove(selectedContract);
+            multipleCarriers = false;
+            multipleLTL = false;
         }
 
 
@@ -149,8 +182,7 @@ namespace TMS
         {
             // check the orderlist vs the carrier LTL/FTL rate
             // if(confirmContract())
-
-            
+            // planner.CreateOrder(orderContracts, currCarriers);
 
             if(!AddBtn.IsEnabled)       // if the Add button has been deactivated re enable it
             {
@@ -159,62 +191,12 @@ namespace TMS
 
             // refresh everything!!!
             // refresh all lists 
-            ContractsGrid.Items.Clear();
-            generateContractData();
-
-            selectedContract = new Contract();
-
-            currentOrderList.Clear();       // clear the current order list
-
-            currCarriers.Clear();
+            refreshData();
         }
 
 
         private bool confirmContract()
         {
-            if(orderContracts.Count == 0)
-            { 
-                return false;
-            }
-
-            if(isFTL)       // if the order is marked as an ftl or is comprised of multiple ltls
-            {
-                if(currCarriers[0].FtlAvail >= 1)
-                { 
-                    return true; 
-                }
-                else
-                {
-                    Error.Content = "FTL quantity not available";
-                }
-            }
-            else
-            {
-                if(isFTL == false)
-                {
-                    int neededLTL = 0;
-                    int availLTL = 0;
-                    foreach(Contract c in orderContracts)
-                    {
-                        neededLTL += c.Quantity;
-                    }
-
-                    foreach(Carrier carr in currCarriers)
-                    {
-                        availLTL += carr.LtlAvail;
-                    }
-
-                    if(neededLTL <= availLTL)
-                    {
-                        return true;
-                    }
-
-                    else
-                    {
-                        Error.Content = "LTL quantity not available";
-                    }
-                }
-            }
 
             return true;
         }
@@ -254,9 +236,22 @@ namespace TMS
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CompleteBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            if(contractToComplete != null)
+            {
+                // check if the order is actually complete
+                if (contractToComplete.EndTime <= percievedTime)
+                {
+                    planner.ConfirmOrder(contractToComplete);
+                }
+                
+            }
         }
 
         private void RemoveBtn_Click(object sender, RoutedEventArgs e)
@@ -334,7 +329,13 @@ namespace TMS
         /// <param name="e"></param>
         private void CarrierGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            DataGrid gridSelection = (DataGrid)sender;
+            Contract contract = gridSelection.SelectedItem as Contract;
 
+            if(contract != null)
+            {
+                contractToComplete = contract;
+            }
         }
     }
 }
