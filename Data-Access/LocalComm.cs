@@ -17,7 +17,10 @@ namespace TMS
     /// </summary>
     class LocalComm
     {
-        private string connectionString = ConfigurationManager.ConnectionStrings["tmsConnStr"].ConnectionString;
+        private string connectionString = string.Format(ConfigurationManager.ConnectionStrings["tmsConnStr"].ConnectionString,serverIp,port);
+        static string serverIp = ConfigurationManager.AppSettings["ipInfo"];
+        static string port = ConfigurationManager.AppSettings["portInfo"];
+
         /// <summary>
         /// This method adds a new Order to the TMS database.
         /// <param name="searchItem">The identifier for the Contract that will be used 
@@ -372,5 +375,43 @@ namespace TMS
 
             return contracts;
         }
+        /// <summary>
+        /// This generates a list of city names based on the carrier_ID of a carrier -> returns all cities where they are
+        /// located
+        /// </summary>
+        /// <param name="Carrier_ID"></param>
+        /// <returns></returns>
+        public List<double> GetRates()
+        {
+            using (var myConn = new MySqlConnection(connectionString))
+            {
+                const string SqlStatement = @"SELECT MarkUp FROM Rate;";
+
+                var myCommand = new MySqlCommand(SqlStatement, myConn);
+                
+                var myAdapter = new MySqlDataAdapter
+                {
+                    SelectCommand = myCommand
+                };
+
+                var dataTable = new DataTable();
+
+                myAdapter.Fill(dataTable);
+                return DataTableToRateList(dataTable);
+            }
+        }
+
+        private List<double> DataTableToRateList(DataTable table)
+        {
+            var rates = new List<double>();
+
+            foreach (DataRow row in table.Rows)
+            {
+                rates.Add(Convert.ToDouble(row["MarkUp"]));
+            }
+
+            return rates;
+        }
+
     }
 }

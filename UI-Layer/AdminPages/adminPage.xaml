@@ -10,12 +10,106 @@
       Background="White">
 
     <Grid>
-        <DataGrid x:Name="DatabaseDisplay" Margin="45,107,45,70"></DataGrid>
-        <Button x:Name="AlterBtn" Content="Alter Data" HorizontalAlignment="Left" Margin="520,385,0,0" VerticalAlignment="Top" Width="85" Height="37"/>
-        <Button x:Name="LogfilesBtn" Content="View Logfiles" HorizontalAlignment="Left" Margin="149,385,0,0" VerticalAlignment="Top" Width="85" Height="37"/>
-        <Button x:Name="BackupBtn" Content="Backup Database" HorizontalAlignment="Left" Margin="45,385,0,0" VerticalAlignment="Top" Width="99" Height="37"/>
-        <Button x:Name="RefreshBtn" Content="Refresh" HorizontalAlignment="Left" Margin="45,65,0,0" VerticalAlignment="Top" Width="57" Height="31"/>
-        <Button x:Name="ConfigBtn" Content="Configuration" HorizontalAlignment="Left" Margin="107,65,0,0" VerticalAlignment="Top" Width="101" Height="31"/>
-        <ComboBox x:Name="DBTables" HorizontalAlignment="Left" Margin="372,65,0,0" VerticalAlignment="Top" Width="233" Height="31"/>
+        <!-- Log File Elements -->
+        <RichTextBox x:Name="LogFileDisplay" Margin="45,64,45,95"/>
+        <TextBlock x:Name="LogFileLocationDisplay" HorizontalAlignment="Left" Margin="340,365,0,0" VerticalAlignment="Top" Width="265" Height="15" IsEnabled="False"/>
+        <TextBlock HorizontalAlignment = "Left" Margin="340,355,0,0" VerticalAlignment="Top" Width="66" Height="10" Text="Log File Location" FontSize="8"/>
+
+        <TextBlock HorizontalAlignment = "Left" Margin="45,18,0,0" VerticalAlignment="Top" Width="35" Height="10" Text="TMS Data" FontSize="8"/>
+        <ComboBox x:Name="DBTablesCmb" HorizontalAlignment="Left" Margin="45,28,0,0" VerticalAlignment="Top" 
+                  Width="290" Height="31" SelectedIndex="0" SelectionChanged="DBTablesCmb_OnSelectionChanged">
+            <ComboBoxItem Content = "Route Table" />
+            <ComboBoxItem Content="Rate Table"/>
+            <ComboBoxItem Content = "Carrier Data" />
+        </ComboBox>
+
+        <!--Route Table Elements -->
+            <Grid x:Name="DataGridFullGrid">
+                <DataGrid x:Name="RouteTableDisplay" Margin="45,64,45,70" Visibility="Visible">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header = "ID" Binding="{Binding Mode=TwoWay, Path=transportCorridor_ID}" Width="40"/>
+                        <DataGridTextColumn Header = "Destination" Binding="{Binding Mode=TwoWay, Path=city_Name}" Width="*"/>
+                        <DataGridTextColumn Header = "Km" Binding="{Binding Mode=TwoWay, Path=distance}" Width="40"/>
+                        <DataGridTextColumn Header = "Time" Binding="{Binding Mode=TwoWay, Path=time_Between}" Width="60"/>
+                        <DataGridTextColumn Header = "West" Binding="{Binding Mode=TwoWay, Path=west}" Width="*"/>
+                        <DataGridTextColumn Header = "East" Binding="{Binding Mode=TwoWay, Path=east}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button x:Name="ApplyRouteChangesBtn" Content="Apply Updates" HorizontalAlignment="Left" 
+                    Margin="45,385,0,0" Width="99" Height="37" VerticalAlignment="Top" Visibility="Visible"/>
+
+                <!-- Rate Table Elements -->
+                <DataGrid x:Name="RateTableDisplay" Margin="45,64,45,70" Visibility="Collapsed">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header = "Truck Type" Binding="{Binding Mode=TwoWay, Path=TruckType}" Width="*"/>
+                        <DataGridTextColumn Header = "Markup" Binding="{Binding Mode=TwoWay, Path=markup}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button x:Name="ApplyRateChangesBtn" Content="Apply Updates" HorizontalAlignment="Left" 
+                    Margin="45,385,0,0" Width="99" Height="37" VerticalAlignment="Top" Visibility="Collapsed"/>
+
+                <!-- Carrier Table Elements -->
+                <DataGrid x:Name="CarrierTableDisplay" Margin="45,64,45,70" Visibility="Collapsed">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header = "ID" Binding="{Binding Mode=TwoWay, Path=ContractID}" Width="25"/>
+                        <DataGridTextColumn Header = "Name" Binding="{Binding Mode=TwoWay, Path=CustomerName}" Width="80"/>
+                        <DataGridTextColumn Header = "Depot" Binding="{Binding Mode=TwoWay, Path=DepotCityID}" Width="80"/>
+                        <DataGridTextColumn Header = "LTL" Binding="{Binding Mode=TwoWay, Path=LtlAvail}" Width="*"/>
+                        <DataGridTextColumn Header = "LTL Rate" Binding="{Binding Mode=TwoWay, Path=LtlRate}" Width="*"/>
+                        <DataGridTextColumn Header = "FTL" Binding="{Binding Mode=TwoWay, Path=FtlAvail}" Width="60"/>
+                        <DataGridTextColumn Header = "FTL Rate" Binding="{Binding Mode=TwoWay, Path=FtlRate}" Width="60"/>
+                        <DataGridTextColumn Header = "Refer Rate" Binding="{Binding Mode=TwoWay, Path=ReefRate}" Width="60"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button x:Name="ApplyCarrierChangesBtn" Content="Apply Updates" HorizontalAlignment="Left" 
+                    Margin="45,385,0,0" Width="99" Height="37" VerticalAlignment="Top" Visibility="Collapsed"/>
+            </Grid>
+
+            <!-- IP and PORT Elements -->
+            <TextBlock x:Name="IpInfoDisplay" HorizontalAlignment="Left" Margin="340,28,0,0" VerticalAlignment="Top" Width="91" Height="31"/>
+            <TextBlock x:Name="PortInfoDisplay" HorizontalAlignment="Left" Margin="436,28,0,0" VerticalAlignment="Top" Width="91" Height="31"/>
+            <TextBlock HorizontalAlignment = "Left" Margin="340,18,0,0" VerticalAlignment="Top" Width="10" Height="10" Text="IP" FontSize="8"/>
+            <TextBlock HorizontalAlignment = "Left" Margin="436,18,0,0" VerticalAlignment="Top" Width="20" Height="10" Text="PORT" FontSize="8"/>
+            <Button x:Name="ConfigBtn" Content="Configure" HorizontalAlignment="Left" Margin="532,28,0,0" VerticalAlignment="Top" Width="73" Height="31" 
+                RenderTransformOrigin="-0.46,1.867" Click="ConfigIpPortBtn_Click"/>
+            <Button x:Name="LogfilesBtn" Content="Toggle Log Files" HorizontalAlignment="Left" Margin="361,385,0,0" VerticalAlignment="Top" 
+                Width="95" Height="37" Click="LogFilesBtn_Click"/>
+            <Button x:Name="ChangeLogLocation" Content="Change Log Location" HorizontalAlignment="Left" Margin="474,385,0,0" VerticalAlignment="Top" 
+                Width="131" Height="37"/>
+            <Button x:Name="BackupTmsDatabaseBtn" Content="Backup Database" HorizontalAlignment="Left" 
+                Margin="162,385,0,0" Width="99" Height="37" VerticalAlignment="Top" Visibility="Visible" Click="BackupTmsDatabaseBtn_Click"/>
+
+            <!-- Update IP and PORT Popup-->
+            <Grid x:Name="IpPortConfigGrid" Visibility="Collapsed">
+                <Grid.Background>
+                    <SolidColorBrush Color = "Black" Opacity="0.8"/>
+                </Grid.Background>
+                <Grid Width = "325" Background="White" Margin="162,188,162,178">
+                    <TextBlock Text = "Update IP and PORT" HorizontalAlignment="Center"></TextBlock>
+                    <TextBox x:Name="IpInfoUpdate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="91" Height="31" IsEnabled="True" Margin="18,34,0,0" 
+                         RenderTransformOrigin="-1.066,-5"/>
+                    <TextBox x:Name="PortInfoUpdate" HorizontalAlignment="Left" Margin="125,34,0,0" VerticalAlignment="Top" Width="91" Height="31" IsEnabled="True"/>
+                    <Button x:Name="ConfigUpdateBtn" Content="Update" HorizontalAlignment="Left" Margin="230,34,0,0" VerticalAlignment="Top" Width="73" Height="31" 
+                    RenderTransformOrigin="-0.46,1.867" Click="ConfigUpdateBtn_OnClick"/>
+                </Grid>
+            </Grid>
+
+            <!-- Backup Database Popup -->
+            <Grid x:Name="BackupDatabaseGrid" Visibility="Collapsed">
+                <Grid.Background>
+                    <SolidColorBrush Color = "Black" Opacity="0.8"/>
+                </Grid.Background>
+                <Grid Background = "White" Width="325">
+                    <TextBlock HorizontalAlignment = "Center" TextWrapping="Wrap" Text="Backup Local Database" 
+                       VerticalAlignment="Top" Margin="102,28,102,0" Width="122"/>
+                    <TextBox MinWidth = "150" TextWrapping="Wrap" Text="Choose save location..." Margin="28,176,102,195" VerticalAlignment="Center"/>
+                    <Button MinWidth = "20" Content="Location" Margin="0,176,28,195" HorizontalAlignment="Right" VerticalAlignment="Center" Width="69"/>
+                    <TextBlock Margin = "83,299,86,0" TextWrapping="Wrap" VerticalAlignment="Top" 
+                           Text="You are about to back up the entire local TMS database" 
+                           HorizontalAlignment="Center" Height="36" Width="157"/>
+                    <Button x:Name="BackupBtn" Content="Backup" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="108,0,173,28" Click="BackupBtn_Click" Width="44"/>
+                    <Button x:Name="BackupBackBtn" Content="Close" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="158,0,123,28" Click="BackupBackBtn_Click" Width="44"/>
+                </Grid>
+            </Grid>
     </Grid>
 </Page>
