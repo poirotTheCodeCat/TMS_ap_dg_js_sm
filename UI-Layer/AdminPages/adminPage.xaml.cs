@@ -19,18 +19,20 @@ namespace TMS
         List<Carrier> carrierList = new List<Carrier>();
         List<TransportCorridor> routeList = new List<TransportCorridor>();
         List<double> rateMarkup = new List<double>();
-        class TypeAndRate
+        internal class TypeAndRate
         {
-            public string truckType;
-            public double markup;
+            public string truckType { get; set; }
+            public double markup { get; set; }
         }
         List<TypeAndRate> rateList = new List<TypeAndRate>();
 
         Admin admin = new Admin();
-
+        bool trigger;
         public AdminPage()
         {
+            trigger = false;
             InitializeComponent();
+            trigger = true;
             LoadIpPortInfo();
             FillCarrierList();
             FillRateList();
@@ -70,6 +72,7 @@ namespace TMS
         private void ConfigUpdateBtn_OnClick(object sender, RoutedEventArgs e)
         {
             UpdateIpPortInfo(IpInfoUpdate.Text, PortInfoUpdate.Text);
+            IpPortConfigGrid.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>
@@ -166,20 +169,20 @@ namespace TMS
                 DataGridFullGrid.Visibility = Visibility.Visible;
             }
 
-            string fileName = ConfigurationManager.AppSettings["logLocation"] + "/TmsLocalBackup";
+            //string fileName = ConfigurationManager.AppSettings["logLocation"] + "/TmsLocalBackup";
 
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            if (openFileDialog.ShowDialog() == true)
-            {
-                StreamReader file = new StreamReader(fileName);
+            //OpenFileDialog openFileDialog = new OpenFileDialog();
+            //if (openFileDialog.ShowDialog() == true)
+            //{
+            //    StreamReader file = new StreamReader(fileName);
 
 
-                //while ((int line = file.ReadLine()) != null)
-                //{
-                //    LogFileDisplay.Add(line);
-                //}
-                file.Close();
-            }
+            //    //while ((int line = file.ReadLine()) != null)
+            //    //{
+            //    //    LogFileDisplay.Add(line);
+            //    //}
+            //    file.Close();
+            //}
         }
 
         /// <summary>
@@ -190,23 +193,24 @@ namespace TMS
         /// <param name="e"></param>
         private void DBTablesCmb_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (!trigger) return;
             var clickedItem = (ComboBox)sender;
             var index = clickedItem.SelectedIndex;
 
-            if (index == 1)
+            if (index == 0)
             {
                 RouteTableDisplay.Visibility = Visibility.Visible;
                 RateTableDisplay.Visibility = Visibility.Collapsed;
                 CarrierTableDisplay.Visibility = Visibility.Collapsed;
             }
-            else if (index == 2)
+            else if (index == 1)
             {
                 RateTableDisplay.Visibility = Visibility.Visible;
                 RouteTableDisplay.Visibility = Visibility.Collapsed;
                 CarrierTableDisplay.Visibility = Visibility.Collapsed;
 
             }
-            else if (index == 3)
+            else if (index == 2)
             {
                 CarrierTableDisplay.Visibility = Visibility.Visible;
                 RateTableDisplay.Visibility = Visibility.Collapsed;
@@ -222,6 +226,7 @@ namespace TMS
         private void FillCarrierList()
         {
             carrierList = admin.GetCarriers();
+            FillCarrierGrid();
         }
 
         /// <summary>
@@ -230,6 +235,7 @@ namespace TMS
         private void FillRouteList()
         {
             routeList = admin.GetRoutes();
+            FillRouteGrid();
         }
 
         /// <summary>
@@ -261,6 +267,7 @@ namespace TMS
                     rateList[i].markup = rateMarkup[i];
                 }
             }
+            FillRateGrid();
         }
 
         /// <summary>

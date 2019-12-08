@@ -27,12 +27,11 @@
             <Grid x:Name="DataGridFullGrid">
                 <DataGrid x:Name="RouteTableDisplay" Margin="45,64,45,70" Visibility="Visible">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header = "ID" Binding="{Binding Mode=TwoWay, Path=transportCorridor_ID}" Width="40"/>
-                        <DataGridTextColumn Header = "Destination" Binding="{Binding Mode=TwoWay, Path=city_Name}" Width="*"/>
-                        <DataGridTextColumn Header = "Km" Binding="{Binding Mode=TwoWay, Path=distance}" Width="40"/>
-                        <DataGridTextColumn Header = "Time" Binding="{Binding Mode=TwoWay, Path=time_Between}" Width="60"/>
-                        <DataGridTextColumn Header = "West" Binding="{Binding Mode=TwoWay, Path=west}" Width="*"/>
-                        <DataGridTextColumn Header = "East" Binding="{Binding Mode=TwoWay, Path=east}" Width="*"/>
+                        <DataGridTextColumn Header = "Destination" Binding="{Binding Mode=TwoWay, Path=CityName}" Width="*"/>
+                        <DataGridTextColumn Header = "Km" Binding="{Binding Mode=TwoWay, Path=Distance}" Width="40"/>
+                        <DataGridTextColumn Header = "Time" Binding="{Binding Mode=TwoWay, Path=TimeBetween}" Width="60"/>
+                        <DataGridTextColumn Header = "West" Binding="{Binding Mode=TwoWay, Path=West}" Width="*"/>
+                        <DataGridTextColumn Header = "East" Binding="{Binding Mode=TwoWay, Path=East}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <Button x:Name="ApplyRouteChangesBtn" Content="Apply Updates" HorizontalAlignment="Left" 
@@ -41,7 +40,7 @@
                 <!-- Rate Table Elements -->
                 <DataGrid x:Name="RateTableDisplay" Margin="45,64,45,70" Visibility="Collapsed">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header = "Truck Type" Binding="{Binding Mode=TwoWay, Path=TruckType}" Width="*"/>
+                        <DataGridTextColumn Header = "Truck Type" Binding="{Binding Mode=TwoWay, Path=truckType}" Width="*"/>
                         <DataGridTextColumn Header = "Markup" Binding="{Binding Mode=TwoWay, Path=markup}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
@@ -51,9 +50,9 @@
                 <!-- Carrier Table Elements -->
                 <DataGrid x:Name="CarrierTableDisplay" Margin="45,64,45,70" Visibility="Collapsed">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header = "ID" Binding="{Binding Mode=TwoWay, Path=ContractID}" Width="25"/>
-                        <DataGridTextColumn Header = "Name" Binding="{Binding Mode=TwoWay, Path=CustomerName}" Width="80"/>
-                        <DataGridTextColumn Header = "Depot" Binding="{Binding Mode=TwoWay, Path=DepotCityID}" Width="80"/>
+                        <DataGridTextColumn Header = "ID" Binding="{Binding Mode=TwoWay, Path=CarrierID}" Width="25"/>
+                        <DataGridTextColumn Header = "Name" Binding="{Binding Mode=TwoWay, Path=CarrierName}" Width="80"/>
+                        <DataGridTextColumn Header = "Depot" Binding="{Binding Mode=TwoWay, Path=DepotCityString}" Width="80"/>
                         <DataGridTextColumn Header = "LTL" Binding="{Binding Mode=TwoWay, Path=LtlAvail}" Width="*"/>
                         <DataGridTextColumn Header = "LTL Rate" Binding="{Binding Mode=TwoWay, Path=LtlRate}" Width="*"/>
                         <DataGridTextColumn Header = "FTL" Binding="{Binding Mode=TwoWay, Path=FtlAvail}" Width="60"/>

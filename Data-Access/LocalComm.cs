@@ -18,8 +18,8 @@ namespace TMS
     class LocalComm
     {
         private string connectionString = string.Format(ConfigurationManager.ConnectionStrings["tmsConnStr"].ConnectionString,serverIp,port);
-        static string serverIp = ConfigurationManager.AppSettings["ipInfo"];
-        static string port = ConfigurationManager.AppSettings["portInfo"];
+        static string serverIp = "tms-historybuff.mysql.database.azure.com";
+        static string port = "3306";
 
         /// <summary>
         /// This method adds a new Order to the TMS database.
@@ -331,9 +331,9 @@ namespace TMS
             {
                 routes.Add(new TransportCorridor
                 {
-                    TransportCorridorID = row["TransportCorridorID"].ToString(),
+                   
                     CityName = row["CityName"].ToString(),
-                    Distance = Convert.ToInt32(row["CityName"]),
+                    Distance = Convert.ToInt32(row["Distance"]),
                     TimeBetween = Convert.ToDouble(row["TimeBetween"]),
                     West = row["West"].ToString(),
                     East = row["East"].ToString()
