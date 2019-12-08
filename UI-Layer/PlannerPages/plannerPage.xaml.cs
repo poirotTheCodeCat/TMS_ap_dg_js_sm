@@ -20,8 +20,10 @@ namespace TMS
     /// </summary>
     public partial class PlannerPage : Page
     {
-        private List<Contract> allContracts = new List<Contract>();        // allContracts is used to hold all existing contracts -> can be updated
         private Contract selectedContract = new Contract();
+        private Contract deleteContract = new Contract();
+
+        private List<Contract> allContracts = new List<Contract>();        // allContracts is used to hold all existing contracts -> can be updated
         private List<Contract> orderContracts = new List<Contract>();        // Will store the list of currently selected contracts for the trip
 
         private List<Carrier> AllCarriers = new List<Carrier>();
@@ -125,7 +127,14 @@ namespace TMS
 
         private void CarrierSelection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            DataGrid gridSelection = (DataGrid)sender;
+            Contract contractToDelete = gridSelection.SelectedItem as Contract;
 
+            if(contractToDelete != null)
+            {
+                RemoveBtn.IsEnabled = true;
+                deleteContract = contractToDelete;
+            }
         }
 
         private void ContractsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -145,6 +154,33 @@ namespace TMS
         }
 
         private void RemoveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (deleteContract != null)
+            {
+                // remove from ordertable
+                TripGrid.Items.Remove(deleteContract);
+
+                // add to display table
+                ContractsGrid.Items.Add(deleteContract);
+
+                // remove from orderList
+                orderContracts.Remove(deleteContract);
+
+                // reset deleteContact
+                deleteContract = new Contract();
+
+                // deactivate button
+                RemoveBtn.IsEnabled = false;
+
+                //if(list is empty or null) -> clear carriers list and display
+                if(orderContracts.Count == 0)
+                {
+                    CarrierGrid.Items.Clear();
+                }
+            }
+        }
+
+        private void TripGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
