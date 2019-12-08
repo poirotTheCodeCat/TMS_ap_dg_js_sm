@@ -286,6 +286,16 @@ namespace TMS
         /// </summary>
         private void FillRouteGrid()
         {
+            foreach(var s in carrierList)
+            {
+                var temp = "";
+                foreach (var d in s.DepotCities)
+                {
+                    temp += d+", ";
+                }
+                s.DepotCityString = temp;
+            }
+
             foreach (TransportCorridor c in routeList)
             {
                 RouteTableDisplay.Items.Add(c);

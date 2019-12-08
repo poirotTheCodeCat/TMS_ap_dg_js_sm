@@ -299,7 +299,7 @@ namespace TMS
             // EndTime != null 
             foreach(Contract con in contracts)
             {
-                con.Price = GetClientCharge(con, carriers, originalCarriers);
+               // con.Price = GetClientCharge(con, carriers, originalCarriers);
                 con.EndTime = startTime.AddHours(CalculateTime(con));
                 con.UpdateContract();
             }
