@@ -37,10 +37,10 @@
             <Rectangle Stroke="Gray"/>
             <DataGrid  x:Name="CurrentOrderGrid" Margin="10,10,292,10">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Customer" Width="*" Binding="{Binding Path=CName}"/>
-                    <DataGridTextColumn Header="Contract ID" Width="*" Binding="{Binding Path=}"/>
-                    <DataGridTextColumn Header="Carrier ID" Width="*" Binding="{Binding Path=}"/>
-                    <DataGridTextColumn Header="Confirmed" Width="*" Binding="{Binding Path=}"/>
+                    <DataGridTextColumn Header="Customer" Width="*" />
+                    <DataGridTextColumn Header="Contract ID" Width="*"/>
+                    <DataGridTextColumn Header="Carrier ID" Width="*" />
+                    <DataGridTextColumn Header="Confirmed" Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
             <Button x:Name="CompleteBtn" Content="Complete Order" Click="CompleteBtn_Click" Margin="500,102,97,13"/>
@@ -54,6 +54,15 @@
         <TextBox HorizontalAlignment="Left" Height="23" Margin="429,133,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="147"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="595,133,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="84"/>
 
-        <DataGrid Margin="429,38,21,316" ></DataGrid>
+        <DataGrid x:Name="CarrierGrid" Margin="429,38,21,316" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Carrier" Binding="{Binding Path=CarrierName}" Width="75"/>
+                <DataGridTextColumn Header="LTL Rate" Binding="{Binding Path=LtlRate}" Width="75"/>
+                <DataGridTextColumn Header="FTL Rate" Binding="{Binding Path=FtlRate}" Width="75"/>
+                <DataGridTextColumn Header="LTL Avail" Binding="{Binding Path=LtlAvailable}" Width="75"/>
+                <DataGridTextColumn Header="FTL Avail" Binding="{Binding Path=FtlAvailable}" Width="75"/>
+                <DataGridTextColumn Header="Reefer Rate" Binding="{Binding Path=ReeferCharge}" Width="75"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>
