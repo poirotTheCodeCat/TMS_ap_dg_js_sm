@@ -18,8 +18,8 @@ namespace TMS
     class LocalComm
     {
         private string connectionString = string.Format(ConfigurationManager.ConnectionStrings["tmsConnStr"].ConnectionString,serverIp,port);
-        static string serverIp = "tms-historybuff.mysql.database.azure.com";
-        static string port = "3306";
+        static string serverIp = ConfigurationManager.AppSettings["ipInfo"];
+        static string port = ConfigurationManager.AppSettings["portInfo"];
 
         /// <summary>
         /// This method adds a new Order to the TMS database.

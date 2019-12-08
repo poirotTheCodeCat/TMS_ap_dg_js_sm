@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using Google.Protobuf.WellKnownTypes;
-
+using TMS.Business_Layer.users;
 
 namespace TMS
 {
@@ -32,11 +32,22 @@ namespace TMS
         {
             trigger = false;
             InitializeComponent();
+
             trigger = true;
             LoadIpPortInfo();
-            FillCarrierList();
-            FillRateList();
-            FillRouteList();
+            //UpdateIpPortInfo("tms-historybuff.mysql.database.azure.com", "3306");
+
+            try
+            {
+                FillCarrierList();
+                FillRateList();
+                FillRouteList();
+            }
+            catch
+            {
+                MessageBox.Show("Unable to connect IP or Port information");
+            }
+            
         }
 
         /// <summary>
@@ -55,14 +66,23 @@ namespace TMS
         /// <param name="port">The new Port</param>
         private void UpdateIpPortInfo(string ip, string port)
         {
+            System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             if (ip != "")
             {
-                IpInfoDisplay.Text = ConfigurationManager.AppSettings["ipInfo"] = ip;
+                config.AppSettings.Settings["ipInfo"].Value = ip;
+                config.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection("appSettings");
+                IpInfoDisplay.Text = ip;
+                   // ConfigurationManager.AppSettings["ipInfo"] = ip;
             }
 
             if (port != "")
             {
-                PortInfoDisplay.Text = ConfigurationManager.AppSettings["portInfo"] = port;
+                config.AppSettings.Settings["portInfo"].Value = port;
+                config.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection("appSettings");
+                PortInfoDisplay.Text = port;
+                    //ConfigurationManager.AppSettings["portInfo"] = port;
             }
         }
 
@@ -160,6 +180,7 @@ namespace TMS
         /// <param name="e"></param>
         private void LogFilesBtn_Click(object sender, RoutedEventArgs e)
         {
+            LogFileDisplay.Document.Blocks.Clear();
             if (DataGridFullGrid.Visibility == Visibility.Visible)
             {
                 DataGridFullGrid.Visibility = Visibility.Collapsed;
@@ -169,21 +190,25 @@ namespace TMS
                 DataGridFullGrid.Visibility = Visibility.Visible;
             }
 
-            //string fileName = ConfigurationManager.AppSettings["logLocation"] + "/TmsLocalBackup";
+            Logger.Log("WOOO WEEEE");
+            string fileName = AppDomain.CurrentDomain.BaseDirectory + "/TMSLog.txt";
 
             //OpenFileDialog openFileDialog = new OpenFileDialog();
             //if (openFileDialog.ShowDialog() == true)
             //{
-            //    StreamReader file = new StreamReader(fileName);
+             StreamReader file = new StreamReader(fileName);
 
+            string line;
 
-            //    //while ((int line = file.ReadLine()) != null)
-            //    //{
-            //    //    LogFileDisplay.Add(line);
-            //    //}
-            //    file.Close();
-            //}
-        }
+            while ((line = file.ReadLine()) != null)
+            {
+
+                LogFileDisplay.AppendText("\n");
+                LogFileDisplay.AppendText(line);
+            }
+            file.Close();
+            }
+        
 
         /// <summary>
         /// This handler will change visibility of the three different datagrids that are available on this screen for viewing

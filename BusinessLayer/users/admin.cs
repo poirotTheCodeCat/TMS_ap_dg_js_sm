@@ -143,7 +143,7 @@ namespace TMS
         /// <returns>Carrier that is requested.</returns>
         public List<Carrier> GetCarriers()
         {
-            List<Carrier> carriers = new LocalComm().GetCarriers();
+            List<Carrier> carriers = new Planner().GetCarriers();
            
             return carriers;
         }
