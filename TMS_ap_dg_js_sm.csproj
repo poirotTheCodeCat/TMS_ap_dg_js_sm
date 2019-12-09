@@ -104,7 +104,6 @@
     <Compile Include="Data-Access\ExternalComm.cs" />
     <Compile Include="Data-Access\LocalComm.cs" />
     <Compile Include="BusinessLayer\users\Planner.cs" />
-    <Compile Include="BusinessLayer\orderManagement\Order.cs" />
     <Compile Include="UI-Layer\AdminPages\AdminPage.xaml.cs">
       <DependentUpon>AdminPage.xaml</DependentUpon>
     </Compile>
