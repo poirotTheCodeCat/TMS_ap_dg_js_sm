@@ -98,18 +98,7 @@ namespace TMS
             return remainingLoad;
         }
 
-        /// <summary>
-        /// This method allows the Planner to create a Trip that will be added to an Order.
-        /// </summary>
-        /// <param name="searchItem1">An identifier for the Order the Trip is required for</param>
-        /// <param name="searchItem2">An identifier for the Carrier completing the Trip</param>
-        /// <returns>List of trips that were created.</returns>
-        public List<Trip> CreateTrip(string searchItem1, string searchItem2)
-        {
-            List<Trip> trip = new List<Trip>();
 
-            return trip;
-        }
 
         /// <summary>
         /// This method allows the Planner to mark an Order as approved.
