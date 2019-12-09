@@ -46,7 +46,7 @@
             </DataGrid>
             <Button x:Name="CompleteBtn" Content="Complete Order" Click="CompleteBtn_Click" Margin="594,105,10,10"/>
             <Button x:Name="GenerateInvoiceBtn" Content="Generate Invoice" Click="GenerateInvoiceBtn_Click" Margin="493,105,111,10"/>
-            <Button x:Name="SimulateDayBtn" Content="Simulate Day" Click="CompleteBtn_Click" Margin="594,58,10,57"/>
+            <Button x:Name="SimulateDayBtn" Content="Simulate Day" Click="SimulateDayBtn_Click" Margin="594,58,10,57"/>
         </Grid>
         <Button x:Name="AddBtn" Content="Add" HorizontalAlignment="Left" Margin="516,204,0,0" VerticalAlignment="Top" Width="84" Height="31" Click="AddContract_Click"/>
         <Button x:Name="OrderBtn" Content="Place Order" HorizontalAlignment="Left" Margin="605,204,0,0" VerticalAlignment="Top" Width="84" Height="31" Click="SubmitBtn_Click"/>
