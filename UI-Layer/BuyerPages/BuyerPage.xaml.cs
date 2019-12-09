@@ -125,6 +125,7 @@ namespace TMS
             if(ContractInvoice != null)
             {
                 generateInvoice(ContractInvoice);
+                MessageBox.Show("A reciept has been made");
             }
         }
 
