@@ -441,7 +441,7 @@ namespace TMS
         /// <param name="e"></param>
         private void InvoiceTwoWk_Click(object sender, RoutedEventArgs e)
         {
-            List<Contract> displayContracts = planner.GenerateInvoiceSum();
+            List<Contract> displayContracts = planner.GenerateInvoiceSum(perceivedTime, 1);
             displayInvoice(displayContracts);
         }
 
@@ -452,7 +452,7 @@ namespace TMS
         /// <param name="e"></param>
         private void AllInvoice_Click(object sender, RoutedEventArgs e)
         {
-            List<Contract> displayContracts = planner.GenerateInvoiceSum();
+            List<Contract> displayContracts = planner.GenerateInvoiceSum(perceivedTime);
             displayInvoice(displayContracts);
         }
 
@@ -462,19 +462,25 @@ namespace TMS
         /// <param name="contracts"></param>
         private void displayInvoice(List<Contract> contracts)
         {
-            string invoiceString = "";
+            string nameTabs = null; 
+            
+            string invoiceString = "ID\tClient Name\tJob\tTruck\tEnd Time\t\tCost\n";
             foreach(Contract c in contracts)
             {
-                invoiceString = invoiceString +
-                    "********************** \n" +
-                    "********************** \n" +
-                    "Customer: " + c.ClientName + "\n" +
-                    "Contract ID: " + c.ContractID.ToString() + "\n" +
-                    "Job Type: " + c.jobString + "\n" +
-                    "Van Type: " + c.vanTypeString + "\n" +
-                    "Quantity: " + c.Quantity.ToString() +  "\n" +
-                    "End Time: " + c.EndTime.ToString() + "\n" +
-                    "Cost: " + c.Price.ToString() + "\n \n";
+                if (c.ClientName.ToString().Length < 10)
+                {
+                    nameTabs = "\t\t";
+                }
+                else
+                {
+                    nameTabs = "\t";
+                }
+                invoiceString += c.ContractID.ToString() + "\t" +
+                    c.ClientName.ToString() + nameTabs + 
+                    c.jobString + "\t" +
+                    c.vanTypeString + "\t" +
+                    ((DateTime)c.EndTime).ToString("dd-MM-yyyy") + "\t" +
+                    c.Price.ToString("F") + "\n";
             }
             MessageBox.Show(invoiceString);
         }

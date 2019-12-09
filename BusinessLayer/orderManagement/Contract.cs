@@ -71,6 +71,8 @@ namespace TMS
             { return jType; }
             set 
             {
+                jType = value;
+
                 if (jType == 0)
                 {
                     jobString = "FTL";
@@ -79,7 +81,6 @@ namespace TMS
                 {
                     jobString = "LTL";
                 }
-                jType = value; 
             }
         }
 
@@ -94,6 +95,8 @@ namespace TMS
             }
             set 
             {
+                vType = value;
+
                 if (vType == 1)
                 {
                     vanTypeString = "Reefer";
@@ -102,7 +105,6 @@ namespace TMS
                 {
                     vanTypeString = "Dry";
                 }
-                vType = value;
             }
         }
 

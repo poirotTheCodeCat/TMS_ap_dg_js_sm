@@ -99,19 +99,31 @@ namespace TMS
 
             if (ip != "")
             {
+                ConnectionStringSettings ipI = new ConnectionStringSettings("ipInfo", ip);
+
                 config.AppSettings.Settings["ipInfo"].Value = ip;
+                config.ConnectionStrings.ConnectionStrings.Remove("ipInfo");
+                config.ConnectionStrings.ConnectionStrings.Add(ipI);
                 config.Save(ConfigurationSaveMode.Modified);
                 ConfigurationManager.RefreshSection("appSettings");
-                IpInfoDisplay.Text = ip; 
+                IpInfoDisplay.Text = ip;
+
+                Logger.Log("IP Changed");
                 // ConfigurationManager.AppSettings["ipInfo"] = ip;
             }
 
             if (port != "")
             {
+                ConnectionStringSettings portI = new ConnectionStringSettings("ipInfo", port);
                 config.AppSettings.Settings["portInfo"].Value = port;
+                config.ConnectionStrings.ConnectionStrings.Remove("portInfo");
+                //config.ConnectionStrings.ConnectionStrings.Add(portI);
                 config.Save(ConfigurationSaveMode.Modified);
+            
                 ConfigurationManager.RefreshSection("appSettings");
-                PortInfoDisplay.Text = port; 
+                PortInfoDisplay.Text = port;
+
+                Logger.Log("Port Changed");
                 //ConfigurationManager.AppSettings["portInfo"] = port;
             }
         }
