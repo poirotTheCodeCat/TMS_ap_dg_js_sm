@@ -213,12 +213,6 @@ namespace TMS
         }
 
 
-        private bool confirmContract()
-        {
-
-            return true;
-        }
-
         /// <summary>
         /// This will remove the selected item from this datagrid and the list of carriers being used
         /// </summary>
