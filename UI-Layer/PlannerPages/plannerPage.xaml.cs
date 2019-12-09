@@ -371,5 +371,44 @@ namespace TMS
                 contractToComplete = contract;
             }
         }
+
+        /// <summary>
+        /// This button will simulate a day moving forward and will check against all current orders on the go to 
+        /// mark for completion
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SimulateDayBtn_Click(object sender, RoutedEventArgs e)
+        {
+            percievedTime.AddDays(1);
+            foreach(Contract contract in allContracts)      
+            {
+                if((contract.PlannerConfirmed == 0) && (contract.EndTime.HasValue))
+                {
+                    if(contract.EndTime <= percievedTime)       // check if the order has finished
+                    {
+                        markComplete(contract);         // Hulk it out
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///  This indicates the complete status of an order as complete by changing the row color to green within the dataGrid in 
+        ///  which it is stored
+        /// </summary>
+        /// <param name="contract"></param>
+        private void markComplete(Contract contract)
+        {
+            Brush changeColor = new SolidColorBrush(Colors.Green);
+
+            foreach(DataGridRow row in CurrentOrderGrid.Items)
+            {
+                if(row.Item == contract)
+                {
+                    row.Background = changeColor;
+                }
+            }
+        }
     }
 }
