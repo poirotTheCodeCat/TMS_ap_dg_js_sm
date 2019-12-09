@@ -16,8 +16,8 @@
                 <DataGridTextColumn Header="Client" Binding="{Binding Path=ClientName}" Width="75"/>
                 <DataGridTextColumn Header="Origin" Binding="{Binding Path=Origin}" Width="*"/>
                 <DataGridTextColumn Header="Destination" Binding="{Binding Path=Destination}" Width="*"/>
-                <DataGridTextColumn Header="Job Type" Binding="{Binding Path=JobType}" Width="60"/>
-                <DataGridTextColumn Header="Van Type" Binding="{Binding Path=VanType}" Width="60"/>
+                <DataGridTextColumn Header="Job Type" Binding="{Binding Path=jobString}" Width="60"/>
+                <DataGridTextColumn Header="Van Type" Binding="{Binding Path=vanTypeString}" Width="60"/>
                 <DataGridTextColumn Header="Quantity" Binding="{Binding Path=Quantity}" Width="60"/>
             </DataGrid.Columns>
         </DataGrid>
@@ -26,8 +26,8 @@
                 <DataGridTextColumn Header="Client" Binding="{Binding Path=ClientName}" Width="75"/>
                 <DataGridTextColumn Header="Origin" Binding="{Binding Path=Origin}" Width="*"/>
                 <DataGridTextColumn Header="Destination" Binding="{Binding Path=Destination}" Width="*"/>
-                <DataGridTextColumn Header="Job Type" Binding="{Binding Path=JobType}" Width="60"/>
-                <DataGridTextColumn Header="Van Type" Binding="{Binding Path=VanType}" Width="60"/>
+                <DataGridTextColumn Header="Job Type" Binding="{Binding Path=jobString}" Width="60"/>
+                <DataGridTextColumn Header="Van Type" Binding="{Binding Path=vanTypeString}" Width="60"/>
                 <DataGridTextColumn Header="Quantity" Binding="{Binding Path=Quantity}" Width="60"/>
             </DataGrid.Columns>
         </DataGrid>
@@ -46,6 +46,8 @@
             <Button x:Name="CompleteBtn" Content="Complete Order" Click="CompleteBtn_Click" Margin="594,105,10,10"/>
             <Button x:Name="GenerateInvoiceBtn" Content="Generate Invoice" Click="GenerateInvoiceBtn_Click" Margin="493,105,111,10"/>
             <Button x:Name="SimulateDayBtn" Content="Simulate Day" Click="SimulateDayBtn_Click" Margin="594,58,10,57"/>
+            <TextBox x:Name="CountDays" FontSize="18" HorizontalAlignment="Left" Height="32" Margin="506,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" RenderTransformOrigin="0.491,0.503"/>
+            <Label Content="Days Past" HorizontalAlignment="Left" Margin="441,58,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.542,0.552" Height="32"/>
         </Grid>
         <Button x:Name="AddBtn" Content="Add" HorizontalAlignment="Left" Margin="516,204,0,0" VerticalAlignment="Top" Width="84" Height="31" Click="AddContract_Click"/>
         <Button x:Name="OrderBtn" Content="Place Order" HorizontalAlignment="Left" Margin="605,204,0,0" VerticalAlignment="Top" Width="84" Height="31" Click="SubmitBtn_Click"/>

@@ -42,6 +42,8 @@ namespace TMS
         private bool multipleCarriers = true;
         private bool multipleLTL = false;
 
+        private int daysPassed = 0;
+
 
         public PlannerPage()
         {
@@ -382,6 +384,8 @@ namespace TMS
         private void SimulateDayBtn_Click(object sender, RoutedEventArgs e)
         {
             perceivedTime = perceivedTime.AddDays(1);
+            daysPassed++;
+            CountDays.Text = daysPassed.ToString();
             foreach(Contract contract in allContracts)      
             {
                 if((contract.PlannerConfirmed == 0) && (contract.EndTime.HasValue))
