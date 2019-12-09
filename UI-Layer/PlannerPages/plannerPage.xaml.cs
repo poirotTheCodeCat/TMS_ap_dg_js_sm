@@ -136,13 +136,13 @@ namespace TMS
         {
             // check if it is ftl
             // check for other items in orderContract list
-            if(contract.JobType == 0 || currentOrderList.Count > 0)
+            if(contract.JobType == 0 || orderContracts.Count > 0)
             {
                 if (contract.JobType == 1)        // if there are already items in the order list then we cannot add an FTL
                 {
                     if (!planner.CheckGroupedContracts(orderContracts, contract))
                     {
-                        Error.Content = "Cannot add FTL to Order";
+                        Error.Content = "Cannot add LTL to Order";
                         return;
                     }
                 }
