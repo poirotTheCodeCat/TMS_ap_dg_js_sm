@@ -282,6 +282,26 @@ namespace TMS
             }
         }
 
+        /// <summary>
+        /// Updates an FTL rate in the database to match the receiving carrier.
+        /// </summary>
+        /// <returns></returns>
+        public void UpdateCarrierFTLRate(Carrier carrier)
+        {
+            using (var myConn = new MySqlConnection(connectionString))
+            {
+                var myCommand = new MySqlCommand("UpdateCarrierFTLRate", myConn);
+                myCommand.CommandType = CommandType.StoredProcedure;
+
+                myCommand.Parameters.AddWithValue("@id", carrier.CarrierID);
+                myCommand.Parameters.AddWithValue("@value", carrier.FtlRate);
+
+                myConn.Open();
+
+                myCommand.ExecuteNonQuery();
+            }
+        }
+
 
         /// <summary>
         /// This generates a list of carriers from what is returned from the Carriers Table within the database

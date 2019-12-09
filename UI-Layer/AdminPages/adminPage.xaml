@@ -28,14 +28,15 @@
 
         <!--Route Table Elements -->
         <Grid x:Name="DataGridFullGrid">
-            <DataGrid x:Name="RouteTableDisplay" Margin="45,64,45,70" Visibility="Collapsed">
+            <DataGrid x:Name="RouteTableDisplay" Margin="45,64,45,70" Visibility="Collapsed"
+                      IsEnabled="True" IsManipulationEnabled="True" IsReadOnly="False" AutoGenerateColumns="False">>
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Style.Triggers>
                             <Trigger x:Name="highlightStyle"  Property="IsMouseOver" Value="True">
                                 <Setter Property="Background">
                                     <Setter.Value>
-                                        <SolidColorBrush Color="Blue" Opacity="0.5"/>
+                                        <SolidColorBrush Color="Blue" Opacity="0.2"/>
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
@@ -43,23 +44,24 @@
                     </Style>
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header = "Destination" Binding="{Binding Mode=TwoWay, Path=CityName}" Width="*"/>
-                    <DataGridTextColumn Header = "Km" Binding="{Binding Mode=TwoWay, Path=Distance}" Width="40"/>
-                    <DataGridTextColumn Header = "Time" Binding="{Binding Mode=TwoWay, Path=TimeBetween}" Width="60"/>
-                    <DataGridTextColumn Header = "West" Binding="{Binding Mode=TwoWay, Path=West}" Width="*"/>
-                    <DataGridTextColumn Header = "East" Binding="{Binding Mode=TwoWay, Path=East}" Width="*"/>
+                    <DataGridTextColumn Header = "Destination" Binding="{Binding CityName, Mode=TwoWay}" Width="*"/>
+                    <DataGridTextColumn Header = "Km" Binding="{Binding Distance, Mode=TwoWay}" Width="40"/>
+                    <DataGridTextColumn Header = "Time" Binding="{Binding TimeBetween, Mode=TwoWay}" Width="60"/>
+                    <DataGridTextColumn Header = "West" Binding="{Binding West, Mode=TwoWay}" Width="*"/>
+                    <DataGridTextColumn Header = "East" Binding="{Binding East, Mode=TwoWay}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
 
             <!-- Rate Table Elements -->
-            <DataGrid x:Name="RateTableDisplay" Margin="45,64,45,70" Visibility="Collapsed">
+            <DataGrid x:Name="RateTableDisplay" Margin="45,64,45,70" Visibility="Collapsed"
+                      IsEnabled="True" IsManipulationEnabled="True" IsReadOnly="False" AutoGenerateColumns="False">>
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Style.Triggers>
                             <Trigger x:Name="highlightStyle"  Property="IsMouseOver" Value="True">
                                 <Setter Property="Background">
                                     <Setter.Value>
-                                        <SolidColorBrush Color="Blue" Opacity="0.5"/>
+                                        <SolidColorBrush Color="Blue" Opacity="0.2"/>
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
@@ -67,22 +69,24 @@
                     </Style>
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header = "Truck Type" Binding="{Binding Mode=TwoWay, Path=truckType}" Width="*"/>
-                    <DataGridTextColumn Header = "Markup" Binding="{Binding Mode=TwoWay, Path=markup}" Width="*"/>
+                    <DataGridTextColumn Header = "Truck Type" Binding="{Binding truckType, Mode=TwoWay}" Width="*"/>
+                    <DataGridTextColumn Header = "Markup" Binding="{Binding markup, Mode=TwoWay}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button x:Name="ApplyRateChangesBtn" Content="Apply Updates" HorizontalAlignment="Left" 
-                    Margin="45,385,0,0" Width="99" Height="37" VerticalAlignment="Top" Visibility="Collapsed"/>
+            <!--<Button x:Name="ApplyRateChangesBtn" Content="Apply Updates" HorizontalAlignment="Left" 
+                    Margin="45,385,0,0" Width="99" Height="37" VerticalAlignment="Top" Visibility="Collapsed"/>-->
 
             <!-- Carrier Table Elements -->
-            <DataGrid x:Name="CarrierTableDisplay" Margin="45,64,45,70" Visibility="Visible">
+            <DataGrid x:Name="CarrierTableDisplay" Margin="45,64,45,70" Visibility="Visible" 
+                      IsEnabled="True" IsManipulationEnabled="True" IsReadOnly="False" AutoGenerateColumns="False"
+                      CellEditEnding="CarrierTableDisplay_OnCellEditEnding">
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Style.Triggers>
                             <Trigger x:Name="highlightStyle"  Property="IsMouseOver" Value="True">
                                 <Setter Property="Background">
                                     <Setter.Value>
-                                        <SolidColorBrush Color="Blue" Opacity="0.5"/>
+                                        <SolidColorBrush Color="Blue" Opacity="0.2"/>
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
@@ -90,20 +94,35 @@
                     </Style>
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header = "ID" Binding="{Binding Mode=TwoWay, Path=CarrierID}" Width="25"/>
-                    <DataGridTextColumn Header = "Name" Binding="{Binding Mode=TwoWay, Path=CarrierName}" Width="*"/>
-                    <DataGridTextColumn Header = "Depot" Binding="{Binding Mode=TwoWay, Path=DepotCityString}" Width="*"/>
-                    <DataGridTextColumn Header = "LTL" Binding="{Binding Mode=TwoWay, Path=LtlAvail}" Width="60"/>
-                    <DataGridTextColumn Header = "LTL Rate" Binding="{Binding Mode=TwoWay, Path=LtlRate}" Width="60"/>
-                    <DataGridTextColumn Header = "FTL" Binding="{Binding Mode=TwoWay, Path=FtlAvail}" Width="60"/>
-                    <DataGridTextColumn Header = "FTL Rate" Binding="{Binding Mode=TwoWay, Path=FtlRate}" Width="60"/>
-                    <DataGridTextColumn Header = "Refer Rate" Binding="{Binding Mode=TwoWay, Path=ReefRate}" Width="80"/>
+                    <DataGridTextColumn Header = "ID" Binding="{Binding CarrierID, Mode=TwoWay}" Width="25"/>
+                    <DataGridTextColumn Header = "Name" Binding="{Binding CarrierName, Mode=TwoWay}" Width="*"/>
+                    <DataGridTextColumn Header = "Depot" Binding="{Binding DepotCityString, Mode=TwoWay}" Width="*"/>
+                    <DataGridTextColumn Header = "LTL" Binding="{Binding LtlAvail, Mode=TwoWay}" Width="60"/>
+                    <DataGridTextColumn Header = "LTL Rate" Binding="{Binding LtlRate, Mode=TwoWay}" Width="60"/>
+                    <DataGridTextColumn Header = "FTL" Binding="{Binding FtlAvail, Mode=TwoWay}" Width="60"/>
+                    <DataGridTextColumn Header = "FTL Rate" Binding="{Binding FtlRate, Mode=TwoWay}" Width="60"/>
+                    <DataGridTextColumn Header = "Refer Rate" Binding="{Binding ReefRate, Mode=TwoWay}" Width="80"/>
                 </DataGrid.Columns>
             </DataGrid>
             <Button x:Name="ApplyCarrierChangesBtn" Content="Apply Updates" HorizontalAlignment="Left" 
-                    Margin="45,385,0,0" Width="99" Height="37" VerticalAlignment="Top" Visibility="Collapsed"/>
-            <Button x:Name="ApplyRouteChangesBtn" Content="Apply Updates" HorizontalAlignment="Left" Margin="45,357,0,0" 
-                    VerticalAlignment="Top" Width="99" Height="37" Click="ApplyRouteChangesBtn_OnClick"/>
+                    Margin="45,357,0,0" Width="99" Height="37" VerticalAlignment="Top" Visibility="Visible"
+                    Click="ApplyCarrierChangesBtn_OnClick"/>
+            <!--<Button x:Name="ApplyRouteChangesBtn" Content="Apply Updates" HorizontalAlignment="Left" Margin="45,357,0,0" 
+                    VerticalAlignment="Top" Width="99" Height="37"/>-->
+            <Button x:Name="RefreshDataTablesBtn" Content="Refresh Tables" HorizontalAlignment="Left" Margin="262,357,0,0" 
+                    VerticalAlignment="Top" Width="99" Height="37" Click="RefreshDataTablesBtn_OnClick" />
+            <Popup x:Name="refreshPopup" IsOpen="False"  StaysOpen="False" Width="160" Height="20" 
+                   OpacityMask="White" PopupAnimation="Slide" Placement="Center">
+                <TextBlock Background="White" Foreground="Black" VerticalAlignment="Center" Height="20">
+                    Data tables have been reset.
+                </TextBlock>
+            </Popup>
+            <Popup x:Name="updateTablePopup" IsOpen="False"  StaysOpen="False" Width="160" Height="20" 
+                   OpacityMask="White" PopupAnimation="Slide" Placement="Center">
+                <TextBlock Background="White" Foreground="Black" VerticalAlignment="Center" Height="20">
+                    Data tables have updated.
+                </TextBlock>
+            </Popup>
         </Grid>
 
         <!-- IP and PORT Elements -->
@@ -151,6 +170,11 @@
                 <Button x:Name="BackupBtn" Content="Backup" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="BackupBtn_Click" Width="44" Margin="26,0,255,21"/>
                 <Button x:Name="BackupBackBtn" Content="Close" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="BackupBackBtn_Click" Width="44" Margin="251,0,30,21"/>
             </Grid>
+        </Grid>
+        <Grid x:Name="flashScreenUpdate" Visibility="Collapsed" Margin="45,64,45,70">
+            <Grid.Background>
+                <SolidColorBrush Color="Black" Opacity="0.8"/>
+            </Grid.Background>
         </Grid>
     </Grid>
 </Page>

@@ -125,6 +125,7 @@ namespace TMS
             if(ContractInvoice != null)
             {
                 generateInvoice(ContractInvoice);
+                MessageBox.Show("A reciept has been made");
             }
         }
 
@@ -144,6 +145,10 @@ namespace TMS
             }
         }
 
+        /// <summary>
+        /// This method calls an external method which generates an ivoice based on the selected contract
+        /// </summary>
+        /// <param name="contract"></param>
         private void generateInvoice(Contract contract)
         {
             buyer.GenerateInvoice(contract);
