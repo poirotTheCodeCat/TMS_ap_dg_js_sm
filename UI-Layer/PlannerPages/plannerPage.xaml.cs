@@ -87,7 +87,7 @@ namespace TMS
         private void fillLists()
         {
             // get all current orders -> orders where Completed == false
-            allContracts = planner.ShowPendingOrders();
+            // allContracts = planner.Get();
         }
 
         /// <summary>
@@ -100,6 +100,11 @@ namespace TMS
             currCarriers.Clear();
             orderContracts.Clear();
             currentOrderList.Clear();
+            ContractsGrid.Items.Clear();
+            TripGrid.Items.Clear();
+            CarrierGrid.Items.Clear();
+            carrierSelect.Items.Clear();
+            CurrentOrderGrid.Items.Clear();
 
             fillLists();
             generateContractData();
@@ -143,6 +148,7 @@ namespace TMS
                 }
                 else
                 {
+                    ContractsGrid.IsEnabled = false;        // do not allow user to add more
                     if (currCarriers.Count > 1)
                     {
                         Error.Content = "You can only have one carrier to add another LTL";
@@ -150,8 +156,6 @@ namespace TMS
                     }
                 }
             }
-
-            ContractsGrid.IsEnabled = false;
             orderContracts.Add(contract);
             TripGrid.Items.Add(contract);
             ContractsGrid.Items.Remove(selectedContract);
