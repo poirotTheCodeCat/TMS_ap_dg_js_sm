@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TMS.Business_Layer.users;
 
 namespace TMS
 {
@@ -50,8 +51,9 @@ namespace TMS
                 fillLists();            // fill the allContracts list with data from the database
                 generateContractData();
             }
-            catch
+            catch(Exception e)
             {
+                Logger.Log("TMS database connection error\n" + e);
                 MessageBox.Show("Unable to connect IP or Port information");
             }
         }
@@ -333,13 +335,20 @@ namespace TMS
             {
                 Carrier carrier = carriersToDisplay[index];      // get the current carrier 
 
+                if(((orderContracts[0].JobType == 1) && carrier.LtlAvail > 0) || ((orderContracts[0].JobType == 0) && carrier.FtlAvail > 0))
+                {
+                    CarrierGrid.Items.Add(carrier);             // add the carrier 
+                    currCarriers.Add(carrier);                  // add to the list of carriers to send to 
 
-                CarrierGrid.Items.Add(carrier);             // add the carrier 
-                currCarriers.Add(carrier);                  // add to the list of carriers to send to 
+                    string displayString = carrier.CarrierName + " || " + carrier.FtlAvail + " || " + carrier.LtlAvail + " || " + carrier.FtlRate + " || " + carrier.LtlAvail;
 
-                string displayString = carrier.CarrierName + " || " + carrier.FtlAvail + " || " + carrier.LtlAvail + " || " + carrier.FtlRate + " || " + carrier.LtlAvail;
-
-                carrierSelect.Items.Remove(displayString);     // remove the selected carrier from the combobox
+                    carrierSelect.Items.Remove(displayString);     // remove the selected carrier from the combobox
+                }
+                else
+                {
+                    Error.Content = "This Carrier has no availability";
+                }
+               
             }
         }
 
