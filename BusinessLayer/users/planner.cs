@@ -26,7 +26,20 @@ namespace TMS
         public Planner()
         {
             PalletThreshold = 17;
-            transportCorridors = new TransportCorridor().Routes;
+            transportCorridors = GetRoutes();
+        }
+
+        /// <summary>
+        /// This method gets a Carrier to view the details of that Carrier. 
+        /// </summary>
+        /// <returns>Routes that are requested.</returns>
+        public List<TransportCorridor> GetRoutes()
+        {
+
+            List<TransportCorridor> routes = new LocalComm().GetRoutes();
+
+
+            return routes;
         }
 
         /// <summary>
@@ -125,6 +138,12 @@ namespace TMS
             return pendingOrderList;
         }
 
+        public List<Contract> ShowAllContracts()
+        {
+            List<Contract> allContracts = new LocalComm().GetLocalContracts();
+            return allContracts;
+        }
+
         /// <summary>
         /// This method allows the Planner to generate an invoice summary of all Orders. 
         /// </summary>
@@ -166,53 +185,43 @@ namespace TMS
         }
 
         
-        public double GetClientCharge(Contract contract, List<Carrier> orderCarriers, List<Carrier> originalCarriers)
+        public double GetClientCharge(Contract contract, List<Carrier> orderCarriers, int multipleCon=0)
         {
-            double distance = CalculateTime(contract);
+            int distance = CalculateDistance(contract.Origin, contract.Destination);
+            double hours = CalculateTime(contract);
             double dailyCharge = 150;
             int daysTravelled = 0;
-            int pallets = 0;
-
-            double d = distance;
-            while(d > 24)
+            double h = hours;
+            while(h > 24)
             {
-                d -= 24;
+                h -= 24;
                 ++daysTravelled;
             }
             // This means only one Carrier
             if (contract.JobType == 1)
             {
-                contract.Price = (distance * orderCarriers[0].FtlRate) + (daysTravelled * dailyCharge);
+                contract.Price += orderCarriers[0].Pallets * distance * orderCarriers[0].LtlRate;
             }
             else if (contract.VanType == 0)
             {
                 // Finds the number of pallets carried by each carrier, bills appropriately 
                 foreach (Carrier orderC in orderCarriers)
                 {
-                    foreach (Carrier origC in originalCarriers)
-                    {
-                        if (origC.CarrierID == orderC.CarrierID)
-                        {
-                            pallets = origC.LtlAvail - orderC.LtlAvail;
-                            contract.Price += pallets * distance * orderC.LtlRate;
-                        }
-                    }
+                    contract.Price = (distance * orderCarriers[0].FtlRate) + (daysTravelled * dailyCharge);
+
                 }
             }
-            else
+            else if (multipleCon == 0)
             {
                 // Finds the number of pallets carried by each carrier, bills appropriately 
                 foreach (Carrier orderC in orderCarriers)
                 {
-                    foreach (Carrier origC in originalCarriers)
-                    {
-                        if (origC.CarrierID == orderC.CarrierID)
-                        {
-                            pallets = origC.LtlAvail - orderC.LtlAvail;
-                            contract.Price += pallets * distance * orderC.ReefRate;
-                        }
-                    }
+                    contract.Price += (orderC.Pallets * distance * orderC.LtlRate) + (orderC.ReefRate * orderC.Pallets * distance * orderC.LtlRate);
                 }
+            }
+            else
+            {
+                contract.Price += (contract.Quantity * distance * orderCarriers[0].LtlRate);
             }
 
             contract.Price += daysTravelled * dailyCharge;
@@ -255,10 +264,12 @@ namespace TMS
                     if (i == carriers.Count - 1)
                     {
                         carriers[i].LtlAvail -= remaining;
+                        carriers[i].Pallets = remaining;
                         new LocalComm().UpdateCarrierLTL(carriers[i]);
                     }
                     else
                     {
+                        carriers[i].Pallets = carriers[i].LtlAvail; // The carrier is using up all it's Ltl availability
                         remaining -= carriers[i].LtlAvail;
                         carriers[i].LtlAvail = 0;
                         new LocalComm().UpdateCarrierLTL(carriers[i]);
@@ -299,13 +310,58 @@ namespace TMS
             // EndTime != null 
             foreach(Contract con in contracts)
             {
-               // con.Price = GetClientCharge(con, carriers, originalCarriers);
+               // con.Price = GetClientCharge(con, carriers);
                 con.EndTime = startTime.AddHours(CalculateTime(con));
+                con.Price = GetClientCharge(con, carriers);
                 con.UpdateContract();
             }
 
         }
 
+        public int CalculateDistance(string startCity, string endCity)
+        {
+            int originIndex = -1;
+            int DestIndex = -1;
+            int distance = 0;
+
+            foreach (TransportCorridor t in transportCorridors)
+            {
+                // find the index of the start city
+                // find the index of the second city
+                if (startCity == t.CityName)        // check if the city is the origin city
+                {
+                    originIndex = transportCorridors.IndexOf(t);
+                }
+                if (endCity == t.CityName)          // check if the city is the destination city
+                {
+                    DestIndex = transportCorridors.IndexOf(t);
+                }
+                if (originIndex != -1 && DestIndex != -1)
+                {
+                    break;
+                }
+            }
+            // now that the indexes have been found we can compare and see what direction we should travel in
+            if (originIndex < DestIndex)     // if the destination is west
+            {
+                for (int i = originIndex; i < DestIndex; i++)
+                {
+                    distance += transportCorridors[i].Distance;
+                }
+            }
+            else
+            {
+                for (int j = originIndex; j > DestIndex; j--)
+                {
+                    if (transportCorridors[j].CityName != endCity)
+                    {
+                        distance += transportCorridors[j - 1].Distance;
+
+                    }
+                }
+            }
+            return distance;
+        }
         /// <summary>
         /// Calculates the total time needed to complete the trip in hours
         /// </summary>
@@ -348,7 +404,7 @@ namespace TMS
                 for (int i = originIndex; i <= DestIndex; i++)
                 {
                     // Add two hours for each intermediate city if LTL, or if loading/unloading for FTL and LTL
-                    if (contract.Origin == transportCorridors[i].CityName || contract.Origin == transportCorridors[i].CityName
+                    if (contract.Origin == transportCorridors[i].CityName || contract.Destination == transportCorridors[i].CityName
                         || contract.JobType == 1)
                     {
                         restTime += layoverTime;
@@ -369,7 +425,7 @@ namespace TMS
                         // The final time is calculated by totalTime + (daysAdded*24), totalTime serves as the 
                         // remainder of hours if a whole day wasn't required, set to 0 if the last city 
                         // has been reached so too much time isn't added.
-                        if (contract.Origin == transportCorridors[i].CityName)
+                        if (contract.Destination == transportCorridors[i].CityName)
                         {
                             totalTime = 0;
                         }
@@ -382,24 +438,24 @@ namespace TMS
                 {
                     for (int j = originIndex; j >= DestIndex; j--)
                     {
-                        if (contract.Origin == transportCorridors[j-1].CityName || contract.Origin == transportCorridors[j-1].CityName
+                        if (contract.Origin == transportCorridors[j].CityName || contract.Destination == transportCorridors[j].CityName
                         || contract.JobType == 1)
                         {
                             restTime += layoverTime;
-                            totalTime += restTime;
+                            //totalTime += restTime;
                         }
-                        if (totalTime < 12 && driveTime < 8)
+                        if (totalTime < 12 && driveTime < 8 && (contract.Destination != transportCorridors[j].CityName))
                         {
                             driveTime += transportCorridors[j - 1].TimeBetween;
-                            totalTime += driveTime;
+                            //totalTime += driveTime;
 
                         }
-                        if (totalTime >= 12 || driveTime >= 8)
+                        if ((driveTime + restTime) >= 12 || driveTime >= 8)
                         {
                             ++daysAdded;
                             restTime = 0;
                             driveTime = 0;
-                            if (contract.Origin == transportCorridors[j - 1].CityName)
+                            if (contract.Destination == transportCorridors[j].CityName)
                             {
                                 totalTime = 0;
                             }
@@ -408,7 +464,7 @@ namespace TMS
                 }
             }
 
-            return totalTime + (daysAdded * 24);
+            return (driveTime+restTime) + (daysAdded * 24);
         }
             
        

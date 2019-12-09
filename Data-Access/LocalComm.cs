@@ -65,7 +65,7 @@ namespace TMS
                 var myCommand = new MySqlCommand("UpdateContract", myConn);
                 myCommand.CommandType = CommandType.StoredProcedure;
                 myCommand.Parameters.AddWithValue("@id", contract.ContractID);
-                myCommand.Parameters.AddWithValue("@endT", contract.EndTime);
+                myCommand.Parameters.AddWithValue("@endT", contract.EndTime.ToString());
                 myCommand.Parameters.AddWithValue("@p", contract.Price);
                 myCommand.Parameters.AddWithValue("@buyerSel", contract.BuyerSelected);
                 myCommand.Parameters.AddWithValue("@plannerConf", contract.PlannerConfirmed);
@@ -272,7 +272,7 @@ namespace TMS
                 myCommand.CommandType = CommandType.StoredProcedure;
 
                 myCommand.Parameters.AddWithValue("@id", carrier.CarrierID);
-                myCommand.Parameters.AddWithValue("@value", carrier.FtlAvail);
+                myCommand.Parameters.AddWithValue("@value", carrier.LtlAvail);
 
                 myConn.Open();
 
@@ -384,7 +384,7 @@ namespace TMS
                     Origin = row["Origin"].ToString(),
                     Destination = row["Destination"].ToString(),
                     VanType = Convert.ToInt32(row["VanType"]),
-                    EndTime = string.IsNullOrEmpty(row["EndTime"].ToString()) ? (DateTime?)null : DateTime.Parse(row["EndTime"].ToString()),
+                    EndTime = string.IsNullOrWhiteSpace(row["EndTime"].ToString()) ? default(DateTime?) : DateTime.Parse(row["EndTime"].ToString()),
                     Price = Convert.ToDouble(row["Price"]),
                     BuyerSelected = Convert.ToInt32(row["BuyerSelected"]),
                     PlannerConfirmed = Convert.ToInt32(row["PlannerConfirmed"])

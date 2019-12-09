@@ -24,6 +24,7 @@ namespace TMS
         List<Contract> displayContracts;
         Buyer buyer = new Buyer();
         Contract selectedContract = new Contract();
+        Contract ContractInvoice = new Contract();
 
         public BuyerPage()
         {
@@ -97,6 +98,15 @@ namespace TMS
             {
                 ContractGrid.Items.Add(c);
             }
+
+            List<Contract> contracts = new Planner().ShowAllContracts();
+            foreach(Contract con in contracts)
+            {
+                if(con.PlannerConfirmed == 1)
+                {
+                    CompletedGrid.Items.Add(con);
+                }
+            }
         }
 
         /// <summary>
@@ -116,6 +126,47 @@ namespace TMS
                 selectedContract = newItem;
             }
             CreateBtn.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void InvoiceBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if(ContractInvoice != null)
+            {
+                generateInvoice(ContractInvoice);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CompletedGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DataGrid dataGrid = (DataGrid)sender;
+            Contract contract = dataGrid.SelectedItem as Contract;
+
+            if(contract != null)
+            {
+                ContractInvoice = contract;
+            }
+        }
+
+        private void generateInvoice(Contract contract)
+        {
+            string invoiceString = "Contract ID: " + contract.ContractID.ToString() + "\n"
+                + "Customer: " + contract.ClientName + "\n"
+                + "Job Type: " + contract.JobType.ToString() + "\n"
+                + "Van Type " + contract.VanType.ToString() + "\n"
+                + "Quantity " + contract.Quantity.ToString() + "\n";
+
+            MessageBox.Show(invoiceString);
+
         }
     }
 }

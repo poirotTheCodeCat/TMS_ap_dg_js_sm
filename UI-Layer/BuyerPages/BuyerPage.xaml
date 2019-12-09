@@ -20,8 +20,18 @@
                 <DataGridTextColumn Header="Van Type" Width="*" Binding="{Binding Path=VanType}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid x:Name="CompletedGrid" Margin="380,10,10,72" />
+        <DataGrid x:Name="CompletedGrid" Margin="380,10,10,72" SelectionChanged="CompletedGrid_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Client Name" Width="*" Binding="{Binding Path=ClientName}"/>
+                <DataGridTextColumn Header="Job Type" Width="*" Binding="{Binding Path=JobType}"/>
+                <DataGridTextColumn Header="Quantity" Width="*" Binding="{Binding Path=Quantity}"/>
+                <DataGridTextColumn Header="Origin" Width="*" Binding="{Binding Path=Origin}"/>
+                <DataGridTextColumn Header="Destination" Width="*" Binding="{Binding Path=Destination}"/>
+                <DataGridTextColumn Header="Van Type" Width="*" Binding="{Binding Path=VanType}"/>
+            </DataGrid.Columns>
+        </DataGrid>
         <Button x:Name="CreateBtn" Content="Create Order" HorizontalAlignment="Left" Margin="284,355,0,0" VerticalAlignment="Top" Width="91" Height="34" Click="CreateBtn_Click" IsEnabled="False"/>
         <Button x:Name="RefreshBtn" Content="Refresh" HorizontalAlignment="Left" Margin="10,355,0,0" VerticalAlignment="Top" Width="55" Height="34" Click="RefreshBtn_Click"/>
+        <Button x:Name="InvoiceBtn" Content="Invoice" HorizontalAlignment="Left" Margin="606,355,0,0" VerticalAlignment="Top" Width="84" Height="34" Click="InvoiceBtn_Click"/>
     </Grid>
 </Page>

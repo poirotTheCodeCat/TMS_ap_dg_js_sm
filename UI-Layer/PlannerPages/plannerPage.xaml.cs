@@ -74,7 +74,7 @@ namespace TMS
 
             foreach(Contract cont in allContracts)
             {
-                if((cont.PlannerConfirmed == 1) && (cont.ContractStatus == 0))
+                if((cont.PlannerConfirmed == 0) && (cont.EndTime.HasValue))
                 {
                     CurrentOrderGrid.Items.Add(cont);
                 }
@@ -89,7 +89,7 @@ namespace TMS
         private void fillLists()
         {
             // get all current orders -> orders where Completed == false
-            allContracts = planner.ShowPendingOrders();
+            allContracts = planner.ShowAllContracts();
         }
 
         /// <summary>
@@ -102,6 +102,11 @@ namespace TMS
             currCarriers.Clear();
             orderContracts.Clear();
             currentOrderList.Clear();
+            ContractsGrid.Items.Clear();
+            TripGrid.Items.Clear();
+            CarrierGrid.Items.Clear();
+            carrierSelect.Items.Clear();
+            CurrentOrderGrid.Items.Clear();
 
             fillLists();
             generateContractData();
@@ -133,27 +138,26 @@ namespace TMS
         {
             // check if it is ftl
             // check for other items in orderContract list
-            if(contract.JobType == 0 || currentOrderList.Count > 0)
+            if(contract.JobType == 0 || orderContracts.Count > 0)
             {
                 if (contract.JobType == 1)        // if there are already items in the order list then we cannot add an FTL
                 {
                     if (!planner.CheckGroupedContracts(orderContracts, contract))
                     {
-                        Error.Content = "Cannot add FTL to Order";
+                        Error.Content = "Cannot add LTL to Order";
                         return;
                     }
                 }
                 else
                 {
-                    if (currCarriers.Count > 1)
+                    ContractsGrid.IsEnabled = false;        // do not allow user to add more
+                    if (currCarriers.Count >= 1)
                     {
-                        Error.Content = "You can only have one carrier to add another LTL";
+                        Error.Content = "You cannot combine FTL Contracts with other Contracts";
                         return;
                     }
                 }
             }
-
-            ContractsGrid.IsEnabled = false;
             orderContracts.Add(contract);
             TripGrid.Items.Add(contract);
             ContractsGrid.Items.Remove(selectedContract);
@@ -176,8 +180,8 @@ namespace TMS
                 if(c.DepotCities.Contains(city))
                 {
                     displayString = c.CarrierName + " || " + c.FtlAvail + " || " + c.LtlAvail + " || " + c.FtlRate + " || " + c.LtlAvail;
-                    citySelect.Items.Add(displayString);
-                    currCarriers.Add(c);
+                    carrierSelect.Items.Add(displayString);
+                    carriersToDisplay.Add(c);
                 }
             }
         }
@@ -192,8 +196,15 @@ namespace TMS
             // check the orderlist vs the carrier LTL/FTL rate
             // if(confirmContract())
             // planner.CreateOrder(orderContracts, currCarriers);
+            if(currCarriers.Count == 0)
+            {
+                Error.Content = "You must enter a Carrier";
+                return;
+            }
 
-            if(!AddBtn.IsEnabled)       // if the Add button has been deactivated re enable it
+            planner.CreateOrder(orderContracts, currCarriers);
+
+            if (!AddBtn.IsEnabled)       // if the Add button has been deactivated re enable it
             {
                 AddBtn.IsEnabled = true;
             }
@@ -219,13 +230,16 @@ namespace TMS
         {
             DataGrid selection = (DataGrid)sender;
             Carrier removeCarrier = selection.SelectedItem as Carrier;
+            if(removeCarrier != null)
+            {
+                string addString = removeCarrier.CarrierName + " || " + removeCarrier.FtlAvail + " || " + removeCarrier.LtlAvail + " || " + removeCarrier.FtlRate + " || " + removeCarrier.LtlAvail;
 
-            citySelect.Items.Remove(removeCarrier);     // remove the carrier from the datagrid
-            currCarriers.Remove(removeCarrier);     // remove the carrier from the list of current carriers
+                CarrierGrid.Items.Remove(removeCarrier);     // remove the carrier from the datagrid
+                currCarriers.Remove(removeCarrier);     // remove the carrier from the list of current carriers
 
-            string addString = removeCarrier.CarrierName + " || " + removeCarrier.FtlAvail + " || " + removeCarrier.LtlAvail + " || " + removeCarrier.FtlRate + " || " + removeCarrier.LtlAvail;
-
-            citySelect.Items.Add(addString);
+                carrierSelect.Items.Add(addString);
+            }
+            
         }
 
 
@@ -283,6 +297,12 @@ namespace TMS
                 if(orderContracts.Count == 0)
                 {
                     CarrierGrid.Items.Clear();
+                    carrierSelect.Items.Clear();
+                }
+
+                if(!ContractsGrid.IsEnabled)
+                {
+                    ContractsGrid.IsEnabled = true;
                 }
             }
         }
@@ -313,21 +333,28 @@ namespace TMS
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void citySelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void carrier_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;       
             int index = comboBox.SelectedIndex;         // get the index of the selected combobox
             if (index >= 0)
             {
-                Carrier carrier = currCarriers[index];      // get the current carrier 
+                Carrier carrier = carriersToDisplay[index];      // get the current carrier 
 
+                if(((orderContracts[0].JobType == 1) && carrier.LtlAvail > 0) || ((orderContracts[0].JobType == 0) && carrier.FtlAvail > 0))
+                {
+                    CarrierGrid.Items.Add(carrier);             // add the carrier 
+                    currCarriers.Add(carrier);                  // add to the list of carriers to send to 
 
-                CarrierGrid.Items.Add(carrier);             // add the carrier 
-                currCarriers.Add(carrier);                  // add to the list of carriers to send to 
+                    string displayString = carrier.CarrierName + " || " + carrier.FtlAvail + " || " + carrier.LtlAvail + " || " + carrier.FtlRate + " || " + carrier.LtlAvail;
 
-                string displayString = carrier.CarrierName + " || " + carrier.FtlAvail + " || " + carrier.LtlAvail + " || " + carrier.FtlRate + " || " + carrier.LtlAvail;
-
-                citySelect.Items.Remove(displayString);     // remove the selected carrier from the combobox
+                    carrierSelect.Items.Remove(displayString);     // remove the selected carrier from the combobox
+                }
+                else
+                {
+                    Error.Content = "This Carrier has no availability";
+                }
+               
             }
         }
 
@@ -344,6 +371,45 @@ namespace TMS
             if(contract != null)
             {
                 contractToComplete = contract;
+            }
+        }
+
+        /// <summary>
+        /// This button will simulate a day moving forward and will check against all current orders on the go to 
+        /// mark for completion
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SimulateDayBtn_Click(object sender, RoutedEventArgs e)
+        {
+            percievedTime.AddDays(1);
+            foreach(Contract contract in allContracts)      
+            {
+                if((contract.PlannerConfirmed == 0) && (contract.EndTime.HasValue))
+                {
+                    if(contract.EndTime <= percievedTime)       // check if the order has finished
+                    {
+                        markComplete(contract);         // Hulk it out
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///  This indicates the complete status of an order as complete by changing the row color to green within the dataGrid in 
+        ///  which it is stored
+        /// </summary>
+        /// <param name="contract"></param>
+        private void markComplete(Contract contract)
+        {
+            Brush changeColor = new SolidColorBrush(Colors.Green);
+
+            foreach(DataGridRow row in CurrentOrderGrid.Items)
+            {
+                if(row.Item == contract)
+                {
+                    row.Background = changeColor;
+                }
             }
         }
     }
