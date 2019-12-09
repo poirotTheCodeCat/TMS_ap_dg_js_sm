@@ -331,11 +331,6 @@ namespace TMS
                     rateList[i].truckType = "LTL";
                     rateList[i].markup = rateMarkup[i];
                 }
-                else if (i == 2)
-                {
-                    rateList[i].truckType = "REEF"; 
-                    rateList[i].markup = rateMarkup[i];
-                }
             }
             FillRateGrid();
         }
