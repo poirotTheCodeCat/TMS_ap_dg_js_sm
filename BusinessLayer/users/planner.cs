@@ -18,11 +18,6 @@ namespace TMS
         private int PalletThreshold { get; set; }
         private List<TransportCorridor> transportCorridors = new List<TransportCorridor>();
         
-        //private Order workingOrder;
-        //private bool pendingOrders;
-
-
-
         public Planner()
         {
             PalletThreshold = 17;
@@ -30,7 +25,7 @@ namespace TMS
         }
 
         /// <summary>
-        /// This method gets a Carrier to view the details of that Carrier. 
+        /// This method gets a list of all routes from the local database. 
         /// </summary>
         /// <returns>Routes that are requested.</returns>
         public List<TransportCorridor> GetRoutes()
@@ -43,10 +38,10 @@ namespace TMS
         }
 
         /// <summary>
-        /// This method gets a Carrier to view the details of that Carrier. 
+        /// This method gets a list of all Carriers and populates each of them 
+        /// with the appropriate depot city.
         /// </summary>
-        /// <param name="searchItem">The identifier for the Carrier that will be returned</param>
-        /// <returns>Carrier that is requested.</returns>
+        /// <returns>List of all carriers.</returns>
         public List<Carrier> GetCarriers()
         {
             List<Carrier> carriers = new LocalComm().GetCarriers();
@@ -58,57 +53,11 @@ namespace TMS
             return carriers;
         }
 
-        /// <summary>
-        /// This method updates the availability of the Carrier based on the job type being requested. 
-        /// </summary>
-        /// <param name="carrier">The identifier for the Carrier that will be returned</param>
-        /// <param name="jobType">The identifier for the Carrier that will be returned</param>
-        /// <param name="quantityPallets">The LTL load being requested by the Contract(s)</param>
-        /// <returns>Int representing the remaining load for a Contract</returns>
-        public int UpdateCarrierAvailability(Carrier carrier, int jobType=0, int quantityPallets=0)
-        {
-            int remainingLoad = 0;
-
-            // Assuming that the UI will only show Carriers with availability of the job type of the Contract(s) in the cart 
-            // If the job type is an FTL, there must be available trucks 
-            if (jobType == 0)
-            {
-                carrier.FtlAvail -= 1;
-            }
-            else
-            {
-                if (carrier.LtlAvail < quantityPallets)
-                {
-                    remainingLoad = quantityPallets - carrier.LtlAvail;
-                    
-                        carrier.LtlAvail = 0;  
-                }
-                else
-                {
-                    carrier.LtlAvail = quantityPallets;
-                }
-            }
-
-            return remainingLoad;
-        }
-
-        /// <summary>
-        /// This method allows the Planner to create a Trip that will be added to an Order.
-        /// </summary>
-        /// <param name="searchItem1">An identifier for the Order the Trip is required for</param>
-        /// <param name="searchItem2">An identifier for the Carrier completing the Trip</param>
-        /// <returns>List of trips that were created.</returns>
-        public List<Trip> CreateTrip(string searchItem1, string searchItem2)
-        {
-            List<Trip> trip = new List<Trip>();
-
-            return trip;
-        }
 
         /// <summary>
         /// This method allows the Planner to mark an Order as approved.
         /// </summary>
-        /// <param name="searchItem">The identifier for the Order that needs to be marked 
+        /// <param name="contract">The identifier for the Order that needs to be marked 
         ///                         approved</param>
         /// <returns>Int representing an Order was successfully marked approved.</returns>
         public void ConfirmOrder(Contract contract)
@@ -118,14 +67,14 @@ namespace TMS
         }
 
         /// <summary>
-        /// This method allows the Planner to view all pending Orders.
+        /// This method allows the Planner to view all pending Orders (Orders that 
+        /// have been selected by the Buyer, but not approved by the Buyer).
         /// </summary>
         /// <returns>List of pending Orders.</returns>
         public List<Contract> ShowPendingOrders()
         {
             List<Contract> pendingOrderList = new List<Contract>();
             List<Contract> allContracts = new LocalComm().GetLocalContracts();
-            //pendingOrderList = new LocalComm().GetPendingContracts();
 
             foreach(Contract c in allContracts)
             {
@@ -134,10 +83,13 @@ namespace TMS
                     pendingOrderList.Add(c);
                 }
             }
-
             return pendingOrderList;
         }
 
+        /// <summary>
+        /// This method allows the Planner to view all Contracts in the local database.
+        /// </summary>
+        /// <returns>List of all Contracts.</returns>
         public List<Contract> ShowAllContracts()
         {
             List<Contract> allContracts = new LocalComm().GetLocalContracts();
@@ -147,9 +99,10 @@ namespace TMS
         /// <summary>
         /// This method allows the Planner to generate an invoice summary of all Orders. 
         /// </summary>
-        /// <param name="searchItem">The identifier for the invoices that need to be included
-        ///                         in the invoice summary</param>
-        /// <returns>Int representing an invoice was successfully generated</returns>
+        /// <param name="sumStartTime">The current time within the application/param>
+        /// <param name="summaryTime">The time interval requested for invoice summary
+        ///                                 (2 weeks or of all time) /param>
+        /// <returns>List of Contracts being displayed in the summary</returns>
         public List<Contract> GenerateInvoiceSum(DateTime sumStartTime, int summaryTime = 0) // 2 weeks or of all time
         {
             DateTime? conStartTime = new DateTime();
@@ -166,7 +119,6 @@ namespace TMS
                     if(summaryTime == 1)
                     {
                         conEndTime = Convert.ToDateTime(c.EndTime);
-                        //conStartTime = conEndTime.AddHours((double)24 * 14 * -1);
                         if (conEndTime >= sumStartTime)
                         {
                             summaryContracts.Add(c);
@@ -176,15 +128,20 @@ namespace TMS
                     {
                         summaryContracts.Add(c);
                     }
-                        
                 }
-                    
             }
 
             return summaryContracts;
         }
 
-        
+
+        /// <summary>
+        /// This method calculates the cost of a Contract 
+        /// </summary>
+        /// <param name="contract">The Contract that a cost is being generated for/param>
+        /// <param name="orderCarriers">The Carriers associated with the orderder/param>
+        /// <param name="multipleCarr">Indicates whether multiple Carriers are associated with the Contract</param>
+        /// <returns>The total price of the Contract</returns>
         public double GetClientCharge(Contract contract, List<Carrier> orderCarriers, int multipleCarr=0)
         {
             List<double> markUp = new LocalComm().GetRates();

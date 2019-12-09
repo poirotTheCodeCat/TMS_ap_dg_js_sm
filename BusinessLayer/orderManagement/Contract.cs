@@ -62,8 +62,7 @@ namespace TMS
         }
 
         /// <summary>
-        /// Gets and sets             get { return jType; }
-
+        /// Gets and sets job type
         /// </summary>
         public int JobType
         {
