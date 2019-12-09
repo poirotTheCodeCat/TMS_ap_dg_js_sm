@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Drawing;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -40,18 +41,23 @@ namespace TMS
             LoadIpPortInfo();
             //UpdateIpPortInfo("tms-historybuff.mysql.database.azure.com", "3306");
 
+            UpdateDataTables();
+
+        }
+
+        private void UpdateDataTables()
+        {
             try
             {
                 FillCarrierList();
                 FillRateList();
                 FillRouteList();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Logger.Log("TMS database connection error\n"+e);
+                Logger.Log("TMS database connection error\n" + e);
                 MessageBox.Show("Unable to connect IP or Port information");
             }
-            
         }
 
         /// <summary>
@@ -253,14 +259,19 @@ namespace TMS
         private void DBTablesCmb_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!trigger) return;
+            trigger = false;
+            CarrierTableDisplay.Items.Clear();
+            trigger = true;
+
+            UpdateDataTables();
             var clickedItem = (System.Windows.Controls.ComboBox)sender;
             var index = clickedItem.SelectedIndex;
 
             if (index == 0)
             {
-                RouteTableDisplay.Visibility = Visibility.Visible;
+                RouteTableDisplay.Visibility = Visibility.Collapsed;
                 RateTableDisplay.Visibility = Visibility.Collapsed;
-                CarrierTableDisplay.Visibility = Visibility.Collapsed;
+                CarrierTableDisplay.Visibility = Visibility.Visible;
             }
             else if (index == 1)
             {
@@ -271,9 +282,9 @@ namespace TMS
             }
             else if (index == 2)
             {
-                CarrierTableDisplay.Visibility = Visibility.Visible;
+                CarrierTableDisplay.Visibility = Visibility.Collapsed;
                 RateTableDisplay.Visibility = Visibility.Collapsed;
-                RouteTableDisplay.Visibility = Visibility.Collapsed;
+                RouteTableDisplay.Visibility = Visibility.Visible;
 
             }
         }
@@ -380,7 +391,7 @@ namespace TMS
 
         private void ApplyRouteChangesBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("This element is not enabled ATM.");
+            throw new NotImplementedException();
         }
     }
 }
