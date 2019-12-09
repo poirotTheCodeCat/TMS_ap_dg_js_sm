@@ -338,7 +338,8 @@ namespace TMS
             {
                 Carrier carrier = carriersToDisplay[index];      // get the current carrier 
 
-                if(((orderContracts[0].JobType == 1) && carrier.LtlAvail > 0) || ((orderContracts[0].JobType == 0) && carrier.FtlAvail > 0))
+                if(((orderContracts[0].JobType == 1 && carrier.LtlAvail > 0 && orderContracts.Count == 1)) || 
+                    ((orderContracts[0].JobType == 0 && carrier.FtlAvail > 0 && orderContracts.Count == 1)))
                 {
                     CarrierGrid.Items.Add(carrier);             // add the carrier 
                     currCarriers.Add(carrier);                  // add to the list of carriers to send to 
