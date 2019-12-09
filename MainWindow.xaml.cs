@@ -30,16 +30,31 @@ namespace TMS
             Logger.Log("Application start.");
         }
 
+        /// <summary>
+        /// This redirects the frame to the admin page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Admin_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = new AdminPage();
         }
 
+        /// <summary>
+        /// This redirects the frame to the Planner page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Planner_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = new PlannerPage();
         }
 
+        /// <summary>
+        /// This redirects the frame to the Buyer page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Buyer_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = new BuyerPage();

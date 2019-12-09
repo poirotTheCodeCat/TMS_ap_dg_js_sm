@@ -95,6 +95,10 @@ namespace TMS
             return 0;
         }
 
+        /// <summary>
+        /// This adds a contract to the local database for the TMS
+        /// </summary>
+        /// <param name="newContract"></param>
     public void AddContract(Contract newContract)
         {
             LocalComm comm = new LocalComm();

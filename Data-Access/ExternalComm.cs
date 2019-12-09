@@ -53,6 +53,12 @@ namespace TMS
                 return contracts;
             }
         }
+
+        /// <summary>
+        /// This method extracts the contents of a datatable and inputs them into a class
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
         private List<Contract> DataTableToContractsList(DataTable table)
         {
             var contracts = new List<Contract>();

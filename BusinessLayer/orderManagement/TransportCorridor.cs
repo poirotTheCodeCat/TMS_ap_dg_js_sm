@@ -8,6 +8,7 @@ namespace TMS
 {
     public class TransportCorridor
     {
+        // private data members
         private string transportCorridorID;
         private string cityName;
         private int distance;
@@ -16,6 +17,7 @@ namespace TMS
         private string east;
         private List<TransportCorridor> routes = new List<TransportCorridor>();
 
+        // accessors and mutators
         public string TransportCorridorID
         {
             get { return transportCorridorID; }
