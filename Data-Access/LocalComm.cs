@@ -17,9 +17,7 @@ namespace TMS
     /// </summary>
     class LocalComm
     {
-        private string connectionString = string.Format(ConfigurationManager.ConnectionStrings["tmsConnStr"].ConnectionString,serverIp,port);
-        static string serverIp = ConfigurationManager.AppSettings["ipInfo"];
-        static string port = ConfigurationManager.AppSettings["portInfo"];
+        private string connectionString = ConfigurationManager.ConnectionStrings["tmsConnStr"].ConnectionString;
 
         /// <summary>
         /// This method adds a new Order to the TMS database.

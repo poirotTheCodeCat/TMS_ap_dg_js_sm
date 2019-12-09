@@ -27,6 +27,8 @@ namespace TMS
         private int buyerSelected;
         private int plannerConfirmed;           // if the planner has added the contract to an order or not
         private int contractStatus;///< Holds contractStatus //if the order is completed or if it is not 
+        public string jobString {get; set;}
+        public string vanTypeString { get; set; }
 
         /* 1. BuyerSelected = 0 
          * - Appears in buyer screen, not in planner 
@@ -65,8 +67,20 @@ namespace TMS
         /// </summary>
         public int JobType
         {
-            get { return jType; }
-            set { jType = value; }
+            get 
+            { return jType; }
+            set 
+            {
+                if (jType == 0)
+                {
+                    jobString = "FTL";
+                }
+                else
+                {
+                    jobString = "LTL";
+                }
+                jType = value; 
+            }
         }
 
         /// <summary>
@@ -74,8 +88,22 @@ namespace TMS
         /// </summary>
         public int VanType
         {
-            get { return vType; }
-            set { vType = value; }
+            get 
+            {
+                return vType; 
+            }
+            set 
+            {
+                if (vType == 1)
+                {
+                    vanTypeString = "Reefer";
+                }
+                else
+                {
+                    vanTypeString = "Dry";
+                }
+                vType = value;
+            }
         }
 
         /// <summary>
