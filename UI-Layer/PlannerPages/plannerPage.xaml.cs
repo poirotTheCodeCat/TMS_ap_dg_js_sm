@@ -87,7 +87,7 @@ namespace TMS
         private void fillLists()
         {
             // get all current orders -> orders where Completed == false
-            // allContracts = planner.Get();
+            allContracts = planner.ShowAllContracts();
         }
 
         /// <summary>
