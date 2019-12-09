@@ -43,7 +43,6 @@
                     <DataGridTextColumn Header="Status" Width="*" Binding="{Binding Status, Mode=TwoWay}"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button x:Name="GenerateInvoiceBtn" Content="Generate Invoice" Click="GenerateInvoiceBtn_Click" Margin="594,101,10,10"/>
             <Button x:Name="SimulateDayBtn" Content="Simulate Day" Click="SimulateDayBtn_Click" Margin="594,47,10,62"/>
             <TextBox x:Name="CountDays" FontSize="18" HorizontalAlignment="Left" Height="32" Margin="483,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="92" RenderTransformOrigin="0.491,0.503" IsEnabled="False"/>
             <Label Content="Days Past" HorizontalAlignment="Left" Margin="418,68,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.542,0.552" Height="32"/>

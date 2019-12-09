@@ -150,7 +150,7 @@ namespace TMS
         /// <param name="searchItem">The identifier for the invoices that need to be included
         ///                         in the invoice summary</param>
         /// <returns>Int representing an invoice was successfully generated</returns>
-        public List<Contract> GenerateInvoiceSum(int summaryTime = 0) // 2 weeks or of all time
+        public List<Contract> GenerateInvoiceSum(DateTime sumStartTime, int summaryTime = 0) // 2 weeks or of all time
         {
             DateTime? conStartTime = new DateTime();
             DateTime conEndTime = new DateTime();
@@ -158,7 +158,7 @@ namespace TMS
             List<Contract> summaryContracts = new List<Contract>();
             
             
-            DateTime? sumStartTime = DateTime.Now.AddHours(24 * 14 * -1);
+            sumStartTime = sumStartTime.AddHours(24 * 14 * -1);
             foreach (Contract c in localContracts)
             {
                 if(c.PlannerConfirmed == 1)     // for 2 weeks
@@ -166,8 +166,8 @@ namespace TMS
                     if(summaryTime == 1)
                     {
                         conEndTime = Convert.ToDateTime(c.EndTime);
-                        conStartTime = conEndTime.AddHours((double)24 * 14 * -1);
-                        if (conStartTime >= sumStartTime)
+                        //conStartTime = conEndTime.AddHours((double)24 * 14 * -1);
+                        if (conEndTime >= sumStartTime)
                         {
                             summaryContracts.Add(c);
                         }

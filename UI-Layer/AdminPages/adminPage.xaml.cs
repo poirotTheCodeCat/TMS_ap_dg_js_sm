@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -79,6 +80,11 @@ namespace TMS
         /// <param name="port">The new Port</param>
         private void UpdateIpPortInfo(string ip, string port)
         {
+            if (!IsAllDigits(port) || !IsAllDigits(ip))
+            {
+                MessageBox.Show("No letters allowed in the IP or PORT."); 
+                return;
+            }
             if (ip == "DEFAULT")
             {
                 ip = "159.89.117.198";
@@ -93,21 +99,48 @@ namespace TMS
 
             if (ip != "")
             {
+                ConnectionStringSettings ipI = new ConnectionStringSettings("ipInfo", ip);
+
                 config.AppSettings.Settings["ipInfo"].Value = ip;
+                config.ConnectionStrings.ConnectionStrings.Remove("ipInfo");
+                config.ConnectionStrings.ConnectionStrings.Add(ipI);
                 config.Save(ConfigurationSaveMode.Modified);
                 ConfigurationManager.RefreshSection("appSettings");
-                IpInfoDisplay.Text = ip; 
+                IpInfoDisplay.Text = ip;
+
+                Logger.Log("IP Changed");
                 // ConfigurationManager.AppSettings["ipInfo"] = ip;
             }
 
             if (port != "")
             {
+                ConnectionStringSettings portI = new ConnectionStringSettings("ipInfo", port);
                 config.AppSettings.Settings["portInfo"].Value = port;
+                config.ConnectionStrings.ConnectionStrings.Remove("portInfo");
+                //config.ConnectionStrings.ConnectionStrings.Add(portI);
                 config.Save(ConfigurationSaveMode.Modified);
+            
                 ConfigurationManager.RefreshSection("appSettings");
-                PortInfoDisplay.Text = port; 
+                PortInfoDisplay.Text = port;
+
+                Logger.Log("Port Changed");
                 //ConfigurationManager.AppSettings["portInfo"] = port;
             }
+        }
+
+        /// <summary>
+        /// This method checks if a string is only digits or decimals.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns>Bool to tell if only digits.</returns>
+        private bool IsAllDigits(string s)
+        {
+            foreach (var c in s)
+            {
+                if (!char.IsDigit(c) && c != '.') return false;
+            }
+
+            return true;
         }
 
         /// <summary>

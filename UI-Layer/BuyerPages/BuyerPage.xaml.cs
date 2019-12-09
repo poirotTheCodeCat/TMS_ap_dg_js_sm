@@ -163,8 +163,16 @@ namespace TMS
         {
             try
             {
-                // call function that will fill the datagrid
-                fillList();
+                try
+                {
+                    ContractGrid.Items.Clear();
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log("Contract datagrid is already cleared\n" + ex);
+                }
+                    // call function that will fill the datagrid
+                    fillList();
                 // create thread that automatically refreshes datagrid for new contracts from the marketplace
                 fillGrid();
             }
