@@ -95,6 +95,15 @@ namespace TMS
             {
                 ContractGrid.Items.Add(c);
             }
+
+            List<Contract> contracts = new Planner().ShowPendingOrders();
+            foreach(Contract con in contracts)
+            {
+                if(con.PlannerConfirmed == 1)
+                {
+                    CompletedGrid.Items.Add(con);
+                }
+            }
         }
 
         /// <summary>
@@ -114,6 +123,11 @@ namespace TMS
                 selectedContract = newItem;
             }
             CreateBtn.IsEnabled = true;
+        }
+
+        private void InvoiceBtn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
