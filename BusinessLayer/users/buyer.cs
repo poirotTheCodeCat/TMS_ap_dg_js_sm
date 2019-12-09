@@ -57,17 +57,45 @@ namespace TMS
         /// /// <param name="searchItem">The identifier for the Order that requires
         ///                             an invoice</param>
         /// <returns>Int representing invoice was successfully generated.</returns>
-        public int GenerateInvoice(string searchItem)
+        public int GenerateInvoice(Contract contract)
         {
-            int done = 0;
+            string pathString = "~Invoice" + contract.ContractID.ToString() + ".txt";
+            string[] lines;
+            double distance = new Planner().CalculateDistance(contract.Origin, contract.Destination);
+            string[] buildLine =
+            {
+                "Invoice\n", "Order ID: " + contract.ContractID.ToString(),
+                "Client Name: " + contract.ClientName,
+                "Completed Date: " + contract.EndTime,
+                "Van Type: " + contract.vanTypeString,
+                "Origin City: " + contract.Origin,
+                "Destination City: " + contract.Destination,
+                "Distance Travelled: " + distance.ToString("2F") + " km",
+                "\n\nTotal Cost: $" + contract.Price.ToString()
+            };
 
-            done = 1; //set to true for testing
-            string invoiceInformation = new LocalComm().GetInvoice(searchItem);
+            lines = buildLine;
+       
+            if (!System.IO.File.Exists(pathString))
+            {
+                var newFile = System.IO.File.Create(pathString);
+                newFile.Close();
+            }
 
-            return done;
+            //else open file and write each line to it
+            using (System.IO.StreamWriter file =
+                new System.IO.StreamWriter(pathString, true))
+            {
+                foreach (var line in lines)
+                {
+                    file.Write(line);
+                }
+            }
+
+            return 0;
         }
 
-        public void AddContract(Contract newContract)
+    public void AddContract(Contract newContract)
         {
             LocalComm comm = new LocalComm();
             comm.AddContract(newContract);
