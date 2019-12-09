@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * File Name: Planner.cs
+ * Program Name: TMS_ap_dg_js_sm
+ * Programmers: Arron Perry, Daniel Grew, John Stanley, Sasha Malesevic
+ * First Version: 2019-12-09
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -92,18 +98,7 @@ namespace TMS
             return remainingLoad;
         }
 
-        /// <summary>
-        /// This method allows the Planner to create a Trip that will be added to an Order.
-        /// </summary>
-        /// <param name="searchItem1">An identifier for the Order the Trip is required for</param>
-        /// <param name="searchItem2">An identifier for the Carrier completing the Trip</param>
-        /// <returns>List of trips that were created.</returns>
-        public List<Trip> CreateTrip(string searchItem1, string searchItem2)
-        {
-            List<Trip> trip = new List<Trip>();
 
-            return trip;
-        }
 
         /// <summary>
         /// This method allows the Planner to mark an Order as approved.
@@ -184,7 +179,13 @@ namespace TMS
             return summaryContracts;
         }
 
-        
+        /// <summary>
+        /// THis calculates the amount that we charge the client
+        /// </summary>
+        /// <param name="contract"></param>
+        /// <param name="orderCarriers"></param>
+        /// <param name="multipleCarr"></param>
+        /// <returns></returns>
         public double GetClientCharge(Contract contract, List<Carrier> orderCarriers, int multipleCarr=0)
         {
             List<double> markUp = new LocalComm().GetRates();
@@ -246,7 +247,13 @@ namespace TMS
             return contract.Price;
         }
         
-
+        /// <summary>
+        /// This calculates the break even cost
+        /// </summary>
+        /// <param name="contracts"></param>
+        /// <param name="orderCarriers"></param>
+        /// <param name="originalCarriers"></param>
+        /// <returns></returns>
         public double GetBreakevenCharge(List<Contract> contracts, List<Carrier> orderCarriers, List<Carrier> originalCarriers)
         {
             int jobType = contracts[0].JobType;
@@ -260,7 +267,7 @@ namespace TMS
         }
 
         /// <summary>
-        /// 
+        /// This creates an order and inserts it into the database
         /// </summary>
         /// <param name="contracts"></param>
         /// <param name="orderCarriers"></param>
@@ -328,7 +335,12 @@ namespace TMS
             }
 
         }
-
+        /// <summary>
+        /// This function calculates the distance required to travel between an origin city and a destination city
+        /// </summary>
+        /// <param name="startCity"></param>
+        /// <param name="endCity"></param>
+        /// <returns></returns>
         public int CalculateDistance(string startCity, string endCity)
         {
             int originIndex = -1;

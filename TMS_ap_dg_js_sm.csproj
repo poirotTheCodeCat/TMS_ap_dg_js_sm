@@ -79,7 +79,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BusinessLayer\orderManagement\CombineContracts.cs" />
     <Compile Include="BusinessLayer\orderManagement\TransportCorridor.cs" />
     <Compile Include="BusinessLayer\Logger.cs" />
     <Compile Include="BusinessLayer\orderManagement\Contract.cs" />
@@ -106,7 +105,6 @@
     <Compile Include="Data-Access\LocalComm.cs" />
     <Compile Include="BusinessLayer\users\Planner.cs" />
     <Compile Include="BusinessLayer\orderManagement\Order.cs" />
-    <Compile Include="BusinessLayer\orderManagement\Trip.cs" />
     <Compile Include="UI-Layer\AdminPages\AdminPage.xaml.cs">
       <DependentUpon>AdminPage.xaml</DependentUpon>
     </Compile>

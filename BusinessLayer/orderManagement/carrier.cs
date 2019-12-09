@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * File Name: Carrier.cs
+ * Program Name: TMS_ap_dg_js_sm
+ * Programmers: Arron Perry, Daniel Grew, John Stanley, Sasha Malesevic
+ * First Version: 2019-12-09
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,9 +28,9 @@ namespace TMS
         private double ftlRate;///< Holds the rate of FTL for the specified carrier
         private double ltlRate;///< Holds the rate of LTL for the specified carrier
         private double reeferCharge;///< Holds the rate of a reefer for the specified carrier
-        private int pallets;
-        private List<string> depotCities;
-        private string depotCityString;
+        private int pallets;///< Holds the # of pallets
+        private List<string> depotCities;///< Holds list of depot cities
+        private string depotCityString;///< Holds the depot city as a string
 
 
         /// <summary>

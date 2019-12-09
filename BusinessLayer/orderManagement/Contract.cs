@@ -1,10 +1,16 @@
-﻿using System;
+﻿/*
+ * File Name: Contract.cs
+ * Program Name: TMS_ap_dg_js_sm
+ * Programmers: Arron Perry, Daniel Grew, John Stanley, Sasha Malesevic
+ * First Version: 2019-12-09
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TMS.Business_Layer.users;
-using TMS_ap_dg_js_sm.BusinessLayer.orderManagement;
+
 
 namespace TMS
 {
@@ -22,9 +28,9 @@ namespace TMS
         private int quant;///< Holds the quantity of vans available
         private string origin;///< Holds origin city
         private string dest;///< Holds the destination city
-        private DateTime? endTime;
-        private double price;
-        private int buyerSelected;
+        private DateTime? endTime;///< Holds the current date and time
+        private double price;///< Holds the price of the contract
+        private int buyerSelected;///< Holds the selected buyer index indicator
         private int plannerConfirmed;           // if the planner has added the contract to an order or not
         private int contractStatus;///< Holds contractStatus //if the order is completed or if it is not 
         public string jobString {get; set;}
@@ -62,8 +68,7 @@ namespace TMS
         }
 
         /// <summary>
-        /// Gets and sets             get { return jType; }
-
+        /// Gets and sets job type
         /// </summary>
         public int JobType
         {
@@ -162,7 +167,6 @@ namespace TMS
         public string Status { get; set; }
         private List<Contract> CurrentContracts;
         public List<Contract> SingleContracts;
-        public CombineContracts CombinedContracts;
         private List<string> CityCompare;
 
        public Contract()
@@ -189,52 +193,7 @@ namespace TMS
             new LocalComm().UpdateContract(this);
         }
 
-        /// <summary>
-        /// This method will allow the Buyer to get contracts from the Contract Marketplace database. 
-        /// </summary>
-        /// <returns>Listmof the Contracts received from the Contract Marketplace.</returns>
-        public List<Contract> SortContracts()
-        {
-            
-            List<Contract> contractList = new ExternalComm().GetMarketplaceContracts();
-            
-            List<Contract> ltlContracts = new List<Contract>(); 
-
-            foreach(var c in contractList)
-            {
-                if(c.JobType == 1)
-                {
-                    ltlContracts.Add(c);
-                    CityCompare.Add(c.origin);
-                }
-            }
-
-            if(ltlContracts.Count > 1)
-            {
-
-                var ltlOrigin = ltlContracts[0];
-
-                for (int i = 1; i < ltlContracts.Count; i++)
-                {
-                    if ((ltlOrigin.Origin == ltlContracts[i].Origin) && (ltlOrigin.VanType == ltlContracts[i].VanType))
-                    {
-                        CombinedContracts = new CombineContracts
-                        {
-                            ContractList = new List<Contract>()
-                        };
-                        contractList.Add(ltlContracts[i]);
-                        contractList.Add(ltlOrigin);
-
-                    }
-
-                }
-                   
-            }
-            return contractList;
-            
-
-           
-        }
+        
 
     }
 }
