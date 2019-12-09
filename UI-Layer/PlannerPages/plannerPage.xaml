@@ -15,7 +15,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Path=ContractId}" Width="40"/>
                 <DataGridTextColumn Header="Client" Binding="{Binding Path=ClientName}" Width="75"/>
-                <DataGridTextColumn Header="Origin" Binding="{Binding Path=JobType}" Width="*"/>
+                <DataGridTextColumn Header="Origin" Binding="{Binding Path=Origin}" Width="*"/>
                 <DataGridTextColumn Header="Destination" Binding="{Binding Path=Destination}" Width="*"/>
                 <DataGridTextColumn Header="Job Type" Binding="{Binding Path=JobType}" Width="60"/>
                 <DataGridTextColumn Header="Van Type" Binding="{Binding Path=VanType}" Width="60"/>
@@ -24,9 +24,8 @@
         </DataGrid>
         <DataGrid x:Name="TripGrid" Margin="10,139,293,175" SelectionChanged="TripGrid_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Path=ContractId}" Width="40"/>
                 <DataGridTextColumn Header="Client" Binding="{Binding Path=ClientName}" Width="75"/>
-                <DataGridTextColumn Header="Origin" Binding="{Binding Path=JobType}" Width="*"/>
+                <DataGridTextColumn Header="Origin" Binding="{Binding Path=Origin}" Width="*"/>
                 <DataGridTextColumn Header="Destination" Binding="{Binding Path=Destination}" Width="*"/>
                 <DataGridTextColumn Header="Job Type" Binding="{Binding Path=JobType}" Width="60"/>
                 <DataGridTextColumn Header="Van Type" Binding="{Binding Path=VanType}" Width="60"/>

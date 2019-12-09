@@ -97,7 +97,7 @@ namespace TMS
                 ContractGrid.Items.Add(c);
             }
 
-            List<Contract> contracts = new Planner().ShowPendingOrders();
+            List<Contract> contracts = new Planner().ShowAllContracts();
             foreach(Contract con in contracts)
             {
                 if(con.PlannerConfirmed == 1)

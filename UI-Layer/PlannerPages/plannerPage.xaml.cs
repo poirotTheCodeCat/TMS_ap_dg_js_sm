@@ -295,6 +295,12 @@ namespace TMS
                 if(orderContracts.Count == 0)
                 {
                     CarrierGrid.Items.Clear();
+                    carrierSelect.Items.Clear();
+                }
+
+                if(!ContractsGrid.IsEnabled)
+                {
+                    ContractsGrid.IsEnabled = true;
                 }
             }
         }
