@@ -17,7 +17,7 @@ namespace TMS
     /// </summary>
     class LocalComm
     {
-        private string connectionString = ConfigurationManager.ConnectionStrings["tmsConnStr"].ConnectionString;
+        private string connectionString = ConfigurationManager.ConnectionStrings["tmsConnStr"].ConnectionString; ///< The connection string for connection to the local TMS database. Gathered from App.config.
 
         /// <summary>
         /// This method adds a new Order to the TMS database.

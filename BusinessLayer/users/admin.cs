@@ -9,59 +9,16 @@ namespace TMS
     /// Represents an Admin user of the TMS program. The Admin makes use of the LocalComm class
     /// for updating information stored in the TMS database.
     /// </summary>
-    /// <exception cref="fileIoException">Exception during file reading or writing in the ShowLogs() function</exception>
     public class Admin
     {
         /// <summary>
-        /// This method will allow the admin user to change the current save location of the Logger class log file.
-        /// These values will be updated in the App.config file.
+        /// This method will create a .sql file of the current TMS database for backup.
         /// </summary>
-        /// <param name="newFileLocation">The requested new log save location</param>
-        /// <returns>Int representing the successful change of the log save location.</returns>
-        public int ChangeLogLocation(string newFileLocation)
-        {
-            int done = 0;
-
-            done = 1; //set to true for testing
-
-            return done;
-        }
-
-        /// <summary>
-        /// This method is used to show the current logs saved in the log text file to the screen.
-        /// </summary>
-        /// <returns>Int representing the successful printing of log file, else exception occured.</returns>
-        public int ShowLogs()
-        {
-            int done = 0;
-
-            try
-            {
-                //open text file
-                //read each line to specific WPF text box
-                done = 1; //set to true for testing
-            }
-            catch (Exception fileIoException)
-            {
-                Logger.Log(fileIoException.ToString());
-            }
-
-            return done;
-        }
-
+        /// <param name="filePath">Chosen file location to save the back up file.</param>
         internal void GetBackUp(string filePath)
         {
             new LocalComm().BackUpDb(filePath);
             Logger.Log("TMS database backup.");
-        }
-
-        /// <summary>
-        /// This method is used to update a the values of the route table.
-        /// </summary>
-        /// <param name="c">The id of the selected route</param>
-        public void UpdateRouteTable(Carrier c)
-        {
-            
         }
 
         /// <summary>
@@ -71,15 +28,6 @@ namespace TMS
         public void UpdateCarrierTable(Carrier c)
         {
             new LocalComm().UpdateCarrierFTLRate(c);
-        }
-
-        /// <summary>
-        /// This method is used to update a the values of the rate table.
-        /// </summary>
-        /// <param name="c">The id of the selected route</param>
-        public void UpdateRateTable(Carrier c)
-        {
-
         }
 
         /// <summary>

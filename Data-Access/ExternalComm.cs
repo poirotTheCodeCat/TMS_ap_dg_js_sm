@@ -18,14 +18,14 @@ namespace TMS
     /// </summary>
     public class ExternalComm
     {
-        private string connectionString;
-        public string serverIp { get; set; }
-        public string serverPort { get; set; }
+        private string connectionString; ///< The connection string for connecting to the external CMS database. Gathered from App.config.
+        public string serverIp { get; set; } ///< The IP used to connect to the external server. Gathered from App.config.
+        public string serverPort { get; set; } ///< The Port used to connect to the external sever. Gathered from App.config.
 
 
         public ExternalComm()
         {
-            
+            //establish connection string
             serverIp = ConfigurationManager.AppSettings["ipInfo"];
             serverPort = ConfigurationManager.AppSettings["portInfo"];
             connectionString = string.Format(ConfigurationManager.ConnectionStrings["cmConnStr"].ConnectionString, serverIp, serverPort);

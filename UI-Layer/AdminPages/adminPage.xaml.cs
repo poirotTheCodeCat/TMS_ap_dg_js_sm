@@ -1,19 +1,12 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using Google.Protobuf.WellKnownTypes;
 using TMS.Business_Layer.users;
 using System.Windows.Forms;
 using MessageBox = System.Windows.MessageBox;
-using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 
 namespace TMS
 {
@@ -22,18 +15,22 @@ namespace TMS
     /// </summary>
     public partial class AdminPage : Page
     {
-        List<Carrier> carrierList = new List<Carrier>();
-        List<TransportCorridor> routeList = new List<TransportCorridor>();
-        List<double> rateMarkup = new List<double>();
-        internal class TypeAndRate
+        List<Carrier> carrierList = new List<Carrier>(); ///< Holds a local list of carriers as they are found in the local database.
+        List<TransportCorridor> routeList = new List<TransportCorridor>(); ///< Holds a local list of the route table as found in the local database.
+        List<double> rateMarkup = new List<double>(); ///< Holds a local list of markup values for the FTL and LTL job types.
+        internal class TypeAndRate ///< Used in populating the rate table datagrid.
         {
             public string truckType { get; set; }
             public double markup { get; set; }
         }
-        List<TypeAndRate> rateList = new List<TypeAndRate>();
+        List<TypeAndRate> rateList = new List<TypeAndRate>(); ///< Holds a local list of carriers as they are found in the database.
 
-        Admin admin = new Admin();
+        Admin admin = new Admin(); ///< An instance of an Admin class used within for DAL access.
         bool trigger;
+
+        /// <summary>
+        /// Admin page constructor to initialize the page and populate the tables and text blocks.
+        /// </summary>
         public AdminPage()
         {
             trigger = false;
