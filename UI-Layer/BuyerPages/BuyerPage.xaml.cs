@@ -29,19 +29,6 @@ namespace TMS
         public BuyerPage()
         {
             InitializeComponent();
-
-            try
-            {
-                // call function that will fill the datagrid
-                fillList();
-                // create thread that automatically refreshes datagrid for new contracts from the marketplace
-                fillGrid();
-            }
-            catch(Exception e)
-            {
-                Logger.Log("TMS database connection error\n" + e);
-                MessageBox.Show("Unable to connect IP or Port information");
-            }
         }
 
         /// <summary>
@@ -163,10 +150,34 @@ namespace TMS
                 + "Customer: " + contract.ClientName + "\n"
                 + "Job Type: " + contract.JobType.ToString() + "\n"
                 + "Van Type " + contract.VanType.ToString() + "\n"
-                + "Quantity " + contract.Quantity.ToString() + "\n";
+                + "Quantity " + contract.Quantity.ToString() + "\n"
+                + "Price: " + contract.Price.ToString();
 
             MessageBox.Show(invoiceString);
 
+        }
+
+        /// <summary>
+        /// This connects to the contract marketplace database and loads all of the elements into the datagrid 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ConnectBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // call function that will fill the datagrid
+                fillList();
+                // create thread that automatically refreshes datagrid for new contracts from the marketplace
+                fillGrid();
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("TMS database connection error\n" + ex);
+                MessageBox.Show("Unable to connect IP or Port information");
+            }
+            
+            ConnectionIndicator.Fill = new SolidColorBrush(Colors.Green); 
         }
     }
 }
