@@ -207,7 +207,7 @@ namespace TMS
                 return;
             }
 
-            planner.CreateOrder(orderContracts, currCarriers);
+            planner.CreateOrder(orderContracts, currCarriers, perceivedTime);
 
             if (!AddBtn.IsEnabled)       // if the Add button has been deactivated re enable it
             {
