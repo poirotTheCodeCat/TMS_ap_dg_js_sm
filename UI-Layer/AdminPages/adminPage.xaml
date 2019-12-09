@@ -33,7 +33,11 @@
                     <Style TargetType="DataGridRow">
                         <Style.Triggers>
                             <Trigger x:Name="highlightStyle"  Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="Blue"/>
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="Blue" Opacity="0.5"/>
+                                    </Setter.Value>
+                                </Setter>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -49,6 +53,19 @@
 
             <!-- Rate Table Elements -->
             <DataGrid x:Name="RateTableDisplay" Margin="45,64,45,70" Visibility="Collapsed">
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <Trigger x:Name="highlightStyle"  Property="IsMouseOver" Value="True">
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="Blue" Opacity="0.5"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header = "Truck Type" Binding="{Binding Mode=TwoWay, Path=truckType}" Width="*"/>
                     <DataGridTextColumn Header = "Markup" Binding="{Binding Mode=TwoWay, Path=markup}" Width="*"/>
@@ -59,6 +76,19 @@
 
             <!-- Carrier Table Elements -->
             <DataGrid x:Name="CarrierTableDisplay" Margin="45,64,45,70" Visibility="Visible">
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <Trigger x:Name="highlightStyle"  Property="IsMouseOver" Value="True">
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="Blue" Opacity="0.5"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header = "ID" Binding="{Binding Mode=TwoWay, Path=CarrierID}" Width="25"/>
                     <DataGridTextColumn Header = "Name" Binding="{Binding Mode=TwoWay, Path=CarrierName}" Width="*"/>
