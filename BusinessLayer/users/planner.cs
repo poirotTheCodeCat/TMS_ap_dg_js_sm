@@ -161,7 +161,7 @@ namespace TMS
             DateTime? sumStartTime = DateTime.Now.AddHours(24 * 14 * -1);
             foreach (Contract c in localContracts)
             {
-                if(c.PlannerConfirmed == 1)
+                if(c.PlannerConfirmed == 1)     // for 2 weeks
                 {   
                     if(summaryTime == 1)
                     {
@@ -199,7 +199,7 @@ namespace TMS
                 ++daysTravelled;
             }
             
-            if (contract.JobType == 1)  // FTL 
+            if (contract.JobType == 0)  // FTL 
             {
                 contract.Price = (orderCarriers[0].FtlRate * distance)      // Original Rate
                     + (orderCarriers[0].FtlRate * distance * markUp[0]);    // Add OSHT mark up
@@ -264,7 +264,7 @@ namespace TMS
         /// </summary>
         /// <param name="contracts"></param>
         /// <param name="orderCarriers"></param>
-        public void CreateOrder(List<Contract> contracts, List<Carrier> carriers)
+        public void CreateOrder(List<Contract> contracts, List<Carrier> carriers, DateTime currTime)
         {
             // 1. Create a trip for each carrier and contract 
             // 2. Generate the price to be used for invoice generation 
@@ -322,14 +322,14 @@ namespace TMS
             }
             */
 
-            DateTime startTime = DateTime.Now;
+            DateTime startTime = currTime;
             // BuyerSelected = 1 
             // PlannerSelected = 0
             // EndTime != null 
             foreach(Contract con in contracts)
             {
                // con.Price = GetClientCharge(con, carriers);
-                con.EndTime = startTime.AddHours(CalculateTime(con));
+                con.EndTime = currTime.AddHours(CalculateTime(con));
 
                 if(carriers.Count > 1)
                 {
@@ -378,7 +378,10 @@ namespace TMS
             {
                 for (int i = originIndex; i < DestIndex; i++)
                 {
-                    distance += transportCorridors[i].Distance;
+                    if(transportCorridors[i].CityName != endCity)
+                    {
+                        distance += transportCorridors[i].Distance;
+                    }
                 }
             }
             else
@@ -440,15 +443,13 @@ namespace TMS
                         || contract.JobType == 1)
                     {
                         restTime += layoverTime;
-                        totalTime += restTime;
                     }
                     if (totalTime < 12 && driveTime < 8)
                     {
                         driveTime += transportCorridors[i].TimeBetween;
-                        totalTime += driveTime;
 
                     }
-                    if (totalTime >= 12 || driveTime >= 8)
+                    if ((restTime + driveTime) >= 12 || driveTime >= 8)
                     {
                         ++daysAdded;
                         restTime = 0;
@@ -457,10 +458,7 @@ namespace TMS
                         // The final time is calculated by totalTime + (daysAdded*24), totalTime serves as the 
                         // remainder of hours if a whole day wasn't required, set to 0 if the last city 
                         // has been reached so too much time isn't added.
-                        if (contract.Destination == transportCorridors[i].CityName)
-                        {
-                            totalTime = 0;
-                        }
+                      
                     }
                 }
             }
@@ -487,10 +485,6 @@ namespace TMS
                             ++daysAdded;
                             restTime = 0;
                             driveTime = 0;
-                            if (contract.Destination == transportCorridors[j].CityName)
-                            {
-                                totalTime = 0;
-                            }
                         }
                     }
                 }

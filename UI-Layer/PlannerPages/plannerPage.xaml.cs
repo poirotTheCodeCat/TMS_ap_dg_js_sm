@@ -42,6 +42,8 @@ namespace TMS
         private bool multipleCarriers = true;
         private bool multipleLTL = false;
 
+        private int daysPassed = 0;
+
 
         public PlannerPage()
         {
@@ -205,11 +207,16 @@ namespace TMS
                 return;
             }
 
-            planner.CreateOrder(orderContracts, currCarriers);
+            planner.CreateOrder(orderContracts, currCarriers, perceivedTime);
 
             if (!AddBtn.IsEnabled)       // if the Add button has been deactivated re enable it
             {
                 AddBtn.IsEnabled = true;
+            }
+
+            if(!ContractsGrid.IsEnabled)
+            {
+                ContractsGrid.IsEnabled = true;
             }
 
             // refresh everything!!!
@@ -338,8 +345,9 @@ namespace TMS
             {
                 Carrier carrier = carriersToDisplay[index];      // get the current carrier 
 
-                if(((orderContracts[0].JobType == 1 && carrier.LtlAvail > 0 && orderContracts.Count == 1)) || 
-                    ((orderContracts[0].JobType == 0 && carrier.FtlAvail > 0 && orderContracts.Count == 1)))
+                if((orderContracts[0].JobType == 1 && orderContracts.Count > 1 && carrier.FtlAvail > 0) ||
+                    (orderContracts[0].JobType == 1 && orderContracts.Count == 1 && carrier.LtlAvail > 0) || 
+                    ((orderContracts[0].JobType == 0 && carrier.FtlAvail > 0 && currCarriers.Count == 0)))
                 {
                     CarrierGrid.Items.Add(carrier);             // add the carrier 
                     currCarriers.Add(carrier);                  // add to the list of carriers to send to 
@@ -382,6 +390,8 @@ namespace TMS
         private void SimulateDayBtn_Click(object sender, RoutedEventArgs e)
         {
             perceivedTime = perceivedTime.AddDays(1);
+            daysPassed++;
+            CountDays.Text = daysPassed.ToString();
             foreach(Contract contract in allContracts)      
             {
                 if((contract.PlannerConfirmed == 0) && (contract.EndTime.HasValue))
@@ -422,6 +432,51 @@ namespace TMS
                     CurrentOrderGrid.Items.Remove(contract);
                 }
             }
+        }
+
+        /// <summary>
+        /// This retrieves the invoice of all contracts from the past 2 weeks via a method in the planner class
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void InvoiceTwoWk_Click(object sender, RoutedEventArgs e)
+        {
+            List<Contract> displayContracts = planner.GenerateInvoiceSum();
+            displayInvoice(displayContracts);
+        }
+
+        /// <summary>
+        /// This retrieves the invoice of all contracts completed via a method in the planner class
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AllInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            List<Contract> displayContracts = planner.GenerateInvoiceSum();
+            displayInvoice(displayContracts);
+        }
+
+        /// <summary>
+        /// This displats the list of contracts depending on the button click of the user -> 2 weeks or all time
+        /// </summary>
+        /// <param name="contracts"></param>
+        private void displayInvoice(List<Contract> contracts)
+        {
+            string invoiceString = "";
+            foreach(Contract c in contracts)
+            {
+                invoiceString = invoiceString +
+                    "********************** \n" +
+                    "********************** \n" +
+                    "Customer: " + c.ClientName + "\n" +
+                    "Contract ID: " + c.ContractID.ToString() + "\n" +
+                    "Job Type: " + c.jobString + "\n" +
+                    "Van Type: " + c.vanTypeString + "\n" +
+                    "Quantity: " + c.Quantity.ToString() +  "\n" +
+                    "End Time: " + c.EndTime.ToString() + "\n" +
+                    "Cost: " + c.Price.ToString() + "\n \n";
+            }
+            MessageBox.Show(invoiceString);
         }
     }
 }
