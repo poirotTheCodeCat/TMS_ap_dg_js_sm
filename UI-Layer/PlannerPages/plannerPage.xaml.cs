@@ -154,7 +154,7 @@ namespace TMS
                 else
                 {
                     ContractsGrid.IsEnabled = false;        // do not allow user to add more
-                    if (currCarriers.Count >= 1)
+                    if (orderContracts.Count >= 1)
                     {
                         Error.Content = "You cannot combine FTL Contracts with other Contracts";
                         return;
