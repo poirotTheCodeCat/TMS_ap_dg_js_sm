@@ -214,6 +214,11 @@ namespace TMS
                 AddBtn.IsEnabled = true;
             }
 
+            if(!ContractsGrid.IsEnabled)
+            {
+                ContractsGrid.IsEnabled = true;
+            }
+
             // refresh everything!!!
             // refresh all lists 
             refreshData();
@@ -427,6 +432,51 @@ namespace TMS
                     CurrentOrderGrid.Items.Remove(contract);
                 }
             }
+        }
+
+        /// <summary>
+        /// This retrieves the invoice of all contracts from the past 2 weeks via a method in the planner class
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void InvoiceTwoWk_Click(object sender, RoutedEventArgs e)
+        {
+            List<Contract> displayContracts = planner.GenerateInvoiceSum();
+            displayInvoice(displayContracts);
+        }
+
+        /// <summary>
+        /// This retrieves the invoice of all contracts completed via a method in the planner class
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AllInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            List<Contract> displayContracts = planner.GenerateInvoiceSum();
+            displayInvoice(displayContracts);
+        }
+
+        /// <summary>
+        /// This displats the list of contracts depending on the button click of the user -> 2 weeks or all time
+        /// </summary>
+        /// <param name="contracts"></param>
+        private void displayInvoice(List<Contract> contracts)
+        {
+            string invoiceString = "";
+            foreach(Contract c in contracts)
+            {
+                invoiceString = invoiceString +
+                    "********************** \n" +
+                    "********************** \n" +
+                    "Customer: " + c.ClientName + "\n" +
+                    "Contract ID: " + c.ContractID.ToString() + "\n" +
+                    "Job Type: " + c.jobString + "\n" +
+                    "Van Type: " + c.vanTypeString + "\n" +
+                    "Quantity: " + c.Quantity.ToString() +  "\n" +
+                    "End Time: " + c.EndTime.ToString() + "\n" +
+                    "Cost: " + c.Price.ToString() + "\n \n";
+            }
+            MessageBox.Show(invoiceString);
         }
     }
 }

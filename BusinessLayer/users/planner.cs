@@ -161,7 +161,7 @@ namespace TMS
             DateTime? sumStartTime = DateTime.Now.AddHours(24 * 14 * -1);
             foreach (Contract c in localContracts)
             {
-                if(c.PlannerConfirmed == 1)
+                if(c.PlannerConfirmed == 1)     // for 2 weeks
                 {   
                     if(summaryTime == 1)
                     {
