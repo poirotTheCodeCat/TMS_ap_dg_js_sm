@@ -254,7 +254,7 @@ namespace TMS
                 myCommand.CommandType = CommandType.StoredProcedure;
 
                 myCommand.Parameters.AddWithValue("@id", carrier.CarrierID);
-                myCommand.Parameters.AddWithValue("@value", carrier.FtlAvail);
+                myCommand.Parameters.AddWithValue("@value", carrier.LtlAvail);
 
                 myConn.Open();
 

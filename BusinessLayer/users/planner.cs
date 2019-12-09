@@ -185,7 +185,7 @@ namespace TMS
         }
 
         
-        public double GetClientCharge(Contract contract, List<Carrier> orderCarriers)
+        public double GetClientCharge(Contract contract, List<Carrier> orderCarriers, int multipleCon=0)
         {
             int distance = CalculateDistance(contract.Origin, contract.Destination);
             double hours = CalculateTime(contract);
@@ -211,13 +211,17 @@ namespace TMS
 
                 }
             }
-            else
+            else if (multipleCon == 0)
             {
                 // Finds the number of pallets carried by each carrier, bills appropriately 
                 foreach (Carrier orderC in orderCarriers)
                 {
                     contract.Price += (orderC.Pallets * distance * orderC.LtlRate) + (orderC.ReefRate * orderC.Pallets * distance * orderC.LtlRate);
                 }
+            }
+            else
+            {
+                contract.Price += (contract.Quantity * distance * orderCarriers[0].LtlRate);
             }
 
             contract.Price += daysTravelled * dailyCharge;
