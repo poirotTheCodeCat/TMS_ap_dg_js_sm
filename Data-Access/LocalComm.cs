@@ -65,7 +65,7 @@ namespace TMS
                 var myCommand = new MySqlCommand("UpdateContract", myConn);
                 myCommand.CommandType = CommandType.StoredProcedure;
                 myCommand.Parameters.AddWithValue("@id", contract.ContractID);
-                myCommand.Parameters.AddWithValue("@endT", contract.EndTime);
+                myCommand.Parameters.AddWithValue("@endT", contract.EndTime.ToString());
                 myCommand.Parameters.AddWithValue("@p", contract.Price);
                 myCommand.Parameters.AddWithValue("@buyerSel", contract.BuyerSelected);
                 myCommand.Parameters.AddWithValue("@plannerConf", contract.PlannerConfirmed);

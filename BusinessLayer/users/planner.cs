@@ -179,37 +179,30 @@ namespace TMS
         }
 
         
-        public double GetClientCharge(Contract contract, List<Carrier> orderCarriers, List<Carrier> originalCarriers)
+        public double GetClientCharge(Contract contract, List<Carrier> orderCarriers)
         {
             int distance = CalculateDistance(contract.Origin, contract.Destination);
+            double hours = CalculateTime(contract);
             double dailyCharge = 150;
             int daysTravelled = 0;
-            int pallets = 0;
-
-            double d = distance;
-            while(d > 24)
+            double h = hours;
+            while(h > 24)
             {
-                d -= 24;
+                h -= 24;
                 ++daysTravelled;
             }
             // This means only one Carrier
             if (contract.JobType == 1)
             {
-                contract.Price = (distance * orderCarriers[0].FtlRate) + (daysTravelled * dailyCharge);
+                contract.Price += orderCarriers[0].Pallets * distance * orderCarriers[0].LtlRate;
             }
             else if (contract.VanType == 0)
             {
                 // Finds the number of pallets carried by each carrier, bills appropriately 
                 foreach (Carrier orderC in orderCarriers)
                 {
-                    foreach (Carrier origC in originalCarriers)
-                    {
-                        if (origC.CarrierID == orderC.CarrierID)
-                        {
-                            pallets = origC.LtlAvail - orderC.LtlAvail;
-                            contract.Price += pallets * distance * orderC.LtlRate;
-                        }
-                    }
+                    contract.Price = (distance * orderCarriers[0].FtlRate) + (daysTravelled * dailyCharge);
+
                 }
             }
             else
@@ -217,14 +210,7 @@ namespace TMS
                 // Finds the number of pallets carried by each carrier, bills appropriately 
                 foreach (Carrier orderC in orderCarriers)
                 {
-                    foreach (Carrier origC in originalCarriers)
-                    {
-                        if (origC.CarrierID == orderC.CarrierID)
-                        {
-                            pallets = origC.LtlAvail - orderC.LtlAvail;
-                            contract.Price += pallets * distance * orderC.ReefRate;
-                        }
-                    }
+                    contract.Price += (orderC.Pallets * distance * orderC.LtlRate) + (orderC.ReefRate * orderC.Pallets * distance * orderC.LtlRate);
                 }
             }
 
@@ -268,10 +254,12 @@ namespace TMS
                     if (i == carriers.Count - 1)
                     {
                         carriers[i].LtlAvail -= remaining;
+                        carriers[i].Pallets = remaining;
                         new LocalComm().UpdateCarrierLTL(carriers[i]);
                     }
                     else
                     {
+                        carriers[i].Pallets = carriers[i].LtlAvail; // The carrier is using up all it's Ltl availability
                         remaining -= carriers[i].LtlAvail;
                         carriers[i].LtlAvail = 0;
                         new LocalComm().UpdateCarrierLTL(carriers[i]);
@@ -312,8 +300,9 @@ namespace TMS
             // EndTime != null 
             foreach(Contract con in contracts)
             {
-               // con.Price = GetClientCharge(con, carriers, originalCarriers);
+               // con.Price = GetClientCharge(con, carriers);
                 con.EndTime = startTime.AddHours(CalculateTime(con));
+                con.Price = GetClientCharge(con, carriers);
                 con.UpdateContract();
             }
 

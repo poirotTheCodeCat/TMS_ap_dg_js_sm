@@ -129,13 +129,6 @@ namespace TMS
             set { plannerConfirmed = value; }
         }
 
-        public int ContractStatus
-        {
-            get { return contractStatus; }
-            set { contractStatus = value; }
-        }
-
-
 
         private List<Contract> CurrentContracts;
         public List<Contract> SingleContracts;
