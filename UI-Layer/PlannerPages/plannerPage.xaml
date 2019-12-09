@@ -13,7 +13,6 @@
 
         <DataGrid x:Name="ContractsGrid" Margin="10,10,293,291" SelectionChanged="ContractsGrid_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Path=ContractId}" Width="40"/>
                 <DataGridTextColumn Header="Client" Binding="{Binding Path=ClientName}" Width="75"/>
                 <DataGridTextColumn Header="Origin" Binding="{Binding Path=Origin}" Width="*"/>
                 <DataGridTextColumn Header="Destination" Binding="{Binding Path=Destination}" Width="*"/>
