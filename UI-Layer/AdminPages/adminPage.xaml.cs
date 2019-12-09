@@ -8,6 +8,9 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using Google.Protobuf.WellKnownTypes;
 using TMS.Business_Layer.users;
+using System.Windows.Forms;
+using MessageBox = System.Windows.MessageBox;
+using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 
 namespace TMS
 {
@@ -43,8 +46,9 @@ namespace TMS
                 FillRateList();
                 FillRouteList();
             }
-            catch
+            catch(Exception e)
             {
+                Logger.Log("TMS database connection error\n"+e);
                 MessageBox.Show("Unable to connect IP or Port information");
             }
             
@@ -66,14 +70,16 @@ namespace TMS
         /// <param name="port">The new Port</param>
         private void UpdateIpPortInfo(string ip, string port)
         {
-            System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            Configuration config = 
+                ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
             if (ip != "")
             {
                 config.AppSettings.Settings["ipInfo"].Value = ip;
                 config.Save(ConfigurationSaveMode.Modified);
                 ConfigurationManager.RefreshSection("appSettings");
-                IpInfoDisplay.Text = ip;
-                   // ConfigurationManager.AppSettings["ipInfo"] = ip;
+                IpInfoDisplay.Text = ip; 
+                // ConfigurationManager.AppSettings["ipInfo"] = ip;
             }
 
             if (port != "")
@@ -81,8 +87,8 @@ namespace TMS
                 config.AppSettings.Settings["portInfo"].Value = port;
                 config.Save(ConfigurationSaveMode.Modified);
                 ConfigurationManager.RefreshSection("appSettings");
-                PortInfoDisplay.Text = port;
-                    //ConfigurationManager.AppSettings["portInfo"] = port;
+                PortInfoDisplay.Text = port; 
+                //ConfigurationManager.AppSettings["portInfo"] = port;
             }
         }
 
@@ -96,34 +102,30 @@ namespace TMS
         }
 
         /// <summary>
+        /// This method allows the user to select a file path for where to save the backup of the local
+        /// tms database.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GetFilePathBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            FolderBrowserDialog oFD = new FolderBrowserDialog();
+            if (oFD.ShowDialog() != DialogResult.OK) return; 
+            BackupFilePathtxb.Text = oFD.SelectedPath;
+        }
+
+        /// <summary>
         /// This method will allow the user to select a save location for the database backup.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void BackupBtn_Click(object sender, RoutedEventArgs e)
         {
-            Stream logStream;
-            SaveFileDialog dlg = new SaveFileDialog();
+            string filePath = BackupFilePathtxb.Text.Trim() + "\\TMSLocalBackup.sql";
 
-            dlg.Filter = "Text documents (.txt)|*.txt";
-            dlg.FilterIndex = 2;
-            dlg.RestoreDirectory = true;
-            dlg.DefaultExt = ".txt";
-            dlg.FileName = "TmsLocalBackup";
-            //DateTime.Now.ToString("MMM dd, yyyy HH:MM:SS")
+            admin.GetBackUp(filePath);
 
-            // Show save file dialog box
-            Nullable<bool> result = dlg.ShowDialog();
-
-            if (dlg.ShowDialog() == true)
-            {
-                if ((logStream = dlg.OpenFile()) != null)
-                {
-                    // Code to write the stream goes here.
-                    logStream.Close();
-                }
-            }
-
+            MessageBox.Show("The local TMS database has been backed up to:\n" + filePath);
             //remove the popup from screen
             BackupDatabaseGrid.Visibility = Visibility.Collapsed;
         }
@@ -180,35 +182,67 @@ namespace TMS
         /// <param name="e"></param>
         private void LogFilesBtn_Click(object sender, RoutedEventArgs e)
         {
+            //Logger.Log("test log");
             LogFileDisplay.Document.Blocks.Clear();
             if (DataGridFullGrid.Visibility == Visibility.Visible)
             {
                 DataGridFullGrid.Visibility = Visibility.Collapsed;
+                LogViewGrid.Visibility = Visibility.Visible;
             }
             else
             {
                 DataGridFullGrid.Visibility = Visibility.Visible;
+                LogViewGrid.Visibility = Visibility.Collapsed;
             }
+            
+            //if logfile grid currently hidden then do not attempt to open it
+            if(LogViewGrid.Visibility == Visibility.Collapsed) return;
+            
+            //generate file name
+            string fileName = ConfigurationManager.AppSettings["logLocation"];
 
-            Logger.Log("WOOO WEEEE");
-            string fileName = AppDomain.CurrentDomain.BaseDirectory + "/TMSLog.txt";
-
-            //OpenFileDialog openFileDialog = new OpenFileDialog();
-            //if (openFileDialog.ShowDialog() == true)
-            //{
-             StreamReader file = new StreamReader(fileName);
-
-            string line;
-
-            while ((line = file.ReadLine()) != null)
+            if (fileName == "~TmsLog.txt")
             {
+                fileName = AppDomain.CurrentDomain.BaseDirectory + "\\TMSLog.txt";
+            }
+            //fill ui box
+            LogFileLocationDisplay.Text = fileName;
+            try
+            {
+                StreamReader file = new StreamReader(fileName);
+                string line;
 
-                LogFileDisplay.AppendText("\n");
-                LogFileDisplay.AppendText(line);
+                while ((line = file.ReadLine()) != null)
+                {
+                    LogFileDisplay.AppendText(line + "\n");
+                }
+                file.Close();
             }
-            file.Close();
+            catch
+            {
+                MessageBox.Show("There are no current log file available in this location. Change location or try again later.");
             }
-        
+        }
+
+        private void ChangeLogLocation_OnClick(object sender, RoutedEventArgs e)
+        {
+            FolderBrowserDialog oFD = new FolderBrowserDialog();
+            if (oFD.ShowDialog() != DialogResult.OK) return;
+            LogFileLocationDisplay.Text = oFD.SelectedPath;
+
+            UpdateLogLocation(LogFileLocationDisplay.Text.Trim()+"\\TmsLog.txt");
+        }
+
+        private void UpdateLogLocation(string logLocal)
+        {
+            Configuration config =
+                ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            config.AppSettings.Settings["logLocation"].Value = logLocal;
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+            LogFileLocationDisplay.Text = ConfigurationManager.AppSettings["logLocation"];
+        }
 
         /// <summary>
         /// This handler will change visibility of the three different datagrids that are available on this screen for viewing
@@ -219,7 +253,7 @@ namespace TMS
         private void DBTablesCmb_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!trigger) return;
-            var clickedItem = (ComboBox)sender;
+            var clickedItem = (System.Windows.Controls.ComboBox)sender;
             var index = clickedItem.SelectedIndex;
 
             if (index == 0)
@@ -339,24 +373,15 @@ namespace TMS
             }
         }
 
-        ///// <summary>
-        ///// Event handler that checks the element that is currently selected and sets the local data member equal 
-        ///// responsible for tracking the selection to the selection
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //private void ContractGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    // set current item = sender
-        //    DataGrid gridSelection = (DataGrid)sender;
-        //    Contract newItem = gridSelection.SelectedItem as Contract;
+        private void ConfigBackBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            IpPortConfigGrid.Visibility = Visibility.Collapsed;
+        }
 
-        //    if (newItem != null)
-        //    {
-        //        selectedContract = newItem;
-        //    }
-        //    CreateBtn.IsEnabled = true;
-        //}
+        private void ApplyRouteChangesBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("This element is not enabled ATM.");
+        }
     }
 }
 

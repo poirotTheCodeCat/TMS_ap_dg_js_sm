@@ -12,6 +12,6 @@
             <Button x:Name="PlannerBtn" Content="Planner" Width="100" Click="Planner_Click"/>
             <Button x:Name="AdminBtn" Content="Admin" Width="100" Click="Admin_Click"/>
         </StackPanel>
-        <Frame x:Name="MainFrame" Height="422" VerticalAlignment="Bottom" NavigationUIVisibility="Hidden" Margin="100,0,0,0.5"/>
+        <Frame x:Name="MainFrame" Height="422" Width="700" VerticalAlignment="Bottom" NavigationUIVisibility="Hidden" Margin="100,0,0,0.5"/>
     </Grid>
 </Window>

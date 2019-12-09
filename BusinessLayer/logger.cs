@@ -14,20 +14,8 @@ namespace TMS.Business_Layer.users
     /// </summary>
     class Logger
     {
-        private string uName;///< hold the name of the logged in user
-        //private DateTime loginDateTime;
-        //private DateTime logoutDateTime;
-        //private string logFileLocation;
-
         //create a path variable to the location of the service exe
-        private static string pathString = AppDomain.CurrentDomain.BaseDirectory + "TMSLog.txt";
-
-        public Logger(string userName)
-        {
-            uName = userName;
-            //get log save location from the config file
-            //logFileLocation = ConfigurationManager.AppSettings.Get("logLocation");
-        }
+        private static string pathString = ConfigurationManager.AppSettings["logLocation"];
 
         /// <summary>
         /// Writes any amount of text to a text file along with the time and date of the input.
@@ -92,28 +80,6 @@ namespace TMS.Business_Layer.users
             //get current stack trace
             string stackTrace = Environment.StackTrace;
             return stackTrace;
-        }
-
-        /// <summary>
-        /// Read all lines form a text file for display in a WPF UI location.
-        /// </summary>
-
-        public void DisplayLogs()
-        {
-            //read from file
-            string line;
-
-            // Read the file and display it line by line.  
-            System.IO.StreamReader file = 
-                new System.IO.StreamReader(pathString);
-            while ((line = file.ReadLine()) != null)
-            {
-                //write to WPF UI location
-                //System.Console.WriteLine(line);
-                //->>>>>>>>>>>>>nameOfWPFTextBox.Text = line;
-            }
-
-            file.Close();
         }
     }
     /// \mainpage TMS Project      

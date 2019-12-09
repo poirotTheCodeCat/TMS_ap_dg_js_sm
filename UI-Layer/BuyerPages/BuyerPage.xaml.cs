@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TMS.Business_Layer.users;
 
 namespace TMS
 {
@@ -35,8 +36,9 @@ namespace TMS
                 // create thread that automatically refreshes datagrid for new contracts from the marketplace
                 fillGrid();
             }
-            catch
+            catch(Exception e)
             {
+                Logger.Log("TMS database connection error\n" + e);
                 MessageBox.Show("Unable to connect IP or Port information");
             }
         }
