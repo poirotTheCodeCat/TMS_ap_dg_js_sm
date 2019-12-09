@@ -28,9 +28,9 @@ namespace TMS
         private int quant;///< Holds the quantity of vans available
         private string origin;///< Holds origin city
         private string dest;///< Holds the destination city
-        private DateTime? endTime;
-        private double price;
-        private int buyerSelected;
+        private DateTime? endTime;///< Holds the current date and time
+        private double price;///< Holds the price of the contract
+        private int buyerSelected;///< Holds the selected buyer index indicator
         private int plannerConfirmed;           // if the planner has added the contract to an order or not
         private int contractStatus;///< Holds contractStatus //if the order is completed or if it is not 
         public string jobString {get; set;}
