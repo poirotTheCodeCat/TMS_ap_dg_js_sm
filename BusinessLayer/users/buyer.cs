@@ -42,7 +42,7 @@ namespace TMS
         /// <returns>None.</returns>
         public void GenerateInvoice(Contract contract)
         {
-            string pathString = "~\\Invoices\\Invoice" + contract.ContractID.ToString() + ".txt";
+            string pathString = "~Invoice" + contract.ContractID.ToString() + ".txt";
             string[] lines;
             double distance = new Planner().CalculateDistance(contract.Origin, contract.Destination);
             string[] buildLine =
