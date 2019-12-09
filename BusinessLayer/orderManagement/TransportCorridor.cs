@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * File Name:TransportCorridor
+ * Program Name: TMS_ap_dg_js_sm
+ * Programmers: Arron Perry, Daniel Grew, John Stanley, Sasha Malesevic
+ * First Version: 2019-12-09
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +14,7 @@ namespace TMS
 {
     public class TransportCorridor
     {
+        // private data members
         private string transportCorridorID;
         private string cityName;
         private int distance;
@@ -16,6 +23,7 @@ namespace TMS
         private string east;
         private List<TransportCorridor> routes = new List<TransportCorridor>();
 
+        // accessors and mutators
         public string TransportCorridorID
         {
             get { return transportCorridorID; }

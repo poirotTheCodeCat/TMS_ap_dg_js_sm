@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * File Name: Planner.cs
+ * Program Name: TMS_ap_dg_js_sm
+ * Programmers: Arron Perry, Daniel Grew, John Stanley, Sasha Malesevic
+ * First Version: 2019-12-09
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -150,7 +156,7 @@ namespace TMS
         /// <param name="searchItem">The identifier for the invoices that need to be included
         ///                         in the invoice summary</param>
         /// <returns>Int representing an invoice was successfully generated</returns>
-        public List<Contract> GenerateInvoiceSum(int summaryTime = 0) // 2 weeks or of all time
+        public List<Contract> GenerateInvoiceSum(DateTime sumStartTime, int summaryTime = 0) // 2 weeks or of all time
         {
             DateTime? conStartTime = new DateTime();
             DateTime conEndTime = new DateTime();
@@ -158,7 +164,7 @@ namespace TMS
             List<Contract> summaryContracts = new List<Contract>();
             
             
-            DateTime? sumStartTime = DateTime.Now.AddHours(24 * 14 * -1);
+            sumStartTime = sumStartTime.AddHours(24 * 14 * -1);
             foreach (Contract c in localContracts)
             {
                 if(c.PlannerConfirmed == 1)     // for 2 weeks
@@ -166,8 +172,8 @@ namespace TMS
                     if(summaryTime == 1)
                     {
                         conEndTime = Convert.ToDateTime(c.EndTime);
-                        conStartTime = conEndTime.AddHours((double)24 * 14 * -1);
-                        if (conStartTime >= sumStartTime)
+                        //conStartTime = conEndTime.AddHours((double)24 * 14 * -1);
+                        if (conEndTime >= sumStartTime)
                         {
                             summaryContracts.Add(c);
                         }
@@ -184,7 +190,13 @@ namespace TMS
             return summaryContracts;
         }
 
-        
+        /// <summary>
+        /// THis calculates the amount that we charge the client
+        /// </summary>
+        /// <param name="contract"></param>
+        /// <param name="orderCarriers"></param>
+        /// <param name="multipleCarr"></param>
+        /// <returns></returns>
         public double GetClientCharge(Contract contract, List<Carrier> orderCarriers, int multipleCarr=0)
         {
             List<double> markUp = new LocalComm().GetRates();
@@ -246,7 +258,13 @@ namespace TMS
             return contract.Price;
         }
         
-
+        /// <summary>
+        /// This calculates the break even cost
+        /// </summary>
+        /// <param name="contracts"></param>
+        /// <param name="orderCarriers"></param>
+        /// <param name="originalCarriers"></param>
+        /// <returns></returns>
         public double GetBreakevenCharge(List<Contract> contracts, List<Carrier> orderCarriers, List<Carrier> originalCarriers)
         {
             int jobType = contracts[0].JobType;
@@ -260,7 +278,7 @@ namespace TMS
         }
 
         /// <summary>
-        /// 
+        /// This creates an order and inserts it into the database
         /// </summary>
         /// <param name="contracts"></param>
         /// <param name="orderCarriers"></param>
@@ -300,27 +318,6 @@ namespace TMS
                 new LocalComm().UpdateCarrierFTL(carriers[0]);
             }
             
-            /*
-            foreach(Carrier carr in carriers)
-            {
-                // Update Carrier availability 
-                if(contracts[0].JobType == 0)
-                {
-                    new LocalComm().UpdateCarrierFTL(carr);
-                }
-                else
-                {
-                    new LocalComm().UpdateCarrierLTL(carr);
-                }
-
-                // Create a trip for each carrier and Contract 
-                // | CarrierID | Contract ID |  
-                foreach (Contract con in contracts)
-                {
-                    new LocalComm().AddTrip(con.ContractID, carr.CarrierID);
-                }
-            }
-            */
 
             DateTime startTime = currTime;
             // BuyerSelected = 1 
@@ -349,7 +346,12 @@ namespace TMS
             }
 
         }
-
+        /// <summary>
+        /// This function calculates the distance required to travel between an origin city and a destination city
+        /// </summary>
+        /// <param name="startCity"></param>
+        /// <param name="endCity"></param>
+        /// <returns></returns>
         public int CalculateDistance(string startCity, string endCity)
         {
             int originIndex = -1;

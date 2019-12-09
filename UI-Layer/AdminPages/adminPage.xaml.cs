@@ -1,11 +1,21 @@
-﻿
+﻿/*
+ * File Name: AdminPage.xaml.cs
+ * Program Name: TMS_ap_dg_js_sm
+ * Programmers: Arron Perry, Daniel Grew, John Stanley, Sasha Malesevic
+ * First Version: 2019-12-09
+ */
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using Google.Protobuf.WellKnownTypes;
 using TMS.Business_Layer.users;
 using System.Windows.Forms;
 using MessageBox = System.Windows.MessageBox;
@@ -76,6 +86,11 @@ namespace TMS
         /// <param name="port">The new Port</param>
         private void UpdateIpPortInfo(string ip, string port)
         {
+            if (!IsAllDigits(port) || !IsAllDigits(ip))
+            {
+                MessageBox.Show("No letters allowed in the IP or PORT."); 
+                return;
+            }
             if (ip == "DEFAULT")
             {
                 ip = "159.89.117.198";
@@ -117,6 +132,21 @@ namespace TMS
                 Logger.Log("Port Changed");
                 //ConfigurationManager.AppSettings["portInfo"] = port;
             }
+        }
+
+        /// <summary>
+        /// This method checks if a string is only digits or decimals.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns>Bool to tell if only digits.</returns>
+        private bool IsAllDigits(string s)
+        {
+            foreach (var c in s)
+            {
+                if (!char.IsDigit(c) && c != '.') return false;
+            }
+
+            return true;
         }
 
         /// <summary>

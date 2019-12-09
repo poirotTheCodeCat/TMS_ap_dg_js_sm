@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * File Name: BuyerPage.xaml.cs
+ * Program Name: TMS_ap_dg_js_sm
+ * Programmers: Arron Perry, Daniel Grew, John Stanley, Sasha Malesevic
+ * First Version: 2019-12-09
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -163,8 +169,16 @@ namespace TMS
         {
             try
             {
-                // call function that will fill the datagrid
-                fillList();
+                try
+                {
+                    ContractGrid.Items.Clear();
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log("Contract datagrid is already cleared\n" + ex);
+                }
+                    // call function that will fill the datagrid
+                    fillList();
                 // create thread that automatically refreshes datagrid for new contracts from the marketplace
                 fillGrid();
             }

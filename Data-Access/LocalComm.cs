@@ -1,4 +1,10 @@
-﻿using MySql.Data.MySqlClient;
+﻿/*
+ * File Name:LocalComm.cs
+ * Program Name: TMS_ap_dg_js_sm
+ * Programmers: Arron Perry, Daniel Grew, John Stanley, Sasha Malesevic
+ * First Version: 2019-12-09
+ */
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -54,7 +60,10 @@ namespace TMS
             return invoice;
         }
 
-
+        /// <summary>
+        /// This method updates the contract within the local tms database
+        /// </summary>
+        /// <param name="contract"></param>
         public void UpdateContract(Contract contract)
         {
             using (var myConn = new MySqlConnection(connectionString))
@@ -144,6 +153,10 @@ namespace TMS
             }
         }
 
+        /// <summary>
+        /// This method retrieves all contracts that have not been selected by the planner to be put in an order yet
+        /// </summary>
+        /// <returns></returns>
         public List<Contract> GetPendingContracts()
         {
             const string sqlStatement = @" SELECT * FROM Contract WHERE ContractStatus=0;";
@@ -171,6 +184,10 @@ namespace TMS
             }
         }
 
+        /// <summary>
+        /// This method returns all contracts from the local tms database
+        /// </summary>
+        /// <returns></returns>
         public List<Contract> GetLocalContracts()
         {
             const string sqlStatement = @" SELECT * FROM Contract;";
@@ -221,6 +238,10 @@ namespace TMS
             }
         }
 
+        /// <summary>
+        /// This retrieves all information about the TransportCorridor
+        /// </summary>
+        /// <returns></returns>
         public List<TransportCorridor> GetRoutes()
         {
             using (var myConn = new MySqlConnection(connectionString))
@@ -382,6 +403,11 @@ namespace TMS
             return routes;
         }
 
+        /// <summary>
+        /// this retrieves all citynames from the table and converts it to a list of strings
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
         private List<string> DataTableToCityList(DataTable table)
         {
             List<string> cityList = new List<string>();
@@ -391,6 +417,12 @@ namespace TMS
             }
             return cityList;
         }
+
+        /// <summary>
+        /// Extracts the details of a contract from a datatable and places it into a list of Contracts
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
         private List<Contract> DataTableToContractsList(DataTable table)
         {
             var contracts = new List<Contract>();
@@ -441,6 +473,11 @@ namespace TMS
             }
         }
 
+        /// <summary>
+        /// Retrieves the rate values from the datatable taken from the database and inserts the data into a list of doubles
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
         private List<double> DataTableToRateList(DataTable table)
         {
             var rates = new List<double>();

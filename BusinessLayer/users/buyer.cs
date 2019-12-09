@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * File Name: Buyer.cs
+ * Program Name: TMS_ap_dg_js_sm
+ * Programmers: Arron Perry, Daniel Grew, John Stanley, Sasha Malesevic
+ * First Version: 2019-12-09
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,52 +32,29 @@ namespace TMS
             return contractList; 
         }
 
-        /// <summary>
-        /// This method will allow the Buyer to create a new Order that will be added to
-        /// the local database. 
-        /// <param name="searchItem">The identifier for the Contract that will be used 
-        ///                         to create the new Order</param>
-        /// </summary>
-        /// <returns>Order that has been created.</returns>
-        public Order CreateOrder(string searchItem)
-        {
-            Order newOrder = new LocalComm().CreateOrder(searchItem);
-            return newOrder;
-        }
-
-        /// <summary>
-        /// This method will allow the Buyer to view Orders marked by completion by the Planner.
-        /// </summary>
-        /// <returns>List of the completed Orders.</returns>
-        public List<Order> GetCompletedOrders()
-        {
-            string searchItem = "";
-            List<Order> completedOrderList = new LocalComm().GetOrders(searchItem);
-            return completedOrderList;
-        }
 
         /// <summary>
         /// This method will allow the Buyer to generate an invoice as a text file for the 
         /// requested completedOrder.
         /// </summary>
-        /// /// <param name="searchItem">The identifier for the Order that requires
+        /// /// <param name="contract">The identifier for the Order that requires
         ///                             an invoice</param>
-        /// <returns>Int representing invoice was successfully generated.</returns>
-        public int GenerateInvoice(Contract contract)
+        /// <returns>None.</returns>
+        public void GenerateInvoice(Contract contract)
         {
-            string pathString = "~Invoice" + contract.ContractID.ToString() + ".txt";
+            string pathString = "~\\Invoices\\Invoice" + contract.ContractID.ToString() + ".txt";
             string[] lines;
             double distance = new Planner().CalculateDistance(contract.Origin, contract.Destination);
             string[] buildLine =
             {
                 "Invoice\n", "Order ID: " + contract.ContractID.ToString(),
-                "Client Name: " + contract.ClientName,
-                "Completed Date: " + contract.EndTime,
-                "Van Type: " + contract.vanTypeString,
-                "Origin City: " + contract.Origin,
-                "Destination City: " + contract.Destination,
-                "Distance Travelled: " + distance.ToString("2F") + " km",
-                "\n\nTotal Cost: $" + contract.Price.ToString()
+                "\nClient Name: " + contract.ClientName,
+                "\nCompleted Date: " + contract.EndTime,
+                "\nVan Type: " + contract.vanTypeString,
+                "\nOrigin City: " + contract.Origin,
+                "\nDestination City: " + contract.Destination,
+                "\nDistance Travelled: " + distance.ToString("F") + " km",
+                "\n\nTotal Cost: $" + contract.Price.ToString("F")
             };
 
             lines = buildLine;
@@ -91,10 +74,12 @@ namespace TMS
                     file.Write(line);
                 }
             }
-
-            return 0;
         }
 
+        /// <summary>
+        /// This adds a contract to the local database for the TMS
+        /// </summary>
+        /// <param name="newContract"></param>
     public void AddContract(Contract newContract)
         {
             LocalComm comm = new LocalComm();
