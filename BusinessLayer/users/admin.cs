@@ -113,17 +113,10 @@ namespace TMS
         /// <summary>
         /// This method is used to update a column and row location in the carrier table database.
         /// </summary>
-        /// <param name="carrierID">The id of the selected carrier</param>
-        /// <param name="whatColumn">The name of the selected column</param>
-        /// <param name="newValue">The new value to insert in that location</param>
-        /// <returns>Int representing successful addition to the database.</returns>
-        public int UpdateCarrierTable(int carrierID, string whatColumn, string newValue)
+        /// <param name="c">The carrier to be updated</param>
+        public void UpdateCarrierTable(Carrier c)
         {
-            int done = 0;
-
-            done = 1; //set to true for testing
-
-            return done;
+            new LocalComm().UpdateCarrierFTLRate(c);
         }
 
         /// <summary>

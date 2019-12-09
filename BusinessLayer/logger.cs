@@ -28,6 +28,10 @@ namespace TMS.Business_Layer.users
 
         public static void Log(string message, int ex = 0)
         {
+            if (pathString == "~TmsLog.txt") //check for app at default settings and apply usable log file name
+            {
+                pathString = AppDomain.CurrentDomain.BaseDirectory + "\\TmsLog.txt";
+            }
             string[] lines;
 
             //generate the input string -> takes multiple lines

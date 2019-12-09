@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
 using System.IO;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -39,12 +40,14 @@ namespace TMS
 
             trigger = true;
             LoadIpPortInfo();
-            //UpdateIpPortInfo("tms-historybuff.mysql.database.azure.com", "3306");
 
             UpdateDataTables();
 
         }
 
+        /// <summary>
+        /// This method will update all datagrids used on the admin page. Log and display errors.
+        /// </summary>
         private void UpdateDataTables()
         {
             try
@@ -76,6 +79,15 @@ namespace TMS
         /// <param name="port">The new Port</param>
         private void UpdateIpPortInfo(string ip, string port)
         {
+            if (ip == "DEFAULT")
+            {
+                ip = "159.89.117.198";
+            }
+            if (port == "DEFAULT")
+            {
+                port = "3306";
+            }
+
             Configuration config = 
                 ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
@@ -230,17 +242,61 @@ namespace TMS
             }
         }
 
+        /// <summary>
+        /// This method will update the location of where the log file is stored, on update it will attempt
+        /// to print what is contained in the file at that location. If the user enters DEFAULT into the log location
+        /// box the store location will return to where the exe was launched from, else it will allow the user
+        /// to select a file location with a modal folder browser.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ChangeLogLocation_OnClick(object sender, RoutedEventArgs e)
         {
-            FolderBrowserDialog oFD = new FolderBrowserDialog();
-            if (oFD.ShowDialog() != DialogResult.OK) return;
-            LogFileLocationDisplay.Text = oFD.SelectedPath;
+            string filePath;
 
-            UpdateLogLocation(LogFileLocationDisplay.Text.Trim()+"\\TmsLog.txt");
+            if (LogFileLocationDisplay.Text.Trim() == "DEFAULT")
+            {
+                filePath = AppDomain.CurrentDomain.BaseDirectory + "\\TmsLog.txt";
+                LogFileLocationDisplay.Text = filePath;
+            }
+            else
+            {
+                FolderBrowserDialog oFD = new FolderBrowserDialog();
+                if (oFD.ShowDialog() != DialogResult.OK) return;
+                LogFileLocationDisplay.Text = oFD.SelectedPath;
+                filePath = LogFileLocationDisplay.Text.Trim() + "\\TmsLog.txt";
+            }
+            UpdateLogLocation(filePath);
+            Logger.Log("Log file location changed to: " + filePath);
+
+            //then refresh the RTB
+            try
+            {
+                LogFileDisplay.SelectAll();
+                LogFileDisplay.Selection.Text = "";
+
+                StreamReader file = new StreamReader(filePath);
+                string line;
+
+                while ((line = file.ReadLine()) != null)
+                {
+                    LogFileDisplay.AppendText(line + "\n");
+                }
+                file.Close();
+            }
+            catch
+            {
+                MessageBox.Show("There are no current log file available in this location. Change location or try again later.");
+            }
         }
 
+        /// <summary>
+        /// This method will update the log store location value held in the App.Config file.
+        /// </summary>
+        /// <param name="logLocal"></param>
         private void UpdateLogLocation(string logLocal)
         {
+
             Configuration config =
                 ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
@@ -259,11 +315,7 @@ namespace TMS
         private void DBTablesCmb_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!trigger) return;
-            trigger = false;
-            CarrierTableDisplay.Items.Clear();
-            trigger = true;
 
-            UpdateDataTables();
             var clickedItem = (System.Windows.Controls.ComboBox)sender;
             var index = clickedItem.SelectedIndex;
 
@@ -295,6 +347,8 @@ namespace TMS
         /// </summary>
         private void FillCarrierList()
         {
+            if (!trigger) return;
+
             carrierList = admin.GetCarriers();
             FillCarrierGrid();
         }
@@ -304,6 +358,8 @@ namespace TMS
         /// </summary>
         private void FillRouteList()
         {
+            if (!trigger) return;
+
             routeList = admin.GetRoutes();
             FillRouteGrid();
         }
@@ -313,13 +369,14 @@ namespace TMS
         /// </summary>
         private void FillRateList()
         {
-            rateMarkup = admin.GetRates();
-            foreach(var r in rateMarkup)
-            {
-                rateList.Add(new TypeAndRate());
-            }
+            if (!trigger) return;
 
-            for (int i = 0; i <= rateList.Count; i++)
+            rateMarkup = admin.GetRates();
+
+            rateList.Add(new TypeAndRate());
+            rateList.Add(new TypeAndRate());
+
+            for (int i = 0; i <= 1; i++)
             {
                 if (i == 0)
                 {
@@ -340,10 +397,12 @@ namespace TMS
         /// </summary>
         private void FillCarrierGrid()
         {
-            foreach (Carrier c in carrierList)
-            {
-                CarrierTableDisplay.Items.Add(c);
-            }
+            //foreach (Carrier c in carrierList)
+            //{
+            //    CarrierTableDisplay.Items.Add(c);
+            //}
+
+            CarrierTableDisplay.ItemsSource = carrierList;
         }
 
         /// <summary>
@@ -351,12 +410,12 @@ namespace TMS
         /// </summary>
         private void FillRouteGrid()
         {
-            foreach(var s in carrierList)
+            foreach (var s in carrierList)
             {
                 var temp = "";
                 foreach (var d in s.DepotCities)
                 {
-                    temp += d+", ";
+                    temp += d + ", ";
                 }
                 s.DepotCityString = temp;
             }
@@ -365,6 +424,8 @@ namespace TMS
             {
                 RouteTableDisplay.Items.Add(c);
             }
+            //RouteTableDisplay.ItemsSource = routeList;
+
         }
 
         /// <summary>
@@ -372,21 +433,70 @@ namespace TMS
         /// </summary>
         private void FillRateGrid()
         {
-
+            //RateTableDisplay.ItemsSource = rateList;
             foreach (TypeAndRate c in rateList)
             {
                 RateTableDisplay.Items.Add(c);
             }
         }
 
+        /// <summary>
+        /// This handler will exit out of the IP and PORT configuration view.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ConfigBackBtn_OnClick(object sender, RoutedEventArgs e)
         {
             IpPortConfigGrid.Visibility = Visibility.Collapsed;
         }
-
-        private void ApplyRouteChangesBtn_OnClick(object sender, RoutedEventArgs e)
+        
+        /// <summary>
+        /// This method will clear all data tables of current data and load them with the most recent
+        /// as found in the local TMS database.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RefreshDataTablesBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            trigger = false;
+            //CarrierTableDisplay.Items.Clear();
+            RouteTableDisplay.Items.Clear();
+            RateTableDisplay.Items.Clear();
+            carrierList.Clear();
+            routeList.Clear();
+            rateList.Clear();
+            trigger = true;
+
+            UpdateDataTables();
+
+            refreshPopup.IsOpen = true;
+        }
+
+        /// <summary>
+        /// This method will request the changed made to the carrier FTLRate be applied in the database.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ApplyCarrierChangesBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            foreach (var c in carrierList)
+            {
+                admin.UpdateCarrierTable(c);
+            }
+
+            updateTablePopup.IsOpen = true;
+        }
+
+        /// <summary>
+        /// This method updates the local list with the new values held in the object present in the datagrid
+        /// after changes were made. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CarrierTableDisplay_OnCellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            carrierList.Remove((Carrier) CarrierTableDisplay.SelectedItem);
+            carrierList.Add((Carrier) CarrierTableDisplay.SelectedItem);
         }
     }
 }
