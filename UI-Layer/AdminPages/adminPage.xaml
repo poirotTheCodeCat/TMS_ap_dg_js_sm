@@ -52,13 +52,13 @@
             <DataGrid x:Name="CarrierTableDisplay" Margin="45,64,45,70" Visibility="Collapsed">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header = "ID" Binding="{Binding Mode=TwoWay, Path=CarrierID}" Width="25"/>
-                    <DataGridTextColumn Header = "Name" Binding="{Binding Mode=TwoWay, Path=CarrierName}" Width="80"/>
-                    <DataGridTextColumn Header = "Depot" Binding="{Binding Mode=TwoWay, Path=DepotCityString}" Width="80"/>
-                    <DataGridTextColumn Header = "LTL" Binding="{Binding Mode=TwoWay, Path=LtlAvail}" Width="*"/>
-                    <DataGridTextColumn Header = "LTL Rate" Binding="{Binding Mode=TwoWay, Path=LtlRate}" Width="*"/>
+                    <DataGridTextColumn Header = "Name" Binding="{Binding Mode=TwoWay, Path=CarrierName}" Width="*"/>
+                    <DataGridTextColumn Header = "Depot" Binding="{Binding Mode=TwoWay, Path=DepotCityString}" Width="*"/>
+                    <DataGridTextColumn Header = "LTL" Binding="{Binding Mode=TwoWay, Path=LtlAvail}" Width="60"/>
+                    <DataGridTextColumn Header = "LTL Rate" Binding="{Binding Mode=TwoWay, Path=LtlRate}" Width="60"/>
                     <DataGridTextColumn Header = "FTL" Binding="{Binding Mode=TwoWay, Path=FtlAvail}" Width="60"/>
                     <DataGridTextColumn Header = "FTL Rate" Binding="{Binding Mode=TwoWay, Path=FtlRate}" Width="60"/>
-                    <DataGridTextColumn Header = "Refer Rate" Binding="{Binding Mode=TwoWay, Path=ReefRate}" Width="60"/>
+                    <DataGridTextColumn Header = "Refer Rate" Binding="{Binding Mode=TwoWay, Path=ReefRate}" Width="80"/>
                 </DataGrid.Columns>
             </DataGrid>
             <Button x:Name="ApplyCarrierChangesBtn" Content="Apply Updates" HorizontalAlignment="Left" 
