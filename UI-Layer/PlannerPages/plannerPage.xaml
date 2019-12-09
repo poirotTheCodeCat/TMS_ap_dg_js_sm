@@ -35,12 +35,12 @@
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="157">
             <Label Content="Current Orders" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="483,10,0,0"/>
             <Rectangle Stroke="Gray"/>
-            <DataGrid  x:Name="CurrentOrderGrid" Margin="10,10,292,10">
+            <DataGrid  x:Name="CurrentOrderGrid" Margin="10,10,292,10" SelectionChanged="CurrentOrder_SelectionChanged">
                 <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Width="50" Binding="{Binding Path=ContractID}"/>
                     <DataGridTextColumn Header="Customer" Width="*"  Binding="{Binding Path=ClientName}"/>
-                    <DataGridTextColumn Header="Contract ID" Width="*" Binding="{Binding Path=ContractID}"/>
                     <DataGridTextColumn Header="End Time" Width="*" Binding="{Binding Path=EndTime}"/>
-                    <DataGridTextColumn Header="Confirmed" Width="*" Binding="{Binding Path=PlannerConfirmed}"/>
+                    <DataGridTextColumn Header="Status" Width="*" Binding="{Binding Status, Mode=TwoWay}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <Button x:Name="CompleteBtn" Content="Complete Order" Click="CompleteBtn_Click" Margin="594,105,10,10"/>

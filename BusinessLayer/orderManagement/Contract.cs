@@ -129,14 +129,16 @@ namespace TMS
             set { plannerConfirmed = value; }
         }
 
-
+        public string Status { get; set; }
         private List<Contract> CurrentContracts;
         public List<Contract> SingleContracts;
         public CombineContracts CombinedContracts;
         private List<string> CityCompare;
 
-
-
+       public Contract()
+        {
+            Status = "IN PROGRESS";
+        }
 
         /// <summary>
         /// This method will allow the Buyer to get contracts from the Contract Marketplace database. 

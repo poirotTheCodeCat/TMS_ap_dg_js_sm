@@ -185,8 +185,9 @@ namespace TMS
         }
 
         
-        public double GetClientCharge(Contract contract, List<Carrier> orderCarriers, int multipleCon=0)
+        public double GetClientCharge(Contract contract, List<Carrier> orderCarriers, int multipleCarr=0)
         {
+            List<double> markUp = new LocalComm().GetRates();
             int distance = CalculateDistance(contract.Origin, contract.Destination);
             double hours = CalculateTime(contract);
             double dailyCharge = 150;
@@ -197,31 +198,48 @@ namespace TMS
                 h -= 24;
                 ++daysTravelled;
             }
-            // This means only one Carrier
-            if (contract.JobType == 1)
+            
+            if (contract.JobType == 1)  // FTL 
             {
-                contract.Price += orderCarriers[0].Pallets * distance * orderCarriers[0].LtlRate;
+                contract.Price = (orderCarriers[0].FtlRate * distance)      // Original Rate
+                    + (orderCarriers[0].FtlRate * distance * markUp[0]);    // Add OSHT mark up
             }
-            else if (contract.VanType == 0)
+            else if (multipleCarr == 1)
             {
                 // Finds the number of pallets carried by each carrier, bills appropriately 
                 foreach (Carrier orderC in orderCarriers)
                 {
-                    contract.Price = (distance * orderCarriers[0].FtlRate) + (daysTravelled * dailyCharge);
+                    if (contract.VanType == 0)   // Dry van 
+                    {
+                        contract.Price += 
+                                (orderC.Pallets * distance * orderC.LtlRate)                // Original Rate
+                            + (orderC.Pallets * distance * orderC.LtlRate * markUp[1]);     // Add OSHT mark up
+                    }
+                    else // Reefer van 
+                    {
+                        contract.Price += 
 
+                                (orderC.Pallets * distance * orderCarriers[0].LtlRate)      // Original Rate 
+                            + (orderC.Pallets * distance * orderC.ReefRate)                 // Add Reef mark up 
+                            + (orderC.Pallets * distance * orderC.LtlRate * markUp[1]);     // Add OSHT mark up
+                    }
                 }
             }
-            else if (multipleCon == 0)
+            else // LTL single contracts
             {
-                // Finds the number of pallets carried by each carrier, bills appropriately 
-                foreach (Carrier orderC in orderCarriers)
+                if(contract.VanType == 0)   // Dry van 
                 {
-                    contract.Price += (orderC.Pallets * distance * orderC.LtlRate) + (orderC.ReefRate * orderC.Pallets * distance * orderC.LtlRate);
+                    contract.Price = 
+                            (contract.Quantity * distance * orderCarriers[0].LtlRate)
+                        + (contract.Quantity * distance * orderCarriers[0].LtlRate * markUp[1]);
                 }
-            }
-            else
-            {
-                contract.Price += (contract.Quantity * distance * orderCarriers[0].LtlRate);
+                else // Reefer van 
+                {
+                    contract.Price = 
+                            (contract.Quantity * distance * orderCarriers[0].LtlRate)
+                        + (contract.Quantity * distance * orderCarriers[0].ReefRate)
+                        + (contract.Quantity * distance * orderCarriers[0].LtlRate * markUp[1]);
+                }
             }
 
             contract.Price += daysTravelled * dailyCharge;
@@ -312,7 +330,21 @@ namespace TMS
             {
                // con.Price = GetClientCharge(con, carriers);
                 con.EndTime = startTime.AddHours(CalculateTime(con));
-                con.Price = GetClientCharge(con, carriers);
+
+                if(carriers.Count > 1)
+                {
+                    con.Price = GetClientCharge(con, carriers, 1);
+                }
+                else
+                {
+                    con.Price = GetClientCharge(con, carriers);
+                }
+
+                // Add a trip for each carrier and contract
+                foreach (Carrier carr in carriers)
+                {
+                    new LocalComm().AddTrip(con.ContractID, carr.CarrierID);
+                }
                 con.UpdateContract();
             }
 

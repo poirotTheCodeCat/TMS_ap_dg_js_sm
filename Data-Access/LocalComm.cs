@@ -131,7 +131,11 @@ namespace TMS
             using (var myConn = new MySqlConnection(connectionString))
             {
 
-                var myCommand = new MySqlCommand("AddTrip");
+                var myCommand = new MySqlCommand("AddTrip", myConn);
+                myCommand.CommandType = CommandType.StoredProcedure;
+                //myCommand.Parameters.AddWithValue("@status", pending.ContractStatus);
+                myCommand.Parameters.AddWithValue("@contract", contract);
+                myCommand.Parameters.AddWithValue("@carrier", carrier);
 
                 myConn.Open();
 

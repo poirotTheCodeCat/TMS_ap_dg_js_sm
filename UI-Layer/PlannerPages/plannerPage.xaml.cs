@@ -21,7 +21,7 @@ namespace TMS
     /// </summary>
     public partial class PlannerPage : Page
     {
-        private DateTime percievedTime = new DateTime();
+        private DateTime perceivedTime = new DateTime();
         private DateTime currTime = DateTime.Now;
 
         private Contract selectedContract = new Contract();
@@ -38,7 +38,7 @@ namespace TMS
         private Planner planner = new Planner();                            // used to access planner logic
         private List<Carrier> carriersToDisplay = new List<Carrier>();
         private List<Carrier> currCarriers = new List<Carrier>();
-
+        private List<Contract> activeOrders = new List<Contract>();
         private bool multipleCarriers = true;
         private bool multipleLTL = false;
 
@@ -50,6 +50,7 @@ namespace TMS
             {
                 fillLists();            // fill the allContracts list with data from the database
                 generateContractData();
+                perceivedTime = DateTime.Now;
             }
             catch(Exception e)
             {
@@ -69,14 +70,13 @@ namespace TMS
         {
             foreach (Contract c in allContracts)
             {
-                ContractsGrid.Items.Add(c);
-            }
-
-            foreach(Contract cont in allContracts)
-            {
-                if((cont.PlannerConfirmed == 0) && (cont.EndTime.HasValue))
+                if(c.PlannerConfirmed == 0 && !(c.EndTime.HasValue))
                 {
-                    CurrentOrderGrid.Items.Add(cont);
+                    ContractsGrid.Items.Add(c);
+                }
+                else if(c.PlannerConfirmed != 1)
+                {
+                    CurrentOrderGrid.Items.Add(c);
                 }
             }
         }
@@ -89,7 +89,7 @@ namespace TMS
         private void fillLists()
         {
             // get all current orders -> orders where Completed == false
-            allContracts = planner.ShowPendingOrders();
+            allContracts = planner.ShowAllContracts();
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace TMS
                 else
                 {
                     ContractsGrid.IsEnabled = false;        // do not allow user to add more
-                    if (currCarriers.Count >= 1)
+                    if (orderContracts.Count >= 1)
                     {
                         Error.Content = "You cannot combine FTL Contracts with other Contracts";
                         return;
@@ -266,7 +266,7 @@ namespace TMS
             if(contractToComplete != null)
             {
                 // check if the order is actually complete
-                if (contractToComplete.EndTime <= percievedTime)
+                if (contractToComplete.EndTime <= perceivedTime)
                 {
                     planner.ConfirmOrder(contractToComplete);
                 }
@@ -338,7 +338,8 @@ namespace TMS
             {
                 Carrier carrier = carriersToDisplay[index];      // get the current carrier 
 
-                if(((orderContracts[0].JobType == 1) && carrier.LtlAvail > 0) || ((orderContracts[0].JobType == 0) && carrier.FtlAvail > 0))
+                if(((orderContracts[0].JobType == 1 && carrier.LtlAvail > 0 && orderContracts.Count == 1)) || 
+                    ((orderContracts[0].JobType == 0 && carrier.FtlAvail > 0 && orderContracts.Count == 1)))
                 {
                     CarrierGrid.Items.Add(carrier);             // add the carrier 
                     currCarriers.Add(carrier);                  // add to the list of carriers to send to 
@@ -380,12 +381,12 @@ namespace TMS
         /// <param name="e"></param>
         private void SimulateDayBtn_Click(object sender, RoutedEventArgs e)
         {
-            percievedTime.AddDays(1);
+            perceivedTime = perceivedTime.AddDays(1);
             foreach(Contract contract in allContracts)      
             {
                 if((contract.PlannerConfirmed == 0) && (contract.EndTime.HasValue))
                 {
-                    if(contract.EndTime <= percievedTime)       // check if the order has finished
+                    if(contract.EndTime <= perceivedTime)       // check if the order has finished
                     {
                         markComplete(contract);         // Hulk it out
                     }
@@ -400,13 +401,25 @@ namespace TMS
         /// <param name="contract"></param>
         private void markComplete(Contract contract)
         {
-            Brush changeColor = new SolidColorBrush(Colors.Green);
+            List<Contract> temp = planner.ShowAllContracts();
+            CurrentOrderGrid.Items.Remove(contract);
+            
+            contract.Status = "COMPLETE";
 
-            foreach(DataGridRow row in CurrentOrderGrid.Items)
+            CurrentOrderGrid.Items.Add(contract);
+        }
+
+        private void CurrentOrder_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DataGrid gridSelection = (DataGrid)sender;
+            Contract contract = gridSelection.SelectedItem as Contract;
+            if(contract != null)
             {
-                if(row.Item == contract)
+                if (string.Equals(contract.Status, "COMPLETE"))
                 {
-                    row.Background = changeColor;
+                    contract.PlannerConfirmed = 1;
+                    contract.UpdateContract();
+                    CurrentOrderGrid.Items.Remove(contract);
                 }
             }
         }
