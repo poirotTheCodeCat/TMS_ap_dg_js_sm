@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TMS.Business_Layer.users;
 
 namespace TMS
 {
@@ -24,6 +26,8 @@ namespace TMS
         {
             InitializeComponent();
             MainFrame.Content = new BuyerPage();
+
+            Logger.Log("Application start.");
         }
 
         private void Admin_Click(object sender, RoutedEventArgs e)
@@ -39,16 +43,6 @@ namespace TMS
         private void Buyer_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = new BuyerPage();
-        }
-
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void BuyerBtn_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

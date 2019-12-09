@@ -88,6 +88,12 @@ namespace TMS
             return done;
         }
 
+        internal void GetBackUp(string filePath)
+        {
+            new LocalComm().BackUpDb(filePath);
+            Logger.Log("TMS database backup.");
+        }
+
         /// <summary>
         /// This method is used to update a column and row location in the route table database.
         /// </summary>

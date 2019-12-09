@@ -104,6 +104,27 @@ namespace TMS
         }
 
         /// <summary>
+        /// This method will request the tms database create a backup sql script to the local machine.
+        /// </summary>
+        /// <param name="filePath">The local save location for the sql file.</param>
+        internal void BackUpDb(string filePath)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmd = new MySqlCommand())
+                {
+                    using (MySqlBackup mb = new MySqlBackup(cmd))
+                    {
+                        cmd.Connection = conn;
+                        conn.Open();
+                        mb.ExportToFile(filePath);
+                        conn.Close();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// This method will add an Orderline to the TMS Database 
         /// </summary>
         /// <returns>None.</returns>
@@ -112,10 +133,7 @@ namespace TMS
             using (var myConn = new MySqlConnection(connectionString))
             {
 
-                var myCommand = new MySqlCommand("AddTrip", myConn);
-                myCommand.CommandType = CommandType.StoredProcedure;
-                myCommand.Parameters.AddWithValue("@contract", contract);
-                myCommand.Parameters.AddWithValue("@carrier", carrier);
+                var myCommand = new MySqlCommand("AddTrip");
 
                 myConn.Open();
 
