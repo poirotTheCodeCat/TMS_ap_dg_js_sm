@@ -89,7 +89,7 @@ namespace TMS
         private void fillLists()
         {
             // get all current orders -> orders where Completed == false
-            allContracts = planner.ShowAllContracts();
+            allContracts = planner.ShowPendingOrders();
         }
 
         /// <summary>
@@ -124,7 +124,10 @@ namespace TMS
             if (orderContracts.Count == 1)
             {
                 // display the list of cities
-                displayCarriers(orderContracts[0].Origin);
+                if(!carrierSelect.HasItems)
+                {
+                    displayCarriers(orderContracts[0].Origin);
+                }
             }
             
         }
@@ -214,12 +217,6 @@ namespace TMS
             refreshData();
         }
 
-
-        private bool confirmContract()
-        {
-
-            return true;
-        }
 
         /// <summary>
         /// This will remove the selected item from this datagrid and the list of carriers being used
@@ -349,6 +346,7 @@ namespace TMS
                     string displayString = carrier.CarrierName + " || " + carrier.FtlAvail + " || " + carrier.LtlAvail + " || " + carrier.FtlRate + " || " + carrier.LtlAvail;
 
                     carrierSelect.Items.Remove(displayString);     // remove the selected carrier from the combobox
+                    Error.Content = "";
                 }
                 else
                 {
