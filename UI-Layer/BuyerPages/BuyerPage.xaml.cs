@@ -146,15 +146,7 @@ namespace TMS
 
         private void generateInvoice(Contract contract)
         {
-            string invoiceString = "Contract ID: " + contract.ContractID.ToString() + "\n"
-                + "Customer: " + contract.ClientName + "\n"
-                + "Job Type: " + contract.JobType.ToString() + "\n"
-                + "Van Type " + contract.VanType.ToString() + "\n"
-                + "Quantity " + contract.Quantity.ToString() + "\n"
-                + "Price: " + contract.Price.ToString();
-
-            MessageBox.Show(invoiceString);
-
+            buyer.GenerateInvoice(contract);
         }
 
         /// <summary>
