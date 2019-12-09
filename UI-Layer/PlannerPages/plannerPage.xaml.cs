@@ -339,13 +339,20 @@ namespace TMS
             {
                 Carrier carrier = carriersToDisplay[index];      // get the current carrier 
 
+                if(((orderContracts[0].JobType == 1) && carrier.LtlAvail > 0) || ((orderContracts[0].JobType == 0) && carrier.FtlAvail > 0))
+                {
+                    CarrierGrid.Items.Add(carrier);             // add the carrier 
+                    currCarriers.Add(carrier);                  // add to the list of carriers to send to 
 
-                CarrierGrid.Items.Add(carrier);             // add the carrier 
-                currCarriers.Add(carrier);                  // add to the list of carriers to send to 
+                    string displayString = carrier.CarrierName + " || " + carrier.FtlAvail + " || " + carrier.LtlAvail + " || " + carrier.FtlRate + " || " + carrier.LtlAvail;
 
-                string displayString = carrier.CarrierName + " || " + carrier.FtlAvail + " || " + carrier.LtlAvail + " || " + carrier.FtlRate + " || " + carrier.LtlAvail;
-
-                carrierSelect.Items.Remove(displayString);     // remove the selected carrier from the combobox
+                    carrierSelect.Items.Remove(displayString);     // remove the selected carrier from the combobox
+                }
+                else
+                {
+                    Error.Content = "This Carrier has no availability";
+                }
+               
             }
         }
 
