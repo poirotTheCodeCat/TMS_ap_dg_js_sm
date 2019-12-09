@@ -26,7 +26,20 @@ namespace TMS
         public Planner()
         {
             PalletThreshold = 17;
-            transportCorridors = new TransportCorridor().Routes;
+            transportCorridors = GetRoutes();
+        }
+
+        /// <summary>
+        /// This method gets a Carrier to view the details of that Carrier. 
+        /// </summary>
+        /// <returns>Routes that are requested.</returns>
+        public List<TransportCorridor> GetRoutes()
+        {
+
+            List<TransportCorridor> routes = new LocalComm().GetRoutes();
+
+
+            return routes;
         }
 
         /// <summary>
@@ -168,7 +181,7 @@ namespace TMS
         
         public double GetClientCharge(Contract contract, List<Carrier> orderCarriers, List<Carrier> originalCarriers)
         {
-            double distance = CalculateTime(contract);
+            int distance = CalculateDistance(contract.Origin, contract.Destination);
             double dailyCharge = 150;
             int daysTravelled = 0;
             int pallets = 0;
@@ -306,6 +319,50 @@ namespace TMS
 
         }
 
+        public int CalculateDistance(string startCity, string endCity)
+        {
+            int originIndex = -1;
+            int DestIndex = -1;
+            int distance = 0;
+
+            foreach (TransportCorridor t in transportCorridors)
+            {
+                // find the index of the start city
+                // find the index of the second city
+                if (startCity == t.CityName)        // check if the city is the origin city
+                {
+                    originIndex = transportCorridors.IndexOf(t);
+                }
+                if (endCity == t.CityName)          // check if the city is the destination city
+                {
+                    DestIndex = transportCorridors.IndexOf(t);
+                }
+                if (originIndex != -1 && DestIndex != -1)
+                {
+                    break;
+                }
+            }
+            // now that the indexes have been found we can compare and see what direction we should travel in
+            if (originIndex < DestIndex)     // if the destination is west
+            {
+                for (int i = originIndex; i < DestIndex; i++)
+                {
+                    distance += transportCorridors[i].Distance;
+                }
+            }
+            else
+            {
+                for (int j = originIndex; j > DestIndex; j--)
+                {
+                    if (transportCorridors[j].CityName != endCity)
+                    {
+                        distance += transportCorridors[j - 1].Distance;
+
+                    }
+                }
+            }
+            return distance;
+        }
         /// <summary>
         /// Calculates the total time needed to complete the trip in hours
         /// </summary>
@@ -348,7 +405,7 @@ namespace TMS
                 for (int i = originIndex; i <= DestIndex; i++)
                 {
                     // Add two hours for each intermediate city if LTL, or if loading/unloading for FTL and LTL
-                    if (contract.Origin == transportCorridors[i].CityName || contract.Origin == transportCorridors[i].CityName
+                    if (contract.Origin == transportCorridors[i].CityName || contract.Destination == transportCorridors[i].CityName
                         || contract.JobType == 1)
                     {
                         restTime += layoverTime;
@@ -369,7 +426,7 @@ namespace TMS
                         // The final time is calculated by totalTime + (daysAdded*24), totalTime serves as the 
                         // remainder of hours if a whole day wasn't required, set to 0 if the last city 
                         // has been reached so too much time isn't added.
-                        if (contract.Origin == transportCorridors[i].CityName)
+                        if (contract.Destination == transportCorridors[i].CityName)
                         {
                             totalTime = 0;
                         }
@@ -382,24 +439,24 @@ namespace TMS
                 {
                     for (int j = originIndex; j >= DestIndex; j--)
                     {
-                        if (contract.Origin == transportCorridors[j-1].CityName || contract.Origin == transportCorridors[j-1].CityName
+                        if (contract.Origin == transportCorridors[j].CityName || contract.Destination == transportCorridors[j].CityName
                         || contract.JobType == 1)
                         {
                             restTime += layoverTime;
-                            totalTime += restTime;
+                            //totalTime += restTime;
                         }
-                        if (totalTime < 12 && driveTime < 8)
+                        if (totalTime < 12 && driveTime < 8 && (contract.Destination != transportCorridors[j].CityName))
                         {
                             driveTime += transportCorridors[j - 1].TimeBetween;
-                            totalTime += driveTime;
+                            //totalTime += driveTime;
 
                         }
-                        if (totalTime >= 12 || driveTime >= 8)
+                        if ((driveTime + restTime) >= 12 || driveTime >= 8)
                         {
                             ++daysAdded;
                             restTime = 0;
                             driveTime = 0;
-                            if (contract.Origin == transportCorridors[j - 1].CityName)
+                            if (contract.Destination == transportCorridors[j].CityName)
                             {
                                 totalTime = 0;
                             }
@@ -408,7 +465,7 @@ namespace TMS
                 }
             }
 
-            return totalTime + (daysAdded * 24);
+            return (driveTime+restTime) + (daysAdded * 24);
         }
             
        

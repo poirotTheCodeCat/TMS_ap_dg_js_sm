@@ -72,7 +72,7 @@ namespace TMS
 
             foreach(Contract cont in allContracts)
             {
-                if((cont.PlannerConfirmed == 1) && (cont.ContractStatus == 0))
+                if((cont.PlannerConfirmed == 0) && (cont.EndTime.HasValue))
                 {
                     CurrentOrderGrid.Items.Add(cont);
                 }
