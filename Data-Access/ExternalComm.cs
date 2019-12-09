@@ -18,10 +18,18 @@ namespace TMS
     /// </summary>
     public class ExternalComm
     {
-        private string connectionString = string.Format(ConfigurationManager.ConnectionStrings["cmConnStr"].ConnectionString, serverIp, port);
-        static string serverIp = ConfigurationManager.AppSettings["ipInfo"];
-        static string port = ConfigurationManager.AppSettings["portInfo"];
+        private string connectionString;
+        public string serverIp { get; set; }
+        public string serverPort { get; set; }
 
+
+        public ExternalComm()
+        {
+            
+            serverIp = ConfigurationManager.AppSettings["ipInfo"];
+            serverPort = ConfigurationManager.AppSettings["portInfo"];
+            connectionString = string.Format(ConfigurationManager.ConnectionStrings["cmConnStr"].ConnectionString, serverIp, serverPort);
+        }
         /// 
         /// <summary>
         /// This method will query the Contract Marketplace database for Contracts. 
