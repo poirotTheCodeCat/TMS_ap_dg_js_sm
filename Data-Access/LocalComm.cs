@@ -24,41 +24,6 @@ namespace TMS
         private string connectionString = ConfigurationManager.ConnectionStrings["tmsConnStr"].ConnectionString; ///< The connection string for connection to the local TMS database. Gathered from App.config.
 
         /// <summary>
-        /// This method adds a new Order to the TMS database.
-        /// <param name="searchItem">The identifier for the Contract that will be used 
-        ///                         to create the new Order</param>
-        /// </summary>
-        /// <returns>Order that has been created.</returns>
-        public Order CreateOrder(string searchItem)
-        {
-            Order newOrder = null;
-            return newOrder;
-        }
-
-        /// <summary>
-        /// This method queries the TMS database for the requested Orders.
-        /// </summary>
-        /// <param name="searchItem">The identifier for the Orders that are being retrieved.</param>
-        /// <returns>List of Orders requested.</returns>
-        public List<Order> GetOrders(string searchItem)
-        {
-            List<Order> completedOrderList = null;
-            return completedOrderList;
-        }
-
-        /// <summary>
-        /// This method queries the TMS database for the invoice requested.
-        /// </summary>
-        /// <param name="searchItem">The identifier for the Order that requires
-        ///                             an invoice</param>
-        /// <returns>String containing the information required for an invoice.</returns>
-        public string GetInvoice(string searchItem)
-        {
-            string invoice = "";
-            return invoice;
-        }
-
-        /// <summary>
         /// This method updates the contract within the local tms database
         /// </summary>
         /// <param name="contract"></param>

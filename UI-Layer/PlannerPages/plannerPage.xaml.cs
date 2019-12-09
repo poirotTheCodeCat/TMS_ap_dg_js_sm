@@ -38,8 +38,6 @@ namespace TMS
         private List<Contract> orderContracts = new List<Contract>();        // Will store the list of currently selected contracts for the trip
 
         private List<Carrier> AllCarriers = new List<Carrier>();            // all carriers in database
-        private List<Order> currentOrderList = new List<Order>();           // holds all orders selected for creating order
-
 
         private Planner planner = new Planner();                            // used to access planner logic
         private List<Carrier> carriersToDisplay = new List<Carrier>();
@@ -109,7 +107,6 @@ namespace TMS
             allContracts.Clear();
             currCarriers.Clear();
             orderContracts.Clear();
-            currentOrderList.Clear();
             ContractsGrid.Items.Clear();
             TripGrid.Items.Clear();
             CarrierGrid.Items.Clear();
