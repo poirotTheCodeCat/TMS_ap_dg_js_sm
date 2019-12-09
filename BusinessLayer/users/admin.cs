@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using TMS.Business_Layer.users;
 
 namespace TMS
@@ -16,41 +12,6 @@ namespace TMS
     /// <exception cref="fileIoException">Exception during file reading or writing in the ShowLogs() function</exception>
     public class Admin
     {
-        /// <summary>
-        /// This method will allow the admin user to change the current IP address used to access the TMS database.
-        /// These values will be updated in the App.config file.
-        /// </summary>
-        /// <param name="newIP">The requested new IP address</param>
-        /// <param name="newPort">The requested new port number - default to blank in the case where the user only
-        ///                       wants to update the ip address.</param>
-        /// <returns>Int representing the successful change in IP/Port values.</returns>
-        public int ChangeTmsConnSettings(string newIP, string newPort = "")
-        {
-            int done = 0;
-
-
-            done = 1; //set to true for testing
-
-            return done;
-        }
-
-        /// <summary>
-        /// This method will allow the admin user to change the current IP address used to access the Contract
-        /// Marketplace database. These values will be updated in the App.config file.
-        /// </summary>
-        /// <param name="newIP">The requested new IP address</param>
-        /// <param name="newPort">The requested new port number - default to blank in the case where the user only
-        ///                       wants to update the ip address.</param>
-        /// <returns>Int representing the successful change in IP/Port values.</returns>
-        public int ChangeCmpConnSettings(string newIP, string newPort = "")
-        {
-            int done = 0;
-            
-            done = 1; //set to true for testing
-
-            return done;
-        }
-
         /// <summary>
         /// This method will allow the admin user to change the current save location of the Logger class log file.
         /// These values will be updated in the App.config file.
@@ -95,19 +56,12 @@ namespace TMS
         }
 
         /// <summary>
-        /// This method is used to update a column and row location in the route table database.
+        /// This method is used to update a the values of the route table.
         /// </summary>
-        /// <param name="routeID">The id of the selected route</param>
-        /// <param name="whatColumn">The name of the selected column</param>
-        /// <param name="newValue">The new value to insert in that location</param>
-        /// <returns>Int representing successful addition to the database.</returns>
-        public int UpdateRouteTable(int routeID, string whatColumn, string newValue)
+        /// <param name="c">The id of the selected route</param>
+        public void UpdateRouteTable(Carrier c)
         {
-            int done = 0;
-
-            done = 1; //set to true for testing
-
-            return done;
+            
         }
 
         /// <summary>
@@ -120,25 +74,18 @@ namespace TMS
         }
 
         /// <summary>
-        /// This method is used to update a column and row location in the rate table database.
+        /// This method is used to update a the values of the rate table.
         /// </summary>
-        /// <param name="rateID">The id of the selected route</param>
-        /// <param name="whatColumn">The name of the selected column</param>
-        /// <param name="newValue">The new value to insert in that location</param>
-        /// <returns>Int representing successful addition to the database.</returns>
-        public int UpdateRateTable(int rateID, string whatColumn, string newValue)
+        /// <param name="c">The id of the selected route</param>
+        public void UpdateRateTable(Carrier c)
         {
-            int done = 0;
 
-            done = 1; //set to true for testing
-
-            return done;
         }
 
         /// <summary>
         /// This method gets a Carrier to view the details of that Carrier. 
         /// </summary>
-       
+
         /// <returns>Carrier that is requested.</returns>
         public List<Carrier> GetCarriers()
         {
