@@ -17,9 +17,7 @@ namespace TMS
     /// </summary>
     class LocalComm
     {
-        private string connectionString = string.Format(ConfigurationManager.ConnectionStrings["tmsConnStr"].ConnectionString,serverIp,port);
-        static string serverIp = ConfigurationManager.AppSettings["ipInfo"];
-        static string port = ConfigurationManager.AppSettings["portInfo"];
+        private string connectionString = ConfigurationManager.ConnectionStrings["tmsConnStr"].ConnectionString;
 
         /// <summary>
         /// This method adds a new Order to the TMS database.
@@ -133,7 +131,11 @@ namespace TMS
             using (var myConn = new MySqlConnection(connectionString))
             {
 
-                var myCommand = new MySqlCommand("AddTrip");
+                var myCommand = new MySqlCommand("AddTrip", myConn);
+                myCommand.CommandType = CommandType.StoredProcedure;
+                //myCommand.Parameters.AddWithValue("@status", pending.ContractStatus);
+                myCommand.Parameters.AddWithValue("@contract", contract);
+                myCommand.Parameters.AddWithValue("@carrier", carrier);
 
                 myConn.Open();
 

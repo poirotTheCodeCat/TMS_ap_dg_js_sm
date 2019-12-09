@@ -37,8 +37,8 @@
             <Rectangle Stroke="Gray"/>
             <DataGrid  x:Name="CurrentOrderGrid" Margin="10,10,292,10" SelectionChanged="CurrentOrder_SelectionChanged">
                 <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Width="50" Binding="{Binding Path=ContractID}"/>
                     <DataGridTextColumn Header="Customer" Width="*"  Binding="{Binding Path=ClientName}"/>
-                    <DataGridTextColumn Header="Contract ID" Width="*" Binding="{Binding Path=ContractID}"/>
                     <DataGridTextColumn Header="End Time" Width="*" Binding="{Binding Path=EndTime}"/>
                     <DataGridTextColumn Header="Status" Width="*" Binding="{Binding Status, Mode=TwoWay}"/>
                 </DataGrid.Columns>
