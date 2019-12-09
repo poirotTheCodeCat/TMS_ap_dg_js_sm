@@ -138,6 +138,12 @@ namespace TMS
             return pendingOrderList;
         }
 
+        public List<Contract> ShowAllContracts()
+        {
+            List<Contract> allContracts = new LocalComm().GetLocalContracts();
+            return allContracts;
+        }
+
         /// <summary>
         /// This method allows the Planner to generate an invoice summary of all Orders. 
         /// </summary>
