@@ -79,7 +79,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BusinessLayer\orderManagement\CombineContracts.cs" />
     <Compile Include="BusinessLayer\orderManagement\TransportCorridor.cs" />
     <Compile Include="BusinessLayer\Logger.cs" />
     <Compile Include="BusinessLayer\orderManagement\Contract.cs" />

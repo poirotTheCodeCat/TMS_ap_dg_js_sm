@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * File Name:MainWindow.xaml.cs
+ * Program Name: TMS_ap_dg_js_sm
+ * Programmers: Arron Perry, Daniel Grew, John Stanley, Sasha Malesevic
+ * First Version: 2019-12-09
+ */
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -30,16 +36,31 @@ namespace TMS
             Logger.Log("Application start.");
         }
 
+        /// <summary>
+        /// This redirects the frame to the admin page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Admin_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = new AdminPage();
         }
 
+        /// <summary>
+        /// This redirects the frame to the Planner page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Planner_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = new PlannerPage();
         }
 
+        /// <summary>
+        /// This redirects the frame to the Buyer page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Buyer_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = new BuyerPage();

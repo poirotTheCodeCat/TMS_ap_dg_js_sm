@@ -1,4 +1,10 @@
-﻿using MySql.Data.MySqlClient;
+﻿/*
+ * File Name: ExternalComm.cs
+ * Program Name: TMS_ap_dg_js_sm
+ * Programmers: Arron Perry, Daniel Grew, John Stanley, Sasha Malesevic
+ * First Version: 2019-12-09
+ */
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -61,6 +67,12 @@ namespace TMS
                 return contracts;
             }
         }
+
+        /// <summary>
+        /// This method extracts the contents of a datatable and inputs them into a class
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
         private List<Contract> DataTableToContractsList(DataTable table)
         {
             var contracts = new List<Contract>();
