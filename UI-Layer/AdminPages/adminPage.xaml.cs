@@ -1,14 +1,11 @@
-﻿using Microsoft.Win32;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
 using System.IO;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using Google.Protobuf.WellKnownTypes;
 using TMS.Business_Layer.users;
 using System.Windows.Forms;
 using MessageBox = System.Windows.MessageBox;
