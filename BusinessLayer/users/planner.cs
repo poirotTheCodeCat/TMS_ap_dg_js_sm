@@ -264,7 +264,7 @@ namespace TMS
         /// </summary>
         /// <param name="contracts"></param>
         /// <param name="orderCarriers"></param>
-        public void CreateOrder(List<Contract> contracts, List<Carrier> carriers)
+        public void CreateOrder(List<Contract> contracts, List<Carrier> carriers, DateTime currTime)
         {
             // 1. Create a trip for each carrier and contract 
             // 2. Generate the price to be used for invoice generation 
@@ -322,14 +322,14 @@ namespace TMS
             }
             */
 
-            DateTime startTime = DateTime.Now;
+            DateTime startTime = currTime;
             // BuyerSelected = 1 
             // PlannerSelected = 0
             // EndTime != null 
             foreach(Contract con in contracts)
             {
                // con.Price = GetClientCharge(con, carriers);
-                con.EndTime = startTime.AddHours(CalculateTime(con));
+                con.EndTime = currTime.AddHours(CalculateTime(con));
 
                 if(carriers.Count > 1)
                 {
