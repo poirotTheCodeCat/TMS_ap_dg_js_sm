@@ -149,9 +149,9 @@ namespace TMS
                 else
                 {
                     ContractsGrid.IsEnabled = false;        // do not allow user to add more
-                    if (currCarriers.Count > 1)
+                    if (currCarriers.Count >= 1)
                     {
-                        Error.Content = "You can only have one carrier to add another LTL";
+                        Error.Content = "You cannot combine FTL Contracts with other Contracts";
                         return;
                     }
                 }
